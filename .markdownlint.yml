@@ -1,0 +1,12 @@
+---
+default: true
+
+MD001: false
+MD003: false
+MD007: false
+MD013: false
+MD022: false
+MD029:
+  style: ordered
+MD032: false
+MD033: false

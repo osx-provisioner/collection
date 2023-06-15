@@ -1,0 +1,74 @@
+---
+name: collection-github-workflow-publish-to-galaxy
+
+# For further details please consult the documentation here:
+# https://github.com/niall-byrne/ansible-workbench
+
+# Begin Cookiecutter Template Content
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      TAG:
+        description: 'Tag to Deploy'
+        required: true
+        default: ''
+
+#  secrets:
+#    GALAXY_API_KEY:
+#      description: "Optional, enables importing the collection into Ansible Galaxy."
+#      required: false
+#    SLACK_WEBHOOK:
+#      description: "Optional, enables Slack notifications."
+#      required: false
+
+jobs:
+
+  configuration:
+    uses: cicd-tools-org/cicd-tools/.github/workflows/job-00-generic-read_json_file.yml@master
+    with:
+      JSON_FILE_PATH: ".github/config/workflows/workflow-publish-to-galaxy.json"
+
+  api_key_exists:
+    secrets:
+      SECRET: ${{ secrets.GALAXY_API_KEY }}
+    uses: cicd-tools-org/cicd-tools/.github/workflows/job-00-generic-identify_secret_exists.yml@master
+
+  start:
+    if: needs.api_key_exists.outputs.EXISTS == 'true'
+    needs: [api_key_exists]
+    secrets:
+      SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+    uses: cicd-tools-org/cicd-tools/.github/workflows/job-00-generic-notification.yml@master
+    with:
+      NOTIFICATION_EMOJI: ":vertical_traffic_light:"
+      NOTIFICATION_MESSAGE: "Ansible Galaxy release workflow has started!"
+      WORKFLOW_NAME: "galaxy"
+
+  publish_to_galaxy:
+    if: needs.api_key_exists.outputs.EXISTS == 'true'
+    needs: [api_key_exists, configuration, start]
+    secrets:
+      GALAXY_API_KEY: ${{ secrets.GALAXY_API_KEY }}
+      SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+    uses: cicd-tools-org/cicd-tools/.github/workflows/job-95-poetry-galaxy_import_collection.yml@master
+    with:
+      PYTHON_VERSION: ${{ fromJSON(needs.configuration.outputs.JSON_FILE_DATA).ci_python_version }}
+      WORKFLOW_DISPATCH: ${{ github.event_name == 'workflow_dispatch' }}
+      VERBOSE_NOTIFICATIONS: ${{ fromJSON(needs.configuration.outputs.JSON_FILE_DATA).ci_verbose_notifications }}
+      WORKFLOW_NAME: "galaxy"
+
+  success:
+    if: needs.api_key_exists.outputs.EXISTS == 'true'
+    needs: [api_key_exists, publish_to_galaxy]
+    secrets:
+      SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+    uses: cicd-tools-org/cicd-tools/.github/workflows/job-00-generic-notification.yml@master
+    with:
+      NOTIFICATION_EMOJI: ":checkered_flag:"
+      NOTIFICATION_MESSAGE: "Ansible Galaxy release workflow has completed successfully!"
+      WORKFLOW_NAME: "galaxy"
+
+# End Cookiecutter Template Content

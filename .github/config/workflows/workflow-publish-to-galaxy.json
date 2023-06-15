@@ -1,0 +1,4 @@
+{
+  "ci_python_version": "3.9",
+  "ci_verbose_notifications": true
+}

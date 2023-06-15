@@ -1,0 +1,8 @@
+*.retry
+.ansible
+.cache
+.cicd-tools/boxes/*
+!.cicd-tools/boxes/bootstrap
+.idea
+.tool-versions
+poetry.lock

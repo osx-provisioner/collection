@@ -1,0 +1,14 @@
+{
+  "ci_commit_spelling_rev_range": "HEAD",
+  "ci_commitizen_rev_range": "HEAD",
+  "ci_concurrency_limit": 4,
+  "ci_extra_release_content": [
+    "## Release Checklist",
+    "- [] Ensure master is synchronized with the release tag."
+  ],
+  "ci_molecule_excluded_scenarios_regex": "^default$|^noci-.*$",
+  "ci_molecule_test_platforms": ["macos-latest"],
+  "ci_python_versions": ["3.9"],
+  "ci_trufflehog_extra_scan_args": "",
+  "ci_verbose_notifications": false
+}

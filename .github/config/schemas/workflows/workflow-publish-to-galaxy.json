@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "0.1.0",
+  "description": "Ansible Workbench GitHub Ansible Galaxy Publish Workflow Schema",
+  "additionalProperties": false,
+  "required": [
+    "ci_python_version",
+    "ci_verbose_notifications"
+  ],
+  "type": "object",
+  "uniqueItems": true,
+  "properties": {
+    "ci_python_version": {
+      "description": "This array contains the list of Python versions the workflow steps will execute on.",
+      "pattern": "^3\\.[0-9]$",
+      "type": "string"
+    },
+    "ci_verbose_notifications": {
+      "description": "This enables success notifications for each job in the GitHub workflows.",
+      "type": "boolean"
+    }
+  }
+}

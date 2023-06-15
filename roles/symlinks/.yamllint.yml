@@ -1,0 +1,49 @@
+---
+# Based on ansible-lint config
+extends: default
+
+ignore: |
+  .ansible/
+  .cache/
+  .idea/
+  .mac_maker/
+  ansible_role/
+  collections/
+  roles/
+
+rules:
+  braces:
+    max-spaces-inside: 0
+    level: error
+  brackets:
+    max-spaces-inside: 0
+    level: error
+  colons:
+    max-spaces-after: -1
+    level: error
+  commas:
+    max-spaces-after: -1
+    level: error
+  indentation:
+    spaces: consistent
+    indent-sequences: true
+    level: error
+  comments: disable
+  comments-indentation: disable
+  document-start:
+    level: error
+  empty-lines:
+    max: 3
+    level: error
+  hyphens:
+    level: error
+  key-duplicates:
+    level: error
+  line-length: disable
+  new-line-at-end-of-file:
+    level: error
+  new-lines:
+    type: unix
+  trailing-spaces:
+    level: error
+  truthy: disable

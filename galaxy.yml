@@ -1,0 +1,41 @@
+---
+namespace: osx_provisioner
+name: collection
+version: "1.0.0"
+readme: README.md
+
+authors:
+  - Niall Byrne <niall@niallbyrne.ca>
+
+description: A collection of OSX automation tools for Ansible.
+
+# Either a single license or a list of licenses for content inside of a collection. Ansible Galaxy currently only
+# accepts L(SPDX,https://spdx.org/licenses/) licenses. This key is mutually exclusive with 'license_file'
+license:
+  - MIT
+
+# A list of tags you want to associate with the collection for indexing/searching. A tag name has the same character
+# requirements as 'namespace' and 'name'
+tags:
+  - mac
+  - macos
+  - osx
+  - homebrew
+  - brew
+  - apple
+  - ios
+  - macbook
+  - imac
+  - macmini
+  - server
+  - tools
+
+dependencies:
+  community.general: ">=7.0.0"
+
+repository: https://github.com/osx-provisioner/collection
+documentation: https://github.com/osx-provisioner/collection
+homepage: https://www.niallbyrne.ca
+issues: https://github.com/osx-provisioner/collection/issues
+
+build_ignore: []

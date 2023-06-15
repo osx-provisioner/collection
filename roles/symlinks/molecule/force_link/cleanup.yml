@@ -1,0 +1,14 @@
+---
+- name: Clean Up
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: Load Scenario Variables
+      ansible.builtin.include_vars: vars/main.yml
+    - name: Clean Up
+      ansible.builtin.file:
+        path: "{{ symlinks_item.link }}"
+        state: absent
+      loop: "{{ symlinks }}"
+      loop_control:
+        loop_var: symlinks_item

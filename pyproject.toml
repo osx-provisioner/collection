@@ -1,0 +1,38 @@
+[build-system]
+build-backend = 'poetry.core.masonry.api'
+requires = ['poetry-core>=1.0.0']
+
+[tool]
+[tool.commitizen]
+bump_message = 'bump(RELEASE): $current_version → $new_version'
+pre_bump_hooks = ['.cicd-tools/boxes/bootstrap/commitizen/pre_bump.sh']
+version = '1.0.0'
+version_files = ['galaxy.yml:version', 'pyproject.toml:version']
+version_provider = 'poetry'
+
+[tool.poetry]
+authors = ['Niall Byrne <niall@niallbyrne.ca>']
+description = 'A collection of OSX automation tools for Ansible.'
+name = 'collection'
+version = '1.0.0'
+
+[tool.poetry.dependencies]
+python = '^3.9'
+
+[tool.poetry.group]
+[tool.poetry.group.dev]
+[tool.poetry.group.dev.dependencies]
+ansible = '^8.0.0'
+commitizen = '^3.0.0'
+pre-commit = '^3.1.1'
+
+[tool.poetry.group.dev.dependencies.ansible-lint]
+markers = "platform_system != 'Windows'"
+version = '^6.12.2'
+
+[tool.poetry.group.dev.dependencies.molecule]
+version = '^5.0.0'
+
+[tool.poetry.group.dev.dependencies.molecule-plugins]
+extras = ['docker']
+version = '^23.4.1'

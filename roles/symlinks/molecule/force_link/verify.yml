@@ -1,0 +1,32 @@
+---
+- name: Verify
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: Load Scenario Variables
+      ansible.builtin.include_vars: vars/main.yml
+    - name: Check Downloaded Content
+      ansible.builtin.stat:
+        path: "{{ symlinks_item.link }}"
+      register: homeshick_molecule_check_content
+      loop: "{{ symlinks }}"
+      loop_control:
+        loop_var: symlinks_item
+    - name: Assert Files Exist
+      ansible.builtin.assert:
+        that:
+          - symlinks_item.stat.exists
+        msg: "{{ symlinks_item.symlinks_item.link }} does not exist."
+      loop: "{{ homeshick_molecule_check_content.results }}"
+      loop_control:
+        loop_var: symlinks_item
+    - name: Assert Files Have Correct Attributes
+      ansible.builtin.assert:
+        that:
+          - symlinks_item.stat.pw_name == symlinks_user
+          - symlinks_item.stat.lnk_target == symlinks_item.symlinks_item.target
+          - symlinks_item.stat.path == symlinks_item.symlinks_item.link
+        msg: "{{ symlinks_item.symlinks_item.link }} has wrong attributes."
+      loop: "{{ homeshick_molecule_check_content.results }}"
+      loop_control:
+        loop_var: symlinks_item

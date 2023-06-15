@@ -1,0 +1,18 @@
+---
+# tasks file for role-symlinks
+
+- name: Create Symlinks
+  become: True
+  become_user: "{{ symlinks_user }}"
+  ansible.builtin.file:
+    src: '{{ symlinks_item.target }}'
+    dest: '{{ symlinks_item.link }}'
+    force: '{{ false if "force" not in symlinks_item else symlinks_item.force }}'
+    follow: '{{ true if "force" not in symlinks_item else not symlinks_item.force }}'
+    state: link
+  loop:
+    "{{ symlinks }}"
+  loop_control:
+    loop_var: symlinks_item
+  tags:
+    - symlinks

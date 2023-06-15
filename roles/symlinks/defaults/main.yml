@@ -1,0 +1,15 @@
+---
+# defaults file for role-symlinks
+
+# Example symlinks dictionary
+#
+#  symlinks:
+#    - link: /Users/{{ ansible_user_id }}/iCloud
+#      target: /Users/{{ ansible_user_id }}/Library/Mobile Documents/com~apple~CloudDocs
+#      force: true
+#    - link: /Users/{{ ansible_user_id }}/workspace
+#      target: /Volumes/Code/
+
+symlinks_user: "{{ lookup('env', 'USER') }}"
+
+symlinks: []
