@@ -1,0 +1,33 @@
+---
+# handlers file for clamav
+
+- name: Update Virus Definitions
+  become: true
+  ansible.builtin.command: "{{ brew_prefix }}/bin/freshclam --config-file '{{ clamav_freshclam_config_file }}'"
+  changed_when: true
+  listen: "Update Virus Definitions"
+
+- name: Restart Clamd
+  become: true
+  community.general.launchd:
+    name: "clamav.clamd"
+    enabled: true
+    state: restarted
+  listen: "Restart Clamd"
+
+- name: Restart Freshclam
+  become: true
+  community.general.launchd:
+    name: "clamav.freshclam"
+    enabled: true
+    state: restarted
+  listen: "Restart Freshclam"
+
+- name: Restart Clamwatch
+  become: true
+  community.general.launchd:
+    name: "clamav.clamwatch"
+    enabled: true
+    state: restarted
+    force_stop: yes
+  listen: "Restart Clamwatch"

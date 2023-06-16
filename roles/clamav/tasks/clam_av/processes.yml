@@ -1,0 +1,14 @@
+---
+- name: Start Clamd
+  become: true
+  community.general.launchd:
+    name: "clamav.clamd"
+    enabled: true
+    state: started
+
+- name: Start Freshclam
+  become: true
+  community.general.launchd:
+    name: "clamav.freshclam"
+    enabled: true
+    state: started

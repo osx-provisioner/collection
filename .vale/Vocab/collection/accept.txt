@@ -2,7 +2,10 @@
 (D|d)ev
 (N|n)iall
 Ansible|ansible
+ClamAV|clamav
+Homebrew|homebrew
 boolean
+brew_prefix
 config
 gitflow
 symlinks_user

@@ -1,0 +1,11 @@
+---
+- name: Create Virus Database Folder
+  become: true
+  ansible.builtin.file:
+    path: "{{ clamav_database_location }}"
+    state: directory
+    mode: 0755
+    owner: _clamav
+    group: _clamav
+  notify:
+    - Update Virus Definitions

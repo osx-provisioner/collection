@@ -1,0 +1,56 @@
+---
+- name: Check FreshClam logfile exists
+  ansible.builtin.stat:
+    path: "{{ clamav_freshclam_log_file }}"
+  register: clamav_freshclam_log
+- name: Create FreshClam logfile
+  become: true
+  ansible.builtin.file:
+    path: "{{ clamav_freshclam_log_file }}"
+    state: touch
+    mode: 0640
+    owner: _clamav
+    group: _clamav
+  when: not clamav_freshclam_log.stat.exists
+
+- name: Check FreshClam Error logfile exists
+  ansible.builtin.stat:
+    path: "{{ clamav_freshclam_stderr_log_file }}"
+  register: clamav_freshclam_error_log
+- name: Create FreshClam Error logfile
+  become: true
+  ansible.builtin.file:
+    path: "{{ clamav_freshclam_stderr_log_file }}"
+    state: touch
+    mode: 0640
+    owner: _clamav
+    group: _clamav
+  when: not clamav_freshclam_error_log.stat.exists
+
+- name: Check Clamd logfile exists
+  ansible.builtin.stat:
+    path: "{{ clamav_clamd_log_file }}"
+  register: clamav_clamd_log
+- name: Create Clamd logfile
+  become: true
+  ansible.builtin.file:
+    path: "{{ clamav_clamd_log_file }}"
+    state: touch
+    mode: 0640
+    owner: root
+    group: wheel
+  when: not clamav_clamd_log.stat.exists
+
+- name: Check Clamd Error logfile exists
+  ansible.builtin.stat:
+    path: "{{ clamav_clamd_stderr_log_file }}"
+  register: clamav_clamd_error_log
+- name: Create Clamd Error logfile
+  become: true
+  ansible.builtin.file:
+    path: "{{ clamav_clamd_stderr_log_file }}"
+    state: touch
+    mode: 0640
+    owner: root
+    group: wheel
+  when: not clamav_clamd_error_log.stat.exists

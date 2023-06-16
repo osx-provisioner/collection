@@ -1,0 +1,74 @@
+---
+# tasks file for clamav
+
+- name: Install ClamAV From HomeBrew
+  become: true
+  become_user: "{{ brew_user }}"
+  community.general.homebrew:
+    name:
+      - clamav
+      - fswatch
+    state: upgraded
+  retries: "{{ clamav_homebrew_retries }}"
+  delay: 3
+  register: clamav_install
+  until: clamav_install is not failed
+  tags:
+    - clamav
+
+- name: Setup ClamAV Folders
+  ansible.builtin.include_tasks:
+    file: "clam_av/folders.yml"
+  tags:
+    - clamav
+
+- name: Setup ClamAV Logging
+  ansible.builtin.include_tasks:
+    file: "clam_av/logging.yml"
+  tags:
+    - clamav
+
+- name: Setup ClamAV Configuration
+  ansible.builtin.include_tasks:
+    file: "clam_av/configuration.yml"
+  tags:
+    - clamav
+
+- name: Setup ClamWatch Folders
+  ansible.builtin.include_tasks:
+    file: "clam_watch/folders.yml"
+  tags:
+    - clamav
+  when: clamav_clamwatch
+
+- name: Setup ClamWatch Logging
+  ansible.builtin.include_tasks:
+    file: "clam_watch/logging.yml"
+  tags:
+    - clamav
+  when: clamav_clamwatch
+
+- name: Setup ClamWatch Configuration
+  ansible.builtin.include_tasks:
+    file: "clam_watch/configuration.yml"
+  tags:
+    - clamav
+  when: clamav_clamwatch
+
+- name: Flush Handlers
+  ansible.builtin.meta: flush_handlers
+  tags:
+    - clamav
+
+- name: Ensure Services Are Always Running
+  ansible.builtin.include_tasks:
+    file: "clam_av/processes.yml"
+  tags:
+    - clamav
+
+- name: Ensure Services Are Always Running
+  ansible.builtin.include_tasks:
+    file: "clam_watch/processes.yml"
+  tags:
+    - clamav
+  when: clamav_clamwatch

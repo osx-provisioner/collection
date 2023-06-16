@@ -1,0 +1,22 @@
+---
+- name: Install ClamWatch Daemon Configuration
+  become: true
+  ansible.builtin.template:
+    src: clamav.clamwatch.plist.j2
+    dest: /Library/LaunchDaemons/clamav.clamwatch.plist
+    mode: 0644
+    owner: root
+    group: wheel
+  notify:
+    - Restart Clamwatch
+
+- name: Install ClamWatch Script
+  become: true
+  ansible.builtin.template:
+    src: clamwatch.sh.j2
+    dest: "{{ brew_prefix }}/bin/clamwatch"
+    mode: 0755
+    owner: root
+    group: wheel
+  notify:
+    - Restart Clamwatch

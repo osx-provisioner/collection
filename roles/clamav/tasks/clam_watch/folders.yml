@@ -1,0 +1,7 @@
+---
+- name: Create ClamWatch Quarantine Folder
+  become: true
+  ansible.builtin.file:
+    path: "{{ clamav_clamwatch_quarantine_folder }}"
+    state: directory
+    mode: 0700

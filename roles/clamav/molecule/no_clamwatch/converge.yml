@@ -1,0 +1,9 @@
+---
+- name: Converge
+  hosts: all
+  connection: local
+  vars:
+    clamav_clamwatch: false
+  tasks:
+    - name: Include Roles
+      ansible.builtin.include_tasks: "../common/tasks/roles.yml"
