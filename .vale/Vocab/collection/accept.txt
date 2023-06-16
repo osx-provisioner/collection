@@ -3,10 +3,13 @@
 (N|n)iall
 Ansible|ansible
 ClamAV|clamav
+DOWNLOADER|downloader
 Homebrew|homebrew
 boolean
 brew_prefix
 config
+download_(retries|save_location|save_user|timeout)
 gitflow
 symlinks_user
+url
 wip

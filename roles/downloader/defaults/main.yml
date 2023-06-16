@@ -1,0 +1,20 @@
+---
+# defaults file for role-downloader
+
+# Example download_remote_urls
+#
+# download_remote_urls:
+#   - url: http://cdn.propellerheads.se/Reason10/Reason_1041_d4-Stable_164_10.dmg
+#     name: Reason10.dmg
+#   - url: https://fael-downloads-prod.focusrite.com/customer/prod/s3fs-public/downloads/Scarlett%20MixControl-1.10_0.dmg
+#     name: MixControl-1.10_0.dmg
+#   - url: https://www.sws-extension.org/download/featured/sws-v2.10.0.1.dmg
+#     name: sws-v2.10.0.1.dmg
+
+download_remote_urls: []
+
+download_save_user: "{{ lookup('env', 'USER') }}"
+download_save_location: "{{ lookup('env', 'HOME') }}/Downloads"
+
+download_timeout: 10
+download_retries: 3

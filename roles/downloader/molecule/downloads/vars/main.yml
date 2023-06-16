@@ -1,0 +1,12 @@
+---
+download_remote_urls:
+  - url: https://bootstrap.pypa.io/get-pip.py
+    name: get-pip.py
+  - url: https://www.facebook.com/robots.txt
+    name: robots.txt
+
+download_save_user: "{{ lookup('env', 'USER') }}"
+download_save_location: "{{ lookup('env', 'HOME') }}/Downloads"
+
+download_timeout: 10
+download_retries: 3

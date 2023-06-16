@@ -1,0 +1,31 @@
+---
+- name: Verify
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: Load Scenario Variables
+      ansible.builtin.include_vars: vars/main.yml
+    - name: Check Downloaded Content
+      ansible.builtin.stat:
+        path: "{{ download_save_location }}/{{ downloader_item.name }}"
+      register: downloader_molecule_check_content
+      loop: "{{ download_remote_urls }}"
+      loop_control:
+        loop_var: downloader_item
+    - name: Assert Files Exist
+      ansible.builtin.assert:
+        that:
+          - downloader_item.stat.exists
+        msg: "{{ download_save_location }}/{{ downloader_item.downloader_item.name }} does not exist."
+      loop: "{{ downloader_molecule_check_content.results }}"
+      loop_control:
+        loop_var: downloader_item
+    - name: Assert Files Have Correct Attributes
+      ansible.builtin.assert:
+        that:
+          - downloader_item.stat.mode == '0644'
+          - downloader_item.stat.pw_name == download_save_user
+        msg: "{{ download_save_location }}/{{ downloader_item.downloader_item.name }} has wrong attributes."
+      loop: "{{ downloader_molecule_check_content.results }}"
+      loop_control:
+        loop_var: downloader_item
