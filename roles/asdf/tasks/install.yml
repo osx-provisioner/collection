@@ -1,0 +1,32 @@
+---
+- name: Install asdf Global Homebrew Packages
+  become: True
+  become_user: "{{ asdf_user }}"
+  community.general.homebrew:
+    name: "{{ asdf_darwin_global_dependencies }}"
+    state: upgraded
+  retries: "{{ asdf_homebrew_retries }}"
+  delay: 3
+  register: asdf_install_darwin_global_dependencies
+  until: asdf_install_darwin_global_dependencies is not failed
+  when: ansible_os_family == "Darwin"
+
+- name: Check for existing asdf install
+  become: True
+  become_user: "{{ asdf_user }}"
+  ansible.builtin.git:
+    repo: "https://github.com/asdf-vm/asdf.git"
+    dest: "{{ asdf_user_home }}/.asdf"
+    version: "{{ asdf_version }}"
+    clone: no
+    update: no
+  register: asdf_existing_install
+
+- name: Install asdf
+  become: True
+  become_user: "{{ asdf_user }}"
+  ansible.builtin.git:
+    repo: "https://github.com/asdf-vm/asdf.git"
+    dest: "{{ asdf_user_home }}/.asdf"
+    version: "{{ asdf_version }}"
+  when: not asdf_existing_install.before

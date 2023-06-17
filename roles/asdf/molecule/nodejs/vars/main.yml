@@ -1,0 +1,12 @@
+---
+asdf_version: "v0.8.1"
+asdf_user: "{{ lookup('env', 'USER') }}"
+asdf_user_home: "{{ lookup('env', 'HOME') }}"
+asdf_legacy_version_file: "yes"
+asdf_plugins:
+  - name: "nodejs"
+    repository: ""
+    pre_install: "touch ~/pre_install_test"
+    versions:
+      - 18.0.0
+    global: 18.0.0

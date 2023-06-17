@@ -1,0 +1,11 @@
+---
+# tasks file for role-asdf
+
+- name: Install asdf
+  ansible.builtin.import_tasks: "install.yml"
+  tags: [asdf, asdf-install]
+
+- name: Install asdf Plugins on OSX
+  ansible.builtin.import_tasks: "plugins_darwin/main.yml"
+  when: ansible_os_family == "Darwin"
+  tags: [asdf, asdf-plugins]

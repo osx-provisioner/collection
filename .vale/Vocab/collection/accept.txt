@@ -1,6 +1,7 @@
 (B|b)yrne
 (D|d)ev
 (N|n)iall
+ASDF|asdf
 Ansible|ansible
 ClamAV|clamav
 DOWNLOADER|downloader
@@ -14,6 +15,8 @@ config
 dotfiles
 download_(retries|save_location|save_user|timeout)
 gitflow
+plugin_tasks
+rbenv
 symlinks_user
 url
 wip

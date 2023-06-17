@@ -1,0 +1,11 @@
+---
+- name: Check that pre_install was executed
+  ansible.builtin.stat:
+    path: "{{ asdf_user_home }}/pre_install_test"
+  register: asdf_molecule_pre_install_test
+
+- name: Assert pre_install_test was executed
+  ansible.builtin.assert:
+    that:
+      - asdf_molecule_pre_install_test.stat.exists
+    msg: "The pre_install_test file must have been created."

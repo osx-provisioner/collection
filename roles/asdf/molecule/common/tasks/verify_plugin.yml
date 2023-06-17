@@ -1,0 +1,12 @@
+---
+- name: Check that the plugin was installed
+  ansible.builtin.stat:
+    path: "{{ asdf_user_home }}/.asdf/plugins/{{ asdf_plugins[0].name }}"
+  register: asdf_molecule_plugin
+
+- name: Assert plugin was installed
+  ansible.builtin.assert:
+    that:
+      - asdf_molecule_plugin.stat.exists
+      - asdf_molecule_plugin.stat.pw_name == asdf_user
+    msg: "The asdf plugin folder must exist."

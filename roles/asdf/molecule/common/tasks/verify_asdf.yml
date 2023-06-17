@@ -1,0 +1,12 @@
+---
+- name: Check that asdf was installed
+  ansible.builtin.stat:
+    path: "{{ asdf_user_home }}/.asdf/bin/asdf"
+  register: asdf_molecule_install
+
+- name: Assert asdf was installed
+  ansible.builtin.assert:
+    that:
+      - asdf_molecule_install.stat.exists
+      - asdf_molecule_install.stat.pw_name == asdf_user
+    msg: "The asdf repository must exist."

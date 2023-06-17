@@ -1,0 +1,13 @@
+---
+- name: Verify
+  hosts: all
+  gather_facts: false
+  vars:
+    ansible_os_family: "Darwin"
+  tasks:
+
+    - name: Load Scenario Variables
+      ansible.builtin.include_vars: vars/main.yml
+
+    - name: Verify asdf was installed
+      ansible.builtin.include_tasks: "../common/tasks/verify_asdf.yml"

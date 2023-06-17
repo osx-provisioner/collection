@@ -1,0 +1,15 @@
+---
+- name: Load Scenario Variables
+  ansible.builtin.include_vars: vars/main.yml
+
+- name: Include elliotweiser.osx-command-line-tools
+  ansible.builtin.include_role:
+    name: "elliotweiser.osx-command-line-tools"
+
+- name: Include geerlingguy.mac.homebrew
+  ansible.builtin.include_role:
+    name: "geerlingguy.mac.homebrew"
+
+- name: Include osx_provisioner.collection.asdf
+  ansible.builtin.include_role:
+    name: "osx_provisioner.collection.asdf"

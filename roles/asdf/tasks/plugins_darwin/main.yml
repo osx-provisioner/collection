@@ -1,0 +1,93 @@
+---
+- name: Set asdf_source Variable
+  ansible.builtin.set_fact:
+    "asdf_source": "{{ asdf_user_home }}/.asdf/asdf.sh"
+
+- name: Install Homebrew Packages
+  become: True
+  become_user: "{{ asdf_user }}"
+  community.general.homebrew:
+    name: "{{ asdf_darwin_optional_dependencies }}"
+    state: upgraded
+  retries: "{{ asdf_homebrew_retries }}"
+  delay: 3
+  register: asdf_install_optional_dependencies
+  until: asdf_install_optional_dependencies is not failed
+
+- name: Install asdf Plugins
+  become: True
+  become_user: "{{ asdf_user }}"
+  ansible.builtin.shell: "source {{ asdf_source }}; asdf plugin-add {{ asdf_plugin.name }} {{ asdf_plugin.repository | default() }}"
+  args:
+    chdir: "{{ asdf_user_home }}"
+    creates: "{{ asdf_user_home }}/.asdf/plugins/{{ asdf_plugin.name }}"
+    executable: "/bin/sh"
+  with_items: "{{ asdf_plugins }}"
+  loop_control:
+    loop_var: asdf_plugin
+  when: asdf_plugins|length > 0
+  ignore_errors: True  # noqa ignore-errors
+
+- name: Install OSX Specific Plugin Configuration
+  ansible.builtin.include_tasks: "plugins_darwin/install.yml"
+  with_items: "{{ asdf_plugins }}"
+  loop_control:
+    loop_var: asdf_plugin
+  when: asdf_plugin.name in asdf_darwin_plugin_dependencies
+
+- name: Install asdf Apps
+  become: True
+  become_user: "{{ asdf_user }}"
+  ansible.builtin.shell: "source {{ asdf_source }}; {{ asdf_plugin[0]['pre_install'] | default(':') }}; asdf install {{ asdf_plugin.0.name }} {{ asdf_plugin.1 }}"
+  environment: "{{ asdf_plugin[0]['environment'] | default({}) }}"
+  args:
+    chdir: "{{ asdf_user_home }}"
+    creates: "{{ asdf_user_home }}/.asdf/installs/{{ asdf_plugin.0.name }}/{{ asdf_plugin.1 }}"
+    executable: "/bin/sh"
+  with_subelements:
+    - "{{ asdf_plugins }}"
+    - versions
+    - flags:
+      skip_missing: True
+  loop_control:
+    loop_var: asdf_plugin
+  when: asdf_plugins|length > 0
+
+- name: Uninstall asdf Apps
+  become: True
+  become_user: "{{ asdf_user }}"
+  ansible.builtin.shell: "source {{ asdf_source }}; asdf uninstall {{ asdf_plugin.0.name }} {{ asdf_plugin.1 }}"
+  args:
+    chdir: "{{ asdf_user_home }}"
+    removes: "{{ asdf_user_home }}/.asdf/installs/{{ asdf_plugin.0.name }}/{{ asdf_plugin.1 }}"
+    executable: "/bin/sh"
+  with_subelements:
+    - "{{ asdf_plugins }}"
+    - delete_versions
+    - flags:
+      skip_missing: True
+  loop_control:
+    loop_var: asdf_plugin
+  when: asdf_plugins|length > 0
+
+- name: Set Global App Versions
+  become: True
+  become_user: "{{ asdf_user }}"
+  ansible.builtin.shell: "source {{ asdf_source }}; asdf global {{ asdf_plugin.name }} {{ asdf_plugin.global | default(asdf_plugin.versions | difference(asdf_plugin.delete_versions|default([])) | sort | first) }}"
+  args:
+    chdir: "{{ asdf_user_home }}"
+    executable: "/bin/sh"
+  changed_when: false
+  with_items: "{{ asdf_plugins }}"
+  loop_control:
+    loop_var: asdf_plugin
+  when: asdf_plugin.versions is defined
+
+- name: Set asdfrc
+  become: True
+  become_user: "{{ asdf_user }}"
+  ansible.builtin.template:
+    src: "asdfrc.j2"
+    dest: "{{ asdf_user_home }}/.asdfrc"
+    owner: "{{ asdf_user }}"
+    mode: 0644

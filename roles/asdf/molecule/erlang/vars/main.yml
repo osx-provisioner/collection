@@ -1,0 +1,14 @@
+---
+asdf_version: "v0.8.1"
+asdf_user: "{{ lookup('env', 'USER') }}"
+asdf_user_home: "{{ lookup('env', 'HOME') }}"
+asdf_legacy_version_file: "yes"
+asdf_plugins:
+  - name: "erlang"
+    repository: ""
+    versions:
+      - 23.3.4
+    environment:
+      KERL_CONFIGURE_OPTIONS: "--without-javac --with-ssl=/usr/local/opt/openssl@1.1 --disable-hipe"
+      CFLAGS: "-O2 -g -fno-stack-check"
+    global: 23.3.4

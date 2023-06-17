@@ -1,0 +1,33 @@
+---
+# defaults file for asdf
+asdf_homebrew_retries: 3
+asdf_legacy_version_file: "yes"
+asdf_user: "{{ lookup('env', 'USER') }}"
+asdf_user_home: "{{ lookup('env', 'HOME') }}"
+asdf_version: "v0.8.1"
+
+asdf_darwin_global_dependencies:
+  - coreutils
+  - openssl
+  - readline
+
+asdf_darwin_optional_dependencies: []
+
+asdf_darwin_plugin_dependencies:
+  erlang: ["autoconf", "fop", "libyaml", "libxslt", "libtool", "unixodbc", "wxmac"]
+  nodejs: ["node-build"]
+  php: []
+  ruby: []
+  python: ["sqlite3", "xz", "zlib"]
+
+asdf_plugins: []
+# asdf_plugins:
+#   - name: "erlang"
+#     environment_variables: {}  (Optional key to specify environment specific information for OSX builds.)
+#     pre_install: "" (Optional setup command to run before installation, i.e. select a Python version for compilation.)
+#     repository: ""
+#     versions:
+#       - 18.3
+#       - 20.1
+#     delete_versions: []
+#     global: 20.1

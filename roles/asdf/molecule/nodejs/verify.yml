@@ -1,0 +1,23 @@
+---
+- name: Verify
+  hosts: all
+  gather_facts: false
+  vars:
+    ansible_os_family: "Darwin"
+    version_command: "node --version"
+  tasks:
+
+    - name: Load Scenario Variables
+      ansible.builtin.include_vars: vars/main.yml
+
+    - name: Verify asdf was installed
+      ansible.builtin.include_tasks: "../common/tasks/verify_asdf.yml"
+
+    - name: Verify the correct plugin was installed
+      ansible.builtin.include_tasks: "../common/tasks/verify_plugin.yml"
+
+    - name: Verify the correct version was Installed
+      ansible.builtin.include_tasks: "../common/tasks/verify_binary.yml"
+
+    - name: Verify the pre_install command executed
+      ansible.builtin.include_tasks: "../common/tasks/verify_pre_install.yml"

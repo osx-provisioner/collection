@@ -1,0 +1,78 @@
+---
+name: collection-github-workflow-asdf-push
+
+# For further details please consult the documentation here:
+# https://github.com/niall-byrne/ansible-workbench
+
+# Begin Cookiecutter Template Content
+
+on:
+  push:
+    paths:
+      - ".github/workflows/workflow-asdf-push.yml"
+      - "roles/asdf/*"
+      - "roles/asdf/**/*"
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+#  secrets:
+#    SLACK_WEBHOOK:
+#      description: "Optional, enables Slack notifications."
+#      required: false
+
+jobs:
+
+  configuration:
+    uses: cicd-tools-org/cicd-tools/.github/workflows/job-00-generic-read_json_file.yml@master
+    with:
+      JSON_FILE_PATH: ".github/config/workflows/workflow-push.json"
+
+  scenarios:
+    needs: [configuration]
+    uses: cicd-tools-org/cicd-tools/.github/workflows/job-00-generic-identify_molecule_scenarios.yml@master
+    with:
+      MOLECULE_EXCLUSION_REGEX: ${{ fromJSON(needs.configuration.outputs.JSON_FILE_DATA).ci_molecule_excluded_scenarios_regex }}
+      MOLECULE_SCENARIO_PATH: "roles/asdf/molecule"
+
+  start:
+    secrets:
+      SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+    uses: cicd-tools-org/cicd-tools/.github/workflows/job-00-generic-notification.yml@master
+    with:
+      NOTIFICATION_EMOJI: ":vertical_traffic_light:"
+      NOTIFICATION_MESSAGE: "workflow has started!"
+      WORKFLOW_NAME: "asdf"
+
+  molecule_test:
+    needs: [configuration, scenarios]
+    secrets:
+      SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+    strategy:
+      fail-fast: true
+      matrix:
+        scenario: ${{ fromJSON(needs.scenarios.outputs.SCENARIOS) }}
+        platform: ${{ fromJSON(needs.configuration.outputs.JSON_FILE_DATA).ci_molecule_test_platforms }}
+      max-parallel: ${{ fromJSON(needs.configuration.outputs.JSON_FILE_DATA).ci_concurrency_limit }}
+    uses: cicd-tools-org/cicd-tools/.github/workflows/job-40-poetry-molecule_role_command.yml@master
+    with:
+      CONCURRENCY: ${{ fromJSON(needs.configuration.outputs.JSON_FILE_DATA).ci_concurrency_limit }}
+      MOLECULE_COMMAND: "test"
+      MOLECULE_SCENARIO: ${{ matrix.scenario }}
+      PLATFORM: ${{ matrix.platform }}
+      PYTHON_VERSIONS: ${{ toJSON(fromJSON(needs.configuration.outputs.JSON_FILE_DATA).ci_python_versions) }}
+      ROLE_PATH: "roles/asdf"
+      VERBOSE_NOTIFICATIONS: ${{ fromJSON(needs.configuration.outputs.JSON_FILE_DATA).ci_verbose_notifications }}
+      WORKFLOW_NAME: "asdf"
+
+  success:
+    needs: [molecule_test, start]
+    secrets:
+      SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+    uses: cicd-tools-org/cicd-tools/.github/workflows/job-00-generic-notification.yml@master
+    with:
+      NOTIFICATION_EMOJI: ":checkered_flag:"
+      NOTIFICATION_MESSAGE: "workflow has completed successfully!"
+      WORKFLOW_NAME: "asdf"
+
+# End Cookiecutter Template Content

@@ -1,0 +1,16 @@
+---
+- name: Converge
+  hosts: all
+  connection: local
+  tasks:
+
+    - name: "Setup Scenario"
+      ansible.builtin.include_tasks: "../common/tasks/setup.yml"
+
+    - name: Create existing asdf install
+      become: True
+      become_user: "{{ asdf_user }}"
+      ansible.builtin.git:
+        repo: "https://github.com/asdf-vm/asdf.git"
+        dest: "{{ asdf_user_home }}/.asdf"
+        version: "{{ asdf_version }}"

@@ -1,0 +1,20 @@
+---
+- name: Set asdf_source Variable
+  ansible.builtin.set_fact:
+    "asdf_source": "{{ asdf_user_home }}/.asdf/asdf.sh"
+
+- name: Capture output from version command
+  become: true
+  become_user: "{{ asdf_user }}"
+  ansible.builtin.shell: "source {{ asdf_source }}; {{ version_command }}"
+  changed_when: true
+  args:
+    chdir: "{{ asdf_user_home }}"
+    executable: "/bin/sh"
+  register: asdf_molecule_version_output
+
+- name: Assert version is correct
+  ansible.builtin.assert:
+    that:
+      - "asdf_plugins[0].versions[0] in asdf_molecule_version_output.stdout"
+    msg: "The installed version must be: {{ asdf_plugins[0].versions[0] }}."
