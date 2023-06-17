@@ -1,0 +1,20 @@
+---
+brew_user: "{{ lookup('env', 'USER') }}"
+
+brew_packages:
+  - telnet
+brew_casks:
+  - appcleaner
+brew_taps:
+  - gromgit/fuse
+
+brew_user_casks_location: "{{ lookup('env', 'HOME') }}/Applications"
+brew_user_casks:
+  - transmission
+
+brew_targeted_casks_group: "admin"
+brew_targeted_casks_location: "/opt/casks"
+brew_targeted_casks:
+  - spotify
+
+ansible_become_password: ""

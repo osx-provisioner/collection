@@ -1,0 +1,43 @@
+---
+- name: Verify
+  hosts: all
+  gather_facts: false
+  tasks:
+
+    - name: Load Scenario Variables
+      ansible.builtin.include_vars: vars/main.yml
+
+    - name: Check telnet was installed
+      ansible.builtin.stat:
+        path: "/usr/local/bin/telnet"
+      register: homebrew_retry_molecule_telnet_file
+
+    - name: Check AppCleaner was installed
+      ansible.builtin.stat:
+        path: "/Applications/AppCleaner.app/Contents/MacOS/AppCleaner"
+      register: homebrew_retry_molecule_cleaner_file
+
+    - name: Check which Taps are present
+      ansible.builtin.command: brew tap
+      changed_when: true
+      register: homebrew_retry_molecule_taps
+
+    - name: Assert telnet was Installed Correctly
+      ansible.builtin.assert:
+        that:
+          - homebrew_retry_molecule_telnet_file.stat.exists
+          - homebrew_retry_molecule_telnet_file.stat.executable
+        msg: "The telnet binary must exist and be executable."
+
+    - name: Assert App Cleaner was Installed Correctly
+      ansible.builtin.assert:
+        that:
+          - homebrew_retry_molecule_cleaner_file.stat.exists
+          - homebrew_retry_molecule_cleaner_file.stat.executable
+        msg: "The App Cleaner binary must exist and be executable."
+
+    - name: Assert Homebrew Taps were Installed Correctly
+      ansible.builtin.assert:
+        that:
+          - brew_taps[0] in homebrew_retry_molecule_taps.stdout
+        msg: "The configured homebrew taps must be present."

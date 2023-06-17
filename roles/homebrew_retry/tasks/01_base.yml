@@ -1,0 +1,48 @@
+---
+# Base install for apps and casks
+
+- name: Install Homebrew Taps
+  become: True
+  become_user: "{{ brew_user }}"
+  community.general.homebrew_tap:
+    name: "{{ brew_taps }}"
+    state: present
+  retries: "{{ brew_retries }}"
+  delay: 3
+  register: homebrew_retry_install_taps
+  until: homebrew_retry_install_taps is not failed
+  when: brew_taps|length > 0
+  tags:
+    - homebrew_retry
+
+- name: Install Homebrew Apps (With Homebrew Update)
+  become: True
+  become_user: "{{ brew_user }}"
+  community.general.homebrew:
+    name: "{{ brew_packages }}"
+    state: "{{ brew_install_state }}"
+    update_homebrew: yes
+  retries: "{{ brew_retries }}"
+  delay: 3
+  register: homebrew_retry_install_apps
+  until: homebrew_retry_install_apps is not failed
+  when: brew_packages|length > 0
+  tags:
+    - homebrew_retry
+
+- name: Install Homebrew Casks
+  become: True
+  become_user: "{{ brew_user }}"
+  community.general.homebrew_cask:
+    name: "{{ brew_casks }}"
+    # Upgrades Disabled Here Due to: https://github.com/ansible-collections/community.general/issues/1647
+    state: present
+    accept_external_apps: yes
+    sudo_password: "{{ brew_sudo_password }}"
+  retries: "{{ brew_retries }}"
+  delay: 3
+  register: homebrew_retry_install_casks
+  until: homebrew_retry_install_casks is not failed
+  when: brew_casks|length > 0
+  tags:
+    - homebrew_retry

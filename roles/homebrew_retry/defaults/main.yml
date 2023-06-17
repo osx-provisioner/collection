@@ -1,0 +1,28 @@
+---
+# defaults file for homebrew_retry
+
+brew_user: "{{ lookup('env', 'USER') }}"
+brew_retries: 3
+
+# Typical Values: latest, present
+brew_install_state: latest
+
+# Some casks may require SUDO to complete their install
+brew_sudo_password: "{{ ansible_become_password }}"
+
+
+# Installs to Standard Homebrew Locations
+brew_packages: []
+brew_casks: []
+brew_taps: []
+
+
+# Installs to {{ brew_user_casks_location }}
+brew_user_casks_location: "{{ lookup('env', 'HOME') }}/Applications"
+brew_user_casks: []
+
+
+# Installs the casks to {{ brew_targeted_casks_location }}
+brew_targeted_casks_group: "admin"
+brew_targeted_casks_location: "/opt/casks"
+brew_targeted_casks: []

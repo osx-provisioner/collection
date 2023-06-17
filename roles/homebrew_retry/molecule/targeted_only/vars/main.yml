@@ -1,0 +1,9 @@
+---
+brew_user: "{{ lookup('env', 'USER') }}"
+
+brew_targeted_casks_group: "admin"
+brew_targeted_casks_location: "/opt/casks"
+brew_targeted_casks:
+  - spotify
+
+ansible_become_password: ""

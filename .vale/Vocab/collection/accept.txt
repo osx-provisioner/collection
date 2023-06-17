@@ -9,7 +9,7 @@ Homebrew|homebrew
 JumpCloud|jumpcloud
 URL|url
 boolean
-brew_prefix
+brew_(casks|install_state|packages|prefix|retries|sudo_password|taps|targeted_casks|targeted_casks_group|targeted_casks_location|user)
 config
 dotfiles
 download_(retries|save_location|save_user|timeout)

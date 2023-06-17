@@ -1,0 +1,48 @@
+---
+# Targeted Casks Installation
+
+- name: Create Targeted Casks Directory (Writable by all admins.)
+  become: True
+  ansible.builtin.file:
+    path: '{{ brew_targeted_casks_location }}'
+    owner: "{{ brew_user }}"
+    group: "{{ brew_targeted_casks_group }}"
+    mode: '0775'
+    state: directory
+  when: brew_targeted_casks|length > 0
+  tags:
+    - homebrew_retry
+    - homebrew_retry-targeted-casks
+
+- name: Install Homebrew Targeted Casks
+  become: True
+  become_user: "{{ brew_user }}"
+  community.general.homebrew_cask:
+    install_options: 'appdir={{ brew_targeted_casks_location }}'
+    name: "{{ brew_targeted_casks }}"
+    # Upgrades Disabled Here Due to: https://github.com/ansible-collections/community.general/issues/1647
+    state: present
+    accept_external_apps: yes
+    sudo_password: "{{ brew_sudo_password }}"
+  retries: "{{ brew_retries }}"
+  delay: 3
+  register: homebrew_retry_install_targeted_casks
+  until: homebrew_retry_install_targeted_casks is not failed
+  when: brew_targeted_casks|length > 0
+  tags:
+    - homebrew_retry
+    - homebrew_retry-targeted-casks
+
+- name: Set Targeted Cask Permissions Recursively (Writable by all admins.)
+  become: True
+  ansible.builtin.file:
+    path: '{{ brew_targeted_casks_location }}'
+    owner: "{{ brew_user }}"
+    group: "{{ brew_targeted_casks_group }}"
+    mode: '0775'
+    state: directory
+    recurse: yes
+  when: brew_targeted_casks|length > 0 and homebrew_retry_install_targeted_casks.changed
+  tags:
+    - homebrew_retry
+    - homebrew_retry-targeted-casks

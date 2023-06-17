@@ -1,0 +1,19 @@
+---
+- name: Verify
+  hosts: all
+  gather_facts: false
+  tasks:
+
+    - name: Load Scenario Variables
+      ansible.builtin.include_vars: vars/main.yml
+
+    - name: Check which Taps are present
+      ansible.builtin.command: brew tap
+      changed_when: true
+      register: homebrew_retry_molecule_taps
+
+    - name: Assert Homebrew Taps were Installed Correctly
+      ansible.builtin.assert:
+        that:
+          - brew_taps[0] in homebrew_retry_molecule_taps.stdout
+        msg: "The configured homebrew taps must be present."
