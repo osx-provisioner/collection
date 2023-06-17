@@ -15,6 +15,7 @@ config
 dotfiles
 download_(retries|save_location|save_user|timeout)
 gitflow
+mac_maker
 plugin_tasks
 rbenv
 symlinks_user

@@ -10,11 +10,22 @@
       "headers": {
         "Accept-Encoding": "zstd, br, gzip, deflate"
       }
+    },
+    {
+      "urls": [
+        "https://www.clamav.net/"
+      ],
+      "headers": {
+        "User-Agent": "Chrome/79"
+      }
     }
   ],
   "ignorePatterns": [
     {
       "pattern": "^https://github.com/osx-provisioner/collection/"
+    },
+    {
+      "pattern": "^https://galaxy.ansible.com/osx_provisioner/collection"
     }
   ]
 }
