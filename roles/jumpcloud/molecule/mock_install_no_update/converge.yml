@@ -1,0 +1,14 @@
+---
+- name: Converge
+  hosts: all
+  connection: local
+  tasks:
+    - name: Load Default Variables
+      ansible.builtin.include_vars: ../../defaults/main.yml
+    - name: Load Default Variables
+      ansible.builtin.include_vars: ../../defaults/main.yml
+    - name: Load Scenario Variables
+      ansible.builtin.include_vars: vars/main.yml
+    - name: "Include osx_provisioner.collection.jumpcloud"
+      ansible.builtin.include_role:
+        name: "osx_provisioner.collection.jumpcloud"

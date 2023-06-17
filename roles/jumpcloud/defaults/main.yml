@@ -1,0 +1,11 @@
+---
+# defaults file for role-jumpcloud
+
+jumpcloud_agent_url: "https://raw.githubusercontent.com/TheJumpCloud/support/master/scripts/macos/install_agent_and_serviceaccount.sh"
+jumpcloud_agent_location: /opt/jc
+
+jumpcloud_connect_key: "{{ lookup('env', 'JUMPCLOUD_CONNECT_KEY') }}"
+
+jumpcloud_installer_destination: /tmp/jc_installer.sh
+jumpcloud_uninstall_url: "https://github.com/TheJumpCloud/support/releases/download/mac_agent_uninstaller/remove_mac_agent.sh"
+jumpcloud_upgrade: true
