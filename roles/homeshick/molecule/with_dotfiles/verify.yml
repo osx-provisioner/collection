@@ -1,0 +1,32 @@
+---
+- name: Verify
+  hosts: all
+  gather_facts: false
+  tasks:
+
+    - name: Load Scenario Variables
+      ansible.builtin.include_vars: vars/main.yml
+
+    - name: Check File System Content
+      ansible.builtin.include_tasks: "../common/tasks/files.yml"
+
+    - name: Assert homeshick repository was installed
+      ansible.builtin.assert:
+        that:
+          - homeshick_molecule_install.stat.exists
+          - homeshick_molecule_install.stat.pw_name == homeshick_user
+        msg: "Homeshick repository must exist"
+
+    - name: Assert the user dotfiles were installed
+      ansible.builtin.assert:
+        that:
+          - homeshick_molecule_dotfiles_install.stat.exists
+          - homeshick_molecule_dotfiles_install.stat.pw_name == homeshick_user
+        msg: "Dotfiles repository must exist"
+
+    - name: Assert the user .bashrc was NOT symlinked (existing file)
+      ansible.builtin.assert:
+        that:
+          - not homeshick_molecule_bashrc_symlink.stat.islnk
+          - homeshick_molecule_bashrc_symlink.stat.readable
+        msg: "User .bashrc must be a readable file (not a symlink)"

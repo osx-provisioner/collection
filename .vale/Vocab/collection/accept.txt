@@ -4,12 +4,14 @@
 Ansible|ansible
 ClamAV|clamav
 DOWNLOADER|downloader
+HOMESHICK|homeshick
 Homebrew|homebrew
 JumpCloud|jumpcloud
 URL|url
 boolean
 brew_prefix
 config
+dotfiles
 download_(retries|save_location|save_user|timeout)
 gitflow
 symlinks_user

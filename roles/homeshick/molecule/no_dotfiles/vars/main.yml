@@ -1,0 +1,6 @@
+---
+homeshick_user: "{{ lookup('env', 'USER') }}"
+homeshick_user_home: "{{ lookup('env', 'HOME') }}"
+
+homeshick_dotfiles_repo: ""
+homeshick_force: false

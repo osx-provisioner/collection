@@ -1,0 +1,10 @@
+---
+# defaults file for role-homeshick
+
+homeshick_user: "{{ lookup('env', 'USER') }}"
+homeshick_user_home: "{{ lookup('env', 'HOME') }}"
+
+homeshick_dotfiles_repo: ""
+homeshick_force: true
+homeshick_repository: "git://github.com/andsens/homeshick.git"
+homeshick_version: "v2.0.1"
