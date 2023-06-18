@@ -8,6 +8,7 @@ A collection of OSX automation tools for [Ansible](https://www.ansible.com/).
 - [![collection-github-workflow-push](https://github.com/osx-provisioner/collection/actions/workflows/workflow-push.yml/badge.svg?branch=master)](https://github.com/osx-provisioner/collection/actions/workflows/workflow-push.yml)
 - [![role-asdf](https://github.com/osx-provisioner/collection/actions/workflows/workflow-asdf-push.yml/badge.svg?branch=master)](https://github.com/osx-provisioner/collection/actions/workflows/workflow-asdf-push.yml)
 - [![role-clamav](https://github.com/osx-provisioner/collection/actions/workflows/workflow-clamav-push.yml/badge.svg?branch=master)](https://github.com/osx-provisioner/collection/actions/workflows/workflow-clamav-push.yml)
+- [![role-colima](https://github.com/osx-provisioner/collection/actions/workflows/workflow-colima-push.yml/badge.svg?branch=master)](https://github.com/osx-provisioner/collection/actions/workflows/workflow-colima-push.yml)
 - [![role-downloader](https://github.com/osx-provisioner/collection/actions/workflows/workflow-downloader-push.yml/badge.svg?branch=master)](https://github.com/osx-provisioner/collection/actions/workflows/workflow-downloader-push.yml)
 - [![role-homebrew_retry](https://github.com/osx-provisioner/collection/actions/workflows/workflow-homebrew_retry-push.yml/badge.svg?branch=master)](https://github.com/osx-provisioner/collection/actions/workflows/workflow-homebrew_retry-push.yml)
 - [![role-homeshick](https://github.com/osx-provisioner/collection/actions/workflows/workflow-homeshick-push.yml/badge.svg?branch=master)](https://github.com/osx-provisioner/collection/actions/workflows/workflow-homeshick-push.yml)
@@ -19,6 +20,7 @@ A collection of OSX automation tools for [Ansible](https://www.ansible.com/).
 - [![collection-github-workflow-push](https://github.com/osx-provisioner/collection/actions/workflows/workflow-push.yml/badge.svg?branch=dev)](https://github.com/osx-provisioner/collection/actions/workflows/workflow-push.yml)
 - [![role-asdf](https://github.com/osx-provisioner/collection/actions/workflows/workflow-asdf-push.yml/badge.svg?branch=dev)](https://github.com/osx-provisioner/collection/actions/workflows/workflow-asdf-push.yml)
 - [![role-clamav](https://github.com/osx-provisioner/collection/actions/workflows/workflow-clamav-push.yml/badge.svg?branch=dev)](https://github.com/osx-provisioner/collection/actions/workflows/workflow-clamav-push.yml)
+- [![role-colima](https://github.com/osx-provisioner/collection/actions/workflows/workflow-colima-push.yml/badge.svg?branch=dev)](https://github.com/osx-provisioner/collection/actions/workflows/workflow-colima-push.yml)
 - [![role-downloader](https://github.com/osx-provisioner/collection/actions/workflows/workflow-downloader-push.yml/badge.svg?branch=dev)](https://github.com/osx-provisioner/collection/actions/workflows/workflow-downloader-push.yml)
 - [![role-homebrew_retry](https://github.com/osx-provisioner/collection/actions/workflows/workflow-homebrew_retry-push.yml/badge.svg?branch=dev)](https://github.com/osx-provisioner/collection/actions/workflows/workflow-homebrew_retry-push.yml)
 - [![role-homeshick](https://github.com/osx-provisioner/collection/actions/workflows/workflow-homeshick-push.yml/badge.svg?branch=dev)](https://github.com/osx-provisioner/collection/actions/workflows/workflow-homeshick-push.yml)
@@ -33,6 +35,7 @@ This collection contains the following roles for OSX related tasks:
 |------------------------------------------|---------------------------------------------------------------------------------------------------------------|
 | [asdf](./roles/asdf)                     | Manage [asdf](https://asdf-vm.com/) installations on OSX.                                                     |
 | [clamav](./roles/clamav)                 | Manage [ClamAV](https://www.clamav.net/) installations on OSX.                                                |
+| [colima](./roles/colima)                 | Manage [colima](https://github.com/abiosoft/colima) installations on OSX.                                     |
 | [downloader](./roles/downloader)         | Simplifies fetching groups of remote files.                                                                   |
 | [homebrew_retry](./roles/homebrew_retry) | Install software via [Homebrew](https://brew.sh/) with a handy retry mechanism to fend off unstable networks. |
 | [homeshick](./roles/homeshick)           | Use [homeshick](https://github.com/andsens/homeshick) to manage your home folder dotfiles.                    |

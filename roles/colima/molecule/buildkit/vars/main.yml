@@ -1,0 +1,47 @@
+---
+# defaults file for role-colima
+
+colima_user: "{{ lookup('env', 'USER') }}"
+colima_homebrew_retries: 4
+
+colima_cpus: 1
+colima_disk_gigs: 61
+colima_memory_gigs: 3
+colima_arch: "{{ (ansible_machine == 'arm64') | ternary('aarch64', 'x86_64') }}"
+colima_runtime: docker
+
+colima_kubernetes_enabled: false
+colima_kubernetes_version: v1.27.1+k3s1
+colima_kubernetes_args:
+  - --disable=traefik
+colima_auto_activate: true
+
+colima_network_address: false
+colima_network_dns: [8.8.8.8]
+colima_network_dns_hosts:
+  example.com: 1.2.3.4
+colima_network_driver: gvproxy
+
+colima_forward_agent: false
+
+colima_docker_config:
+  features:
+    buildkit: true
+
+colima_vm_type: qemu
+colima_use_rosetta: false
+
+colima_mount_type: sshfs
+colima_mount_inotify: false
+colima_cpu_type: ""
+colima_layer: false
+
+colima_provision_script: []
+colima_ssh_config: true
+
+colima_mounts:
+  - location: /Users/{{ colima_user }}
+    writable: true
+
+colima_environment_variables:
+  TEST_VALUE: "TEST_VALUE"

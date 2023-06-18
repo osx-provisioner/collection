@@ -3,6 +3,7 @@
 (N|n)iall
 ASDF|asdf
 Ansible|ansible
+COLIMA|colima
 ClamAV|clamav
 DOWNLOADER|downloader
 HOMESHICK|homeshick

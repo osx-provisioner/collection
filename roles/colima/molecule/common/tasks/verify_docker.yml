@@ -1,0 +1,33 @@
+---
+- name: Wait for Colima Service to Start
+  ansible.builtin.command: colima status
+  changed_when: false
+  retries: 10
+  delay: 3
+  register: colima_molecule_colima_status
+  until: colima_molecule_colima_status is not failed
+
+- name: Wait for Docker to Respond
+  ansible.builtin.command: docker ps
+  changed_when: false
+  retries: 10
+  delay: 3
+  register: colima_molecule_docker_status
+  until: colima_molecule_docker_status is not failed
+
+- name: Run Ubuntu Docker Container
+  ansible.builtin.command: docker run -t ubuntu:latest echo "Docker is working!"
+  changed_when: false
+  register: colima_molecule_docker_run_test
+
+- name: Check Docker Processes
+  ansible.builtin.command: docker ps -a
+  changed_when: false
+  register: colima_molecule_docker_process_test
+
+- name: Assert docker is working correctly
+  ansible.builtin.assert:
+    that:
+      - "'Docker is working!' in colima_molecule_docker_run_test.stdout"
+      - "'ubuntu:latest' in colima_molecule_docker_process_test.stdout"
+    msg: "The docker installation is not working correctly."

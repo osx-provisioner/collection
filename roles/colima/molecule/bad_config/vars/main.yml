@@ -1,0 +1,7 @@
+---
+# defaults file for role-colima
+
+colima_user: "{{ lookup('env', 'USER') }}"
+colima_homebrew_retries: 4
+
+colima_mount_type: unknown_mount_type

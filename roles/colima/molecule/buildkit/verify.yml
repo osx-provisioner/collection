@@ -1,0 +1,11 @@
+---
+- name: Verify
+  hosts: all
+  gather_facts: false
+  tasks:
+
+    - name: Verify Binaries
+      ansible.builtin.include_tasks: "../common/tasks/verify_binaries.yml"
+
+    - name: Verify Docker
+      ansible.builtin.include_tasks: "../common/tasks/verify_docker.yml"

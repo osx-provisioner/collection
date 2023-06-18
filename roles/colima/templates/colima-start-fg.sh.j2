@@ -1,0 +1,55 @@
+#!/bin/bash
+
+COLIMA_PROFILE="{{ colima_profiles[0] }}"
+DAEMON_PID_FILE="/Users/{{ colima_user }}/.colima/${COLIMA_PROFILE}/daemon/daemon.pid"
+
+export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+
+function colima_foreground_poll() {
+  if daemon_has_pid_file; then
+    daemon_get_pid
+    while daemon_is_alive; do
+      sleep 5
+    done
+  fi
+}
+
+function colima_foreground_start() {
+  if ! daemon_has_pid_file; then
+    colima start -p "${COLIMA_PROFILE}"
+  else
+    daemon_get_pid
+    if ! daemon_is_alive; then
+      colima start -p "${COLIMA_PROFILE}"
+    fi
+  fi
+}
+
+function colima_stop() {
+  colima daemon stop "${COLIMA_PROFILE}"
+  colima stop -p "${COLIMA_PROFILE}"
+}
+
+function daemon_get_pid() {
+  DAEMON_PID="$(cat "${DAEMON_PID_FILE}")"
+}
+
+function daemon_has_pid_file() {
+  [[ -f "${DAEMON_PID_FILE}" ]]
+}
+
+function daemon_is_alive() {
+  kill -0 "${DAEMON_PID}"
+}
+
+main() {
+  local DAEMON_PID
+
+  trap colima_stop SIGINT
+  trap colima_stop SIGTERM
+
+  colima_foreground_start
+  colima_foreground_poll
+}
+
+main "$@"

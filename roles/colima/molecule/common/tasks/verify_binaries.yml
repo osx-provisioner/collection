@@ -1,0 +1,33 @@
+---
+- name: Set CI Machine Type
+  ansible.builtin.set_fact:
+    brew_prefix: "{{ (lookup('env', 'PLATFORM') == 'arm64') | ternary('/opt/homebrew', '/usr/local') }}"
+
+- name: Load Default Var Content
+  ansible.builtin.include_vars: "../../../defaults/main.yml"
+
+- name: Check colima is installed
+  ansible.builtin.stat:
+    path: "{{ brew_prefix }}/bin/colima"
+  register: colima_molecule_file_present_colima
+
+- name: Check docker is installed
+  ansible.builtin.stat:
+    path: "{{ brew_prefix }}/bin/docker"
+  register: colima_molecule_file_present_docker
+
+- name: Check limactl is installed
+  ansible.builtin.stat:
+    path: "{{ brew_prefix }}/bin/limactl"
+  register: colima_molecule_file_present_limactl
+
+- name: Assert the homebrew binaries are symlinked correctly
+  ansible.builtin.assert:
+    that:
+      - colima_molecule_file_present_colima.stat.exists
+      - colima_molecule_file_present_docker.stat.exists
+      - colima_molecule_file_present_limactl.stat.exists
+      - colima_molecule_file_present_colima.stat.executable
+      - colima_molecule_file_present_docker.stat.executable
+      - colima_molecule_file_present_limactl.stat.executable
+    msg: "The binaries were not symlinked correctly.  Check the homebrew install."

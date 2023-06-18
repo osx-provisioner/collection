@@ -1,0 +1,21 @@
+---
+# handlers file for role-colima
+
+- name: Shutdown Bootstrapped Colima
+  become: true
+  become_user: "{{ colima_user }}"
+  ansible.builtin.command: colima stop
+  changed_when: true
+  when: colima_handler_disable is not defined
+  listen: "Stop Bootstrap Process"
+
+- name: Reload Colima Service
+  become: true
+  become_user: "{{ colima_user }}"
+  community.general.launchd:
+    name: "com.github.abiosoft.colima"
+    enabled: true
+    state: reloaded
+    force_stop: yes
+  when: colima_handler_disable is not defined
+  listen: "Enable Colima Service"

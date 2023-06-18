@@ -1,0 +1,148 @@
+---
+# tasks file for role-colima
+- name: Create Main Colima Profile
+  ansible.builtin.set_fact:
+    colima_profiles:
+      - default
+
+- name: Create Colima Profiles List
+  ansible.builtin.set_fact:
+    colima_profiles: "{{ colima_profiles + colima_additional_profiles }}"
+
+- name: Install Colima From HomeBrew
+  become: true
+  become_user: "{{ colima_user }}"
+  community.general.homebrew:
+    name:
+      - colima
+      - docker
+    state: upgraded
+  retries: "{{ colima_homebrew_retries }}"
+  delay: 3
+  register: colima_install_colima
+  until: colima_install_colima is not failed
+  notify:
+    - "Enable Colima Service"
+  tags:
+    - colima
+
+- name: Add Colima Configuration Folder
+  become: true
+  ansible.builtin.file:
+    path: "/Users/{{ colima_user }}/.colima/{{ colima_profile }}"
+    mode: "0755"
+    owner: "{{ colima_user }}"
+    group: "staff"
+    state: "directory"
+  with_items: "{{ colima_profiles }}"
+  loop_control:
+    loop_var: "colima_profile"
+  notify:
+    - "Enable Colima Service"
+  tags:
+    - colima
+
+- name: Hash Previous Colima Configuration
+  ansible.builtin.stat:
+    path: "/Users/{{ colima_user }}/.colima/default/colima.yaml"
+  register: colima_previous_configuration
+  tags:
+    - colima
+
+- name: Add Colima Configuration
+  become: true
+  ansible.builtin.template:
+    src: "./templates/colima.yaml.j2"
+    dest: "/Users/{{ colima_user }}/.colima/{{ colima_profile }}/colima.yaml"
+    mode: "0644"
+    owner: "{{ colima_user }}"
+    group: "staff"
+  with_items: "{{ colima_profiles }}"
+  loop_control:
+    loop_var: "colima_profile"
+  changed_when: false
+  tags:
+    - colima
+
+- name: Add Colima Docker Symlink
+  become: true
+  ansible.builtin.file:
+    src: "/Users/{{ colima_user }}/.colima/default/docker.sock"
+    dest: "/var/run/docker.sock"
+    mode: "0751"
+    owner: "root"
+    group: "daemon"
+    state: link
+    follow: false
+    force: true
+  notify:
+    - "Enable Colima Service"
+  tags:
+    - colima
+
+- name: Bootstrap Colima
+  become: true
+  become_user: "{{ colima_user }}"
+  register: colima_bootstrap_service
+  ansible.builtin.command: colima start
+  changed_when: "'already running' not in colima_bootstrap_service.stderr"
+  failed_when: "'config load failed' in colima_bootstrap_service.stderr or colima_bootstrap_service.rc != 0"
+  notify:
+    - "Stop Bootstrap Process"
+  tags:
+    - colima
+
+- name: Hash New Colima Configuration
+  ansible.builtin.stat:
+    path: "/Users/{{ colima_user }}/.colima/default/colima.yaml"
+  register: colima_new_configuration
+  tags:
+    - colima
+
+- name: Detect Configuration Change
+  ansible.builtin.command: "/bin/echo"
+  changed_when: true
+  notify:
+    - "Enable Colima Service"
+  when: not colima_previous_configuration.stat.exists or colima_new_configuration.stat.checksum != colima_previous_configuration.stat.checksum
+  tags:
+    - colima
+
+- name: Add Colima Launch Script
+  become: true
+  ansible.builtin.template:
+    src: "./templates/colima-start-fg.sh.j2"
+    dest: "/usr/local/bin/colima-start-fg.sh"
+    mode: "0755"
+    owner: "{{ colima_user }}"
+    group: "staff"
+  notify:
+    - "Enable Colima Service"
+  tags:
+    - colima
+
+- name: Add LaunchAgents Folder
+  become: true
+  ansible.builtin.file:
+    dest: /Users/{{ colima_user }}/Library/LaunchAgents
+    mode: "0700"
+    owner: "{{ colima_user }}"
+    group: "staff"
+    state: "directory"
+  notify:
+    - "Enable Colima Service"
+  tags:
+    - colima
+
+- name: Add Colima Launch Agent
+  become: true
+  ansible.builtin.copy:
+    src: "./files/com.github.abiosoft.colima.plist"
+    dest: "/Users/{{ colima_user }}/Library/LaunchAgents/com.github.abiosoft.colima.plist"
+    mode: "0644"
+    owner: "{{ colima_user }}"
+    group: "staff"
+  notify:
+    - "Enable Colima Service"
+  tags:
+    - colima
