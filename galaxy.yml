@@ -17,21 +17,22 @@ license:
 # A list of tags you want to associate with the collection for indexing/searching. A tag name has the same character
 # requirements as 'namespace' and 'name'
 tags:
+  - apple
+  - brew
+  - homebrew
+  - imac
+  - ios
   - mac
+  - macbook
+  - macmini
   - macos
   - osx
-  - homebrew
-  - brew
-  - apple
-  - ios
-  - macbook
-  - imac
-  - macmini
   - server
   - tools
 
 dependencies:
-  community.general: ">=7.0.0"
+  community.general: ">=6.3.0"
+  geerlingguy.mac: ">=2.1.1,<3.0.0"
 
 repository: https://github.com/osx-provisioner/collection
 documentation: https://github.com/osx-provisioner/collection
