@@ -18,10 +18,24 @@
           - clamav_molecule_clamwatch_file.stat.executable
         msg: "The binaries were not symlinked.  Check the homebrew install."
 
-    - name: Assert the processes as running
+    - name: Wait For clamd Process to Start
+      ansible.builtin.command: ps -u root
+      changed_when: false
+      retries: 10
+      delay: 3
+      register: clamav_molecule_root_processes
+      until: "clamav_molecule_root_process_match_clamd in clamav_molecule_root_processes.stdout"
+
+    - name: Wait For freshclam Process to Start
+      ansible.builtin.command: ps -u _clamav
+      changed_when: false
+      retries: 10
+      delay: 3
+      register: clamav_molecule_clamav_user_processes
+      until: "clamav_molecule_user_processes_match_freshclam in clamav_molecule_clamav_user_processes.stdout"
+
+    - name: Assert clamwatch Process Running
       ansible.builtin.assert:
         that:
-          - clamav_molecule_root_process_match_clamd in clamav_molecule_root_processes.stdout
           - clamav_molecule_root_process_match_clamwatch in clamav_molecule_root_processes.stdout
-          - clamav_molecule_user_processes_match_freshclam in clamav_molecule_user_processes.stdout
-        msg: "The services did not start correctly."
+        msg: "The clamwatch process should be running!"

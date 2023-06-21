@@ -6,21 +6,15 @@
 - name: Load Default Var Content
   ansible.builtin.include_vars: "../../../defaults/main.yml"
 
-- name: Capture Root Processes
-  ansible.builtin.command: ps -u root
-  register: clamav_molecule_root_processes
-  changed_when: not clamav_molecule_root_processes.stdout
-
-- name: Create Root Processes Match String
+- name: Create Process Match Strings
   ansible.builtin.set_fact:
     clamav_molecule_root_process_match_clamd: '{{ brew_prefix }}/sbin/clamd --foreground -c {{ clamav_clamd_config_file }}'
     clamav_molecule_root_process_match_clamwatch: '/bin/bash {{ brew_prefix }}/bin/clamwatch {{ clamav_clamwatch_target_folder }} {{ clamav_clamwatch_quarantine_folder }} {{ clamav_clamwatch_log_file }}'
-
-- name: Capture User Processes
-  ansible.builtin.command: ps -u _clamav
-  register: clamav_molecule_user_processes
-  changed_when: not clamav_molecule_user_processes.stdout
-
-- name: Create User Processes Match String
-  ansible.builtin.set_fact:
     clamav_molecule_user_processes_match_freshclam: '{{ brew_prefix }}/bin/freshclam --daemon --foreground --config-file {{ clamav_freshclam_config_file }}'
+
+- name: Debug Processes
+  ansible.builtin.debug:
+    msg:
+      - "root processes 'clamd': {{ clamav_molecule_root_process_match_clamd }}"
+      - "root processes 'clamwatch': {{ clamav_molecule_root_process_match_clamwatch }}"
+      - "_clamav processes 'freshclam': {{ clamav_molecule_user_processes_match_freshclam }}"
