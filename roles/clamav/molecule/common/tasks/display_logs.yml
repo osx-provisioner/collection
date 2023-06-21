@@ -1,0 +1,39 @@
+---
+- name: Create Log File List
+  ansible.builtin.set_fact:
+    clamav_molecule_log_list:
+      - "{{ clamav_clamd_log_file }}"
+      - "{{ clamav_clamd_stderr_log_file }}"
+      - "{{ clamav_clamwatch_log_file }}"
+      - "{{ clamav_clamwatch_stderr_log_file }}"
+      - "{{ clamav_freshclam_log_file }}"
+      - "{{ clamav_freshclam_stderr_log_file }}"
+
+- name: Check For Existence of Logs
+  become: true
+  ansible.builtin.stat:
+    path: "{{ clamav_molecule_log_file }}"
+  register: clamav_molecule_log_stat
+  with_items: "{{ clamav_molecule_log_list }}"
+  loop_control:
+    loop_var: clamav_molecule_log_file
+
+- name: Read Log Files
+  become: true
+  ansible.builtin.slurp:
+    path: "{{ clamav_molecule_log_file.stat.path }}"
+  register: clamav_molecule_log_data
+  when: clamav_molecule_log_file.stat.exists
+  with_items: "{{ clamav_molecule_log_stat.results }}"
+  loop_control:
+    loop_var: clamav_molecule_log_file
+
+- name: Display Log Data
+  ansible.builtin.debug:
+    msg:
+      - "filename: {{ clamav_molecule_log_file.source }}"
+      - "{{ clamav_molecule_log_file.content | b64decode | split('\n') }}"
+  when: clamav_molecule_log_file.source is defined
+  with_items: "{{ clamav_molecule_log_data.results }}"
+  loop_control:
+    loop_var: clamav_molecule_log_file

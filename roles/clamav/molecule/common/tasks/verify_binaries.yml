@@ -1,0 +1,25 @@
+---
+- name: Set CI Machine Type
+  ansible.builtin.set_fact:
+    ansible_machine: "{{ lookup('env', 'PLATFORM') }}"
+
+- name: Load Default Var Content
+  ansible.builtin.include_vars: "../../../defaults/main.yml"
+
+- name: Check Binaries Are Installed
+  ansible.builtin.stat:
+    path: "{{ brew_prefix }}/{{ clamav_molecule_binary_file.path }}/{{ clamav_molecule_binary_file.name }}"
+  register: clamav_molecule_binary_stat
+  with_items: "{{ clamav_molecule_installed_binaries }}"
+  loop_control:
+    loop_var: clamav_molecule_binary_file
+
+- name: Assert Binaries are Symlinked Correctly
+  ansible.builtin.assert:
+    that:
+      - clamav_molecule_binary_file.stat.exists
+      - clamav_molecule_binary_file.stat.executable
+    msg: "The binary {{ clamav_molecule_binary_file }} is not present.  Check the homebrew install."
+  with_items: "{{ clamav_molecule_binary_stat.results }}"
+  loop_control:
+    loop_var: clamav_molecule_binary_file

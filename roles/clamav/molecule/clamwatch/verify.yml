@@ -3,39 +3,29 @@
   hosts: all
   gather_facts: false
   tasks:
+    - name: Display Logs For Troubleshooting Failures
+      block:
 
-    - name: Check File System Content
-      ansible.builtin.include_tasks: "../common/tasks/files.yml"
+        - name: Define Expected Binaries
+          ansible.builtin.set_fact:
+            clamav_molecule_installed_binaries:
+              - name: clamd
+                path: sbin
+                user: root
+              - name: clamwatch
+                path: bin
+                user: root
+              - name: freshclam
+                path: bin
+                user: _clamav
 
-    - name: Check Processes
-      ansible.builtin.include_tasks: "../common/tasks/processes.yml"
+        - name: Verify Binaries
+          ansible.builtin.include_tasks: "../common/tasks/verify_binaries.yml"
 
-    - name: Assert the binaries are symlinked correctly
-      ansible.builtin.assert:
-        that:
-          - clamav_molecule_clamd_file.stat.executable
-          - clamav_molecule_freshclam_file.stat.executable
-          - clamav_molecule_clamwatch_file.stat.executable
-        msg: "The binaries were not symlinked.  Check the homebrew install."
+        - name: Verify Processes
+          ansible.builtin.include_tasks: "../common/tasks/verify_processes.yml"
 
-    - name: Wait For clamd Process to Start
-      ansible.builtin.command: ps -u root
-      changed_when: false
-      retries: 10
-      delay: 3
-      register: clamav_molecule_root_processes
-      until: "clamav_molecule_root_process_match_clamd in clamav_molecule_root_processes.stdout"
+      always:
 
-    - name: Wait For freshclam Process to Start
-      ansible.builtin.command: ps -u _clamav
-      changed_when: false
-      retries: 10
-      delay: 3
-      register: clamav_molecule_clamav_user_processes
-      until: "clamav_molecule_user_processes_match_freshclam in clamav_molecule_clamav_user_processes.stdout"
-
-    - name: Assert clamwatch Process Running
-      ansible.builtin.assert:
-        that:
-          - clamav_molecule_root_process_match_clamwatch in clamav_molecule_root_processes.stdout
-        msg: "The clamwatch process should be running!"
+        - name: Display Logs
+          ansible.builtin.include_tasks: "../common/tasks/display_logs.yml"
