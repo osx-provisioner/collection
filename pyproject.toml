@@ -6,7 +6,7 @@ requires = ['poetry-core>=1.0.0']
 [tool.commitizen]
 bump_message = 'bump(RELEASE): $current_version → $new_version'
 pre_bump_hooks = ['.cicd-tools/boxes/bootstrap/commitizen/pre_bump.sh']
-version = '1.0.0'
+version = '1.0.1'
 version_files = ['galaxy.yml:version', 'pyproject.toml:version']
 version_provider = 'poetry'
 
@@ -14,7 +14,7 @@ version_provider = 'poetry'
 authors = ['Niall Byrne <niall@niallbyrne.ca>']
 description = 'A collection of OSX automation tools for Ansible.'
 name = 'collection'
-version = '1.0.0'
+version = '1.0.1'
 
 [tool.poetry.dependencies]
 python = '^3.9'
