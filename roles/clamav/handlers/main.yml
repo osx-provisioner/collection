@@ -12,7 +12,7 @@
   community.general.launchd:
     name: "clamav.clamd"
     enabled: true
-    state: restarted
+    state: reloaded
   listen: "Restart Clamd"
 
 - name: Restart Freshclam
@@ -20,7 +20,7 @@
   community.general.launchd:
     name: "clamav.freshclam"
     enabled: true
-    state: restarted
+    state: reloaded
   listen: "Restart Freshclam"
 
 - name: Restart Clamwatch
@@ -28,6 +28,6 @@
   community.general.launchd:
     name: "clamav.clamwatch"
     enabled: true
-    state: restarted
+    state: reloaded
     force_stop: yes
   listen: "Restart Clamwatch"
