@@ -6,10 +6,6 @@ ignore: |
   .ansible/
   .cache/
   .idea/
-  .mac_maker/
-  ansible_role/
-  collections/
-  roles/
 
 rules:
   braces:

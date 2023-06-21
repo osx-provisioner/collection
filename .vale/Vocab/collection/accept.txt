@@ -10,6 +10,7 @@ HOMESHICK|homeshick
 Homebrew|homebrew
 JumpCloud|jumpcloud
 URL|url
+YAMLLINT
 boolean
 brew_(casks|install_state|packages|prefix|retries|sudo_password|taps|targeted_casks|targeted_casks_group|targeted_casks_location|user)
 config
