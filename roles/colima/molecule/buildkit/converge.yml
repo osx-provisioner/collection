@@ -3,7 +3,9 @@
   hosts: all
   connection: local
   tasks:
+
     - name: Include Vars
-      ansible.builtin.include_vars: vars/main.yml
+      ansible.builtin.include_vars: "vars/main.yml"
+
     - name: Include Roles
       ansible.builtin.include_tasks: "../common/tasks/roles.yml"

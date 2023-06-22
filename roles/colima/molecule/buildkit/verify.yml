@@ -4,8 +4,16 @@
   gather_facts: false
   tasks:
 
-    - name: Verify Binaries
-      ansible.builtin.include_tasks: "../common/tasks/verify_binaries.yml"
+    - name: Display Logs For Troubleshooting Failures
+      block:
 
-    - name: Verify Docker
-      ansible.builtin.include_tasks: "../common/tasks/verify_docker.yml"
+        - name: Verify Binaries
+          ansible.builtin.include_tasks: "../common/tasks/verify_binaries.yml"
+
+        - name: Verify Docker
+          ansible.builtin.include_tasks: "../common/tasks/verify_docker.yml"
+
+      always:
+
+        - name: Display Logs
+          ansible.builtin.include_tasks: "../common/tasks/display_logs.yml"

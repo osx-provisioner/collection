@@ -1,0 +1,35 @@
+---
+- name: Create Log File List
+  ansible.builtin.set_fact:
+    colima_molecule_log_list:
+      - "/Users/{{ colima_user }}/.lima/colima/ha.stderr.log"
+      - "/Users/{{ colima_user }}/.lima/colima/ha.stdout.log"
+      - "/Users/{{ colima_user }}/.colima/{{ colima_default_profile }}/daemon/daemon.log"
+      - "/Users/{{ colima_user }}/.lima/colima/serial.log"
+
+- name: Check For Existence of Logs
+  ansible.builtin.stat:
+    path: "{{ colima_molecule_log_file }}"
+  register: colima_molecule_log_stat
+  with_items: "{{ colima_molecule_log_list }}"
+  loop_control:
+    loop_var: colima_molecule_log_file
+
+- name: Read Log Files
+  ansible.builtin.slurp:
+    path: "{{ colima_molecule_log_file.stat.path }}"
+  register: colima_molecule_log_data
+  when: colima_molecule_log_file.stat.exists
+  with_items: "{{ colima_molecule_log_stat.results }}"
+  loop_control:
+    loop_var: colima_molecule_log_file
+
+- name: Display Log Data
+  ansible.builtin.debug:
+    msg:
+      - "filename: {{ colima_molecule_log_file.source }}"
+      - "{{ colima_molecule_log_file.content | b64decode | split('\n') }}"
+  when: colima_molecule_log_file.source is defined
+  with_items: "{{ colima_molecule_log_data.results }}"
+  loop_control:
+    loop_var: colima_molecule_log_file

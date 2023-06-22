@@ -3,20 +3,27 @@
   hosts: all
   connection: local
   tasks:
+
     - name: Expect Failure
       block:
+
         - name: Include Vars
-          ansible.builtin.include_vars: vars/main.yml
+          ansible.builtin.include_vars: "vars/main.yml"
+
         - name: Include Roles
           ansible.builtin.include_tasks: "../common/tasks/roles.yml"
+
         - name: Check execution halted
           ansible.builtin.fail:
             msg: "The playbook should stop execution before this step."
           register: playbook_exception
+
       rescue:
+
         - name: Disable Colima Handler
           ansible.builtin.set_fact:
             colima_handler_disable: true
+
         - name: Ensure the role failed
           ansible.builtin.assert:
             that:

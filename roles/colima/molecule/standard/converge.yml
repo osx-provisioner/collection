@@ -3,5 +3,6 @@
   hosts: all
   connection: local
   tasks:
+
     - name: Include Roles
       ansible.builtin.include_tasks: "../common/tasks/roles.yml"
