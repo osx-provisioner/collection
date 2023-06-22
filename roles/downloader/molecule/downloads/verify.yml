@@ -3,8 +3,10 @@
   hosts: all
   gather_facts: false
   tasks:
+
     - name: Load Scenario Variables
-      ansible.builtin.include_vars: vars/main.yml
+      ansible.builtin.include_vars: "vars/main.yml"
+
     - name: Check Downloaded Content
       ansible.builtin.stat:
         path: "{{ download_save_location }}/{{ downloader_item.name }}"
@@ -12,6 +14,7 @@
       loop: "{{ download_remote_urls }}"
       loop_control:
         loop_var: downloader_item
+
     - name: Assert Files Exist
       ansible.builtin.assert:
         that:
@@ -20,6 +23,7 @@
       loop: "{{ downloader_molecule_check_content.results }}"
       loop_control:
         loop_var: downloader_item
+
     - name: Assert Files Have Correct Attributes
       ansible.builtin.assert:
         that:

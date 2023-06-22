@@ -5,10 +5,10 @@
   tasks:
 
     - name: Load Scenario Variables
-      ansible.builtin.include_vars: vars/main.yml
+      ansible.builtin.include_vars: "vars/main.yml"
 
     - name: Check File System Content
-      ansible.builtin.include_tasks: "../common/tasks/files.yml"
+      ansible.builtin.include_tasks: "../common/tasks/stat_files.yml"
 
     - name: Assert homeshick repository was installed
       ansible.builtin.assert:

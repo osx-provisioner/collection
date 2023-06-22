@@ -3,16 +3,23 @@
   hosts: all
   connection: local
   tasks:
-    - name: Load Default Variables
-      ansible.builtin.include_vars: ../../defaults/main.yml
-    - name: Load Scenario Variables
-      ansible.builtin.include_vars: vars/main.yml
+
+    - name: Setup Scenario
+      ansible.builtin.include_tasks: "../common/tasks/setup.yml"
+      tags:
+        - molecule-idempotence-notest
+
     - name: Mock Previous Install Data
       become: true
       ansible.builtin.copy:
         dest: "{{ jumpcloud_agent_location }}"
         content: "Mock Previous Install\n"
         mode: 0644
-    - name: "Include osx_provisioner.collection.jumpcloud"
+      tags:
+        - molecule-idempotence-notest
+
+    - name: Include osx_provisioner.collection.jumpcloud
       ansible.builtin.include_role:
         name: "osx_provisioner.collection.jumpcloud"
+      tags:
+        - molecule-idempotence-notest

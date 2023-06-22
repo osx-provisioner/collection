@@ -3,6 +3,7 @@
   hosts: all
   gather_facts: false
   tasks:
+
     - name: Display Logs For Troubleshooting Failures
       block:
 

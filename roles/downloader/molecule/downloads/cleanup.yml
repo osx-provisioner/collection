@@ -3,8 +3,10 @@
   hosts: all
   gather_facts: false
   tasks:
-    - name: Load Scenario Variables
-      ansible.builtin.include_vars: vars/main.yml
+
+    - name: Setup Scenario
+      ansible.builtin.include_tasks: "../common/tasks/setup.yml"
+
     - name: Clean Up
       ansible.builtin.file:
         path: "{{ download_save_location }}/{{ downloader_item.name }}"

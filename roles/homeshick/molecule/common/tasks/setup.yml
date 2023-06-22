@@ -1,0 +1,3 @@
+---
+- name: Load Scenario Variables
+  ansible.builtin.include_vars: "vars/main.yml"

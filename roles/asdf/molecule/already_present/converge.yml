@@ -4,7 +4,7 @@
   connection: local
   tasks:
 
-    - name: "Setup Scenario"
+    - name: Setup Scenario
       ansible.builtin.include_tasks: "../common/tasks/setup.yml"
 
     - name: Create existing asdf install
@@ -14,3 +14,7 @@
         repo: "https://github.com/asdf-vm/asdf.git"
         dest: "{{ asdf_user_home }}/.asdf"
         version: "{{ asdf_version }}"
+
+    - name: Include osx_provisioner.collection.asdf
+      ansible.builtin.include_role:
+        name: "osx_provisioner.collection.asdf"

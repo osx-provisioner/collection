@@ -4,5 +4,9 @@
   connection: local
   tasks:
 
-    - name: Include Roles
-      ansible.builtin.include_tasks: "../common/tasks/roles.yml"
+    - name: Setup Scenario
+      ansible.builtin.include_tasks: "../common/tasks/setup.yml"
+
+    - name: Include osx_provisioner.collection.colima
+      ansible.builtin.include_role:
+        name: "osx_provisioner.collection.colima"

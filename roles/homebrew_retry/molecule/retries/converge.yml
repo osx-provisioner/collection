@@ -4,7 +4,7 @@
   connection: local
   tasks:
 
-    - name: Load Setup Tasks
+    - name: Setup Scenario
       ansible.builtin.include_tasks: "../common/tasks/setup.yml"
       tags:
         - molecule-idempotence-notest

@@ -3,13 +3,18 @@
   hosts: all
   gather_facts: false
   tasks:
+
     - name: Load Scenario Variables
-      ansible.builtin.include_vars: vars/main.yml
+      ansible.builtin.include_vars: "vars/main.yml"
+
     - name: Read Variables from Test Run
+      become: true
       ansible.builtin.slurp:
         src: "{{ jumpcloud_agent_location }}"
       register: jump_cloud_molecule_results
+
     - name: Check Mock Install Arguments (confirm it's been installed twice!)
       ansible.builtin.assert:
         that:
           - jump_cloud_molecule_results.content | b64decode == "Mock Previous Install\n-f -s -k secret_jumpcloud_key\n"
+        msg: "The mock installer was called with incorrect arguments."
