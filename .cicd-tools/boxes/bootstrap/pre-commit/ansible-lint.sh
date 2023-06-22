@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Runs ansible-galaxy to install/update the dependencies if needed, and then runs ansible-lint on each active role's changes.
+# Runs ansible-galaxy to install/update the dependencies if needed, and then runs ansible-lint on each active target folder's changes.
 
 # @:  An array of folders to run ansible-lin on.
 
@@ -12,12 +12,11 @@ set -eo pipefail
 source "$(dirname -- "${BASH_SOURCE[0]}")/../libraries/tools.sh"
 
 main() {
-  local ROLES_FOLDERS=${*-"."}
-
-  for ROLE in ${ROLES_FOLDERS}; do
-    log "INFO" "PRE-COMMIT > Examining role in folder '${ROLE}' ..."
-    pushd "${ROLE}" >> /dev/null
-    if ! git diff --exit-code HEAD -- requirements.yml; then
+  local TARGET_FOLDERS=${*-"."}
+  for TARGET in ${TARGET_FOLDERS}; do
+    log "INFO" "PRE-COMMIT > Examining folder '${TARGET}' ..."
+    pushd "${TARGET}" >> /dev/null
+    if ! git diff requirements.yml; then
       log "DEBUG" "PRE-COMMIT > Detected a 'requirements.yml' file change."
       log "DEBUG" "PRE-COMMIT > Reinstalling the Ansible Galaxy requirements ..."
       cicd_tools "poetry" ansible-galaxy install --force --timeout 90 -r requirements.yml
