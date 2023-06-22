@@ -1,9 +1,9 @@
 ---
 # tasks file for role-colima
-- name: Create Main Colima Profile
+- name: Create Colima Profiles List
   ansible.builtin.set_fact:
     colima_profiles:
-      - default
+      - "{{ colima_default_profile }}"
 
 - name: Create Colima Profiles List
   ansible.builtin.set_fact:
@@ -44,7 +44,7 @@
 
 - name: Hash Previous Colima Configuration
   ansible.builtin.stat:
-    path: "/Users/{{ colima_user }}/.colima/default/colima.yaml"
+    path: "/Users/{{ colima_user }}/.colima/{{ colima_default_profile }}/colima.yaml"
   register: colima_previous_configuration
   tags:
     - colima
@@ -67,7 +67,7 @@
 - name: Add Colima Docker Symlink
   become: true
   ansible.builtin.file:
-    src: "/Users/{{ colima_user }}/.colima/default/docker.sock"
+    src: "/Users/{{ colima_user }}/.colima/{{ colima_default_profile }}/docker.sock"
     dest: "/var/run/docker.sock"
     mode: "0751"
     owner: "root"
@@ -94,7 +94,7 @@
 
 - name: Hash New Colima Configuration
   ansible.builtin.stat:
-    path: "/Users/{{ colima_user }}/.colima/default/colima.yaml"
+    path: "/Users/{{ colima_user }}/.colima/{{ colima_default_profile }}/colima.yaml"
   register: colima_new_configuration
   tags:
     - colima
