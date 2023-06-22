@@ -12,7 +12,7 @@ driver:
     managed: False
     ansible_connection_options:
       ansible_connection: local
-      ansible_sudo_pass: "${ANSIBLE_SUDO_PASSWORD}"
+      ansible_become_password: "${ANSIBLE_BECOME_PASSWORD}"
 platforms:
   - name: instance
 provisioner:
