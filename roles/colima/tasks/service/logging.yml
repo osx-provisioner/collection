@@ -1,0 +1,32 @@
+---
+- name: Check Colima Stderr Logfile exists
+  become: true
+  ansible.builtin.stat:
+    path: "{{ colima_stderr_log_file }}"
+  register: colima_stderr_log_file_stat
+
+- name: Check Colima Stdout Logfile Exists
+  become: true
+  ansible.builtin.stat:
+    path: "{{ colima_stderr_log_file }}"
+  register: colima_stdout_log_file_stat
+
+- name: Create Colima Stderr Logfile
+  become: true
+  ansible.builtin.file:
+    path: "{{ colima_stderr_log_file }}"
+    state: touch
+    mode: 0640
+    owner: "{{ colima_user }}"
+    group: admin
+  when: not colima_stderr_log_file_stat.stat.exists
+
+- name: Create Colima Stdout Logfile
+  become: true
+  ansible.builtin.file:
+    path: "{{ colima_stdout_log_file }}"
+    state: touch
+    mode: 0640
+    owner: "{{ colima_user }}"
+    group: admin
+  when: not colima_stderr_log_file_stat.stat.exists

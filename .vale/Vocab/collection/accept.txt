@@ -17,9 +17,12 @@ config
 dotfiles
 download_(retries|save_location|save_user|timeout)
 gitflow
+launchd
 mac_maker
 plugin_tasks
 rbenv
+stderr
+stdout
 symlinks_user
 url
 wip

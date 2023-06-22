@@ -6,6 +6,9 @@ brew_prefix: "{{ (ansible_machine == 'arm64') | ternary('/opt/homebrew', '/usr/l
 colima_user: "{{ lookup('env', 'USER') }}"
 colima_homebrew_retries: 3
 
+colima_stderr_log_file: "/var/log/colima.stderr.log"
+colima_stdout_log_file: "/var/log/colima.stdout.log"
+
 colima_default_profile: "default"
 colima_additional_profiles:
   - backup
