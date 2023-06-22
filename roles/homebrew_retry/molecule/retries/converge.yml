@@ -1,0 +1,30 @@
+---
+- name: Converge
+  hosts: all
+  connection: local
+  tasks:
+
+    - name: Load Setup Tasks
+      ansible.builtin.include_tasks: "../common/tasks/setup.yml"
+      tags:
+        - molecule-idempotence-notest
+
+    - name: Test Packages
+      ansible.builtin.include_tasks: "tasks/packages.yml"
+      tags:
+        - molecule-idempotence-notest
+
+    - name: Test Casks
+      ansible.builtin.include_tasks: "tasks/casks.yml"
+      tags:
+        - molecule-idempotence-notest
+
+    - name: Test User Casks
+      ansible.builtin.include_tasks: "tasks/casks_user.yml"
+      tags:
+        - molecule-idempotence-notest
+
+    - name: Test Targeted Casks
+      ansible.builtin.include_tasks: "tasks/casks_targeted.yml"
+      tags:
+        - molecule-idempotence-notest

@@ -1,5 +1,2 @@
 ---
 brew_user: "{{ lookup('env', 'USER') }}"
-
-brew_taps:
-  - gromgit/fuse

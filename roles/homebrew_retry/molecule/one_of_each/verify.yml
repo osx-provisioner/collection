@@ -5,7 +5,7 @@
   tasks:
 
     - name: Load Scenario Variables
-      ansible.builtin.include_vars: vars/main.yml
+      ansible.builtin.include_vars: "vars/main.yml"
 
     - name: Check telnet was installed
       ansible.builtin.stat:

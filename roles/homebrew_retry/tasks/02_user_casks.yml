@@ -26,7 +26,7 @@
   retries: "{{ brew_retries }}"
   delay: 3
   register: homebrew_retry_install_user_casks
-  until: homebrew_retry_install_user_casks is not failed
+  until: homebrew_retry_install_user_casks is not failed or brew_fail_matchers.casks in homebrew_retry_install_user_casks.msg
   when: brew_user_casks|length > 0
   tags:
     - homebrew_retry

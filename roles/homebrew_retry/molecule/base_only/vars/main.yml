@@ -7,5 +7,3 @@ brew_casks:
   - appcleaner
 brew_taps:
   - gromgit/fuse
-
-ansible_become_password: ""

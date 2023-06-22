@@ -6,3 +6,7 @@
 
     - name: Load Setup Tasks
       ansible.builtin.include_tasks: "../common/tasks/setup.yml"
+
+    - name: Include osx_provisioner.collection.homebrew_retry
+      ansible.builtin.include_role:
+        name: "osx_provisioner.collection.homebrew_retry"

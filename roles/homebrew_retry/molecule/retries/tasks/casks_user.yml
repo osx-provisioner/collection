@@ -1,0 +1,39 @@
+---
+- name: Test With Fail Fast on User Casks Enabled
+  block:
+
+    - name: Include osx_provisioner.collection.homebrew_retry
+      ansible.builtin.include_role:
+        name: "osx_provisioner.collection.homebrew_retry"
+      vars:
+        brew_user_casks:
+          - non_existent_non_existent_non_existent
+
+  rescue:
+
+    - name: Assert Retry Did Not Fire (Test With Fail Fast on User Casks Enabled)
+      ansible.builtin.assert:
+        that:
+          - homebrew_retry_install_user_casks.attempts == 1
+        msg: "This task should NOT have been retried."
+
+- name: Test With Fail Fast on User Casks Disabled
+  block:
+
+    - name: Include osx_provisioner.collection.homebrew_retry
+      ansible.builtin.include_role:
+        name: "osx_provisioner.collection.homebrew_retry"
+      vars:
+        brew_fail_matchers:
+          casks: "DISABLED"
+        brew_retries: 2
+        brew_user_casks:
+          - non_existent_non_existent_non_existent
+
+  rescue:
+
+    - name: Assert Retry Fired (Test With Fail Fast on User Casks Disabled)
+      ansible.builtin.assert:
+        that:
+          - homebrew_retry_install_user_casks.attempts == 2
+        msg: "This task should have been retried."

@@ -15,7 +15,7 @@
   tags:
     - homebrew_retry
 
-- name: Install Homebrew Apps (With Homebrew Update)
+- name: Install Homebrew Packages (With Homebrew Update)
   become: True
   become_user: "{{ brew_user }}"
   community.general.homebrew:
@@ -24,8 +24,8 @@
     update_homebrew: yes
   retries: "{{ brew_retries }}"
   delay: 3
-  register: homebrew_retry_install_apps
-  until: homebrew_retry_install_apps is not failed
+  register: homebrew_retry_install_packages
+  until: homebrew_retry_install_packages is not failed or brew_fail_matchers.packages in homebrew_retry_install_packages.msg
   when: brew_packages|length > 0
   tags:
     - homebrew_retry
@@ -42,7 +42,7 @@
   retries: "{{ brew_retries }}"
   delay: 3
   register: homebrew_retry_install_casks
-  until: homebrew_retry_install_casks is not failed
+  until: homebrew_retry_install_casks is not failed or brew_fail_matchers.casks in homebrew_retry_install_casks.msg
   when: brew_casks|length > 0
   tags:
     - homebrew_retry

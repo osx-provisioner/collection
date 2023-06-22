@@ -10,19 +10,21 @@ brew_install_state: latest
 # Some casks may require SUDO to complete their install
 brew_sudo_password: "{{ ansible_become_password }}"
 
-
 # Installs to Standard Homebrew Locations
 brew_packages: []
 brew_casks: []
 brew_taps: []
 
-
 # Installs to {{ brew_user_casks_location }}
 brew_user_casks_location: "{{ lookup('env', 'HOME') }}/Applications"
 brew_user_casks: []
-
 
 # Installs the casks to {{ brew_targeted_casks_location }}
 brew_targeted_casks_group: "admin"
 brew_targeted_casks_location: "/opt/casks"
 brew_targeted_casks: []
+
+# Allows quickly failing when casks or packages do not exist
+brew_fail_matchers:
+  casks: "No Cask with this name exists"
+  packages: "No formulae or casks found for"
