@@ -15,6 +15,10 @@
   register: colima_molecule_docker_status
   until: colima_molecule_docker_status is not failed
 
+- name: Ensure Docker Compose Patch Works
+  ansible.builtin.command: docker compose version
+  changed_when: false
+
 - name: Run Ubuntu Docker Container
   ansible.builtin.command: docker run -t ubuntu:latest echo "Docker is working!"
   changed_when: false

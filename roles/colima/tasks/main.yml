@@ -20,6 +20,7 @@
     name:
       - colima
       - docker
+      - docker-compose
     state: upgraded
   retries: "{{ colima_homebrew_retries }}"
   delay: 3
@@ -30,8 +31,13 @@
   tags:
     - colima
 
-- name: Configure Colima
-  ansible.builtin.import_tasks: "configuration.yml"
+- name: Configure Colima Service
+  ansible.builtin.import_tasks: "configuration/service.yml"
+  tags:
+    - colima
+
+- name: Configure Docker Compose Support
+  ansible.builtin.import_tasks: "configuration/compose.yml"
   tags:
     - colima
 

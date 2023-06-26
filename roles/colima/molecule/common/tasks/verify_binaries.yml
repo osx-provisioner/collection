@@ -16,6 +16,11 @@
     path: "{{ brew_prefix }}/bin/docker"
   register: colima_molecule_file_present_docker
 
+- name: Check docker-compose is installed
+  ansible.builtin.stat:
+    path: "{{ brew_prefix }}/bin/docker-compose"
+  register: colima_molecule_file_present_docker_compose
+
 - name: Check limactl is installed
   ansible.builtin.stat:
     path: "{{ brew_prefix }}/bin/limactl"
@@ -26,8 +31,10 @@
     that:
       - colima_molecule_file_present_colima.stat.exists
       - colima_molecule_file_present_docker.stat.exists
+      - colima_molecule_file_present_docker_compose.stat.exists
       - colima_molecule_file_present_limactl.stat.exists
       - colima_molecule_file_present_colima.stat.executable
       - colima_molecule_file_present_docker.stat.executable
+      - colima_molecule_file_present_docker_compose.stat.executable
       - colima_molecule_file_present_limactl.stat.executable
     msg: "The binaries were not symlinked correctly.  Check the homebrew install."
