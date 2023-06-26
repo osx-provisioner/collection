@@ -1,0 +1,12 @@
+---
+- name: Check the user dotfiles repository
+  ansible.builtin.stat:
+    path: "{{ homeshick_user_home }}/.homesick/repos/{{ homeshick_dotfiles_repo | lower | basename | replace('.git', '') }}"
+  register: homeshick_molecule_dotfiles_install
+
+- name: Assert the user dotfiles are installed
+  ansible.builtin.assert:
+    that:
+      - homeshick_molecule_dotfiles_install.stat.exists
+      - homeshick_molecule_dotfiles_install.stat.pw_name == homeshick_user
+    msg: "The user dotfiles repository was not installed correctly."

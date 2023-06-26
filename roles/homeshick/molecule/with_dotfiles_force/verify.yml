@@ -7,26 +7,20 @@
     - name: Load Scenario Variables
       ansible.builtin.include_vars: "vars/main.yml"
 
-    - name: Check File System Content
-      ansible.builtin.include_tasks: "../common/tasks/stat_files.yml"
+    - name: Verify the Homeshick Install
+      ansible.builtin.include_tasks: "../common/tasks/verify_homeshick.yml"
 
-    - name: Assert homeshick repository was installed
-      ansible.builtin.assert:
-        that:
-          - homeshick_molecule_install.stat.exists
-          - homeshick_molecule_install.stat.pw_name == homeshick_user
-        msg: "Homeshick repository must exist"
+    - name: Verify the Dotfiles Install
+      ansible.builtin.include_tasks: "../common/tasks/verify_dotfiles.yml"
 
-    - name: Assert the user dotfiles were installed
-      ansible.builtin.assert:
-        that:
-          - homeshick_molecule_dotfiles_install.stat.exists
-          - homeshick_molecule_dotfiles_install.stat.pw_name == homeshick_user
-        msg: "Dotfiles repository must exist"
+    - name: Check the user .bashrc file
+      ansible.builtin.stat:
+        path: "{{ homeshick_user_home }}/.bashrc"
+      register: homeshick_molecule_bashrc_symlink
 
-    - name: Assert the user .bashrc was symlinked, and is readable
+    - name: Assert the user .bashrc is symlinked and is readable
       ansible.builtin.assert:
         that:
           - homeshick_molecule_bashrc_symlink.stat.islnk
           - homeshick_molecule_bashrc_symlink.stat.readable
-        msg: "User .bashrc must be a readable symlink"
+        msg: "The user .bashrc file should be symlinked and readable."

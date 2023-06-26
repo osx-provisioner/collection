@@ -1,0 +1,12 @@
+---
+- name: Check the homeshick binary was installed
+  ansible.builtin.stat:
+    path: "{{ homeshick_user_home }}/.homesick/repos/homeshick"
+  register: homeshick_molecule_install
+
+- name: Assert homeshick binary was installed
+  ansible.builtin.assert:
+    that:
+      - homeshick_molecule_install.stat.exists
+      - homeshick_molecule_install.stat.pw_name == homeshick_user
+    msg: "The homeshick binary was not installed correctly."

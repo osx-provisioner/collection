@@ -7,12 +7,5 @@
     - name: Load Scenario Variables
       ansible.builtin.include_vars: "vars/main.yml"
 
-    - name: Check File System Content
-      ansible.builtin.include_tasks: "../common/tasks/stat_files.yml"
-
-    - name: Assert homeshick repository was installed
-      ansible.builtin.assert:
-        that:
-          - homeshick_molecule_install.stat.exists
-          - homeshick_molecule_install.stat.pw_name == homeshick_user
-        msg: "Homeshick repository must exist"
+    - name: Verify the Homeshick Install
+      ansible.builtin.include_tasks: "../common/tasks/verify_homeshick.yml"
