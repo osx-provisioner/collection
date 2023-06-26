@@ -7,7 +7,7 @@
       ansible.builtin.include_role:
         name: "osx_provisioner.collection.homebrew_retry"
       vars:
-        brew_packages:
+        brew_packages:  # noqa var-naming[no-role-prefix]
           - non_existent_non_existent_non_existent
 
   rescue:
@@ -26,11 +26,11 @@
       ansible.builtin.include_role:
         name: "osx_provisioner.collection.homebrew_retry"
       vars:
-        brew_fail_matchers:
+        brew_fail_matchers:  # noqa var-naming[no-role-prefix]
           packages: "DISABLED"
-        brew_packages:
+        brew_packages:  # noqa var-naming[no-role-prefix]
           - non_existent_non_existent_non_existent
-        brew_retries: 2
+        brew_retries: 2  # noqa var-naming[no-role-prefix]
 
   rescue:
 

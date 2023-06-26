@@ -6,7 +6,7 @@
       ansible.builtin.include_role:
         name: "osx_provisioner.collection.homebrew_retry"
       vars:
-        brew_targeted_casks:
+        brew_targeted_casks:  # noqa var-naming[no-role-prefix]
           - non_existent_non_existent_non_existent
 
   rescue:
@@ -24,10 +24,10 @@
       ansible.builtin.include_role:
         name: "osx_provisioner.collection.homebrew_retry"
       vars:
-        brew_fail_matchers:
+        brew_fail_matchers:  # noqa var-naming[no-role-prefix]
           casks: "DISABLED"
-        brew_retries: 2
-        brew_targeted_casks:
+        brew_retries: 2  # noqa var-naming[no-role-prefix]
+        brew_targeted_casks:  # noqa var-naming[no-role-prefix]
           - non_existent_non_existent_non_existent
 
   rescue:
