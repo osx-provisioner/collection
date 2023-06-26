@@ -16,6 +16,18 @@
   tags:
     - clamav
 
+- name: Remove Legacy Services
+  ansible.builtin.include_tasks:
+    file: "legacy_services/remove.yml"
+  with_items:
+    - "clamav.freshclam"
+    - "clamav.clamd"
+    - "clamav.clamwatch"
+  loop_control:
+    loop_var: "clamav_legacy_service"
+  tags:
+    - clamav
+
 - name: Setup ClamAV Folders
   ansible.builtin.include_tasks:
     file: "clam_av/folders.yml"
@@ -51,24 +63,6 @@
 - name: Setup ClamWatch Configuration
   ansible.builtin.include_tasks:
     file: "clam_watch/configuration.yml"
-  tags:
-    - clamav
-  when: clamav_clamwatch
-
-- name: Flush Handlers
-  ansible.builtin.meta: flush_handlers
-  tags:
-    - clamav
-
-- name: Ensure Services Are Always Running
-  ansible.builtin.include_tasks:
-    file: "clam_av/processes.yml"
-  tags:
-    - clamav
-
-- name: Ensure Services Are Always Running
-  ansible.builtin.include_tasks:
-    file: "clam_watch/processes.yml"
   tags:
     - clamav
   when: clamav_clamwatch

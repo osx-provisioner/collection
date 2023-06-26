@@ -5,3 +5,5 @@
     path: "{{ clamav_clamwatch_quarantine_folder }}"
     state: directory
     mode: 0700
+  notify:
+    - Restart Clamwatch

@@ -1,9 +1,9 @@
 ---
-- name: Install FreshClam Daemon Configuration
+- name: Install FreshClam Service Configuration
   become: true
   ansible.builtin.template:
-    src: clamav.freshclam.plist.j2
-    dest: /Library/LaunchDaemons/clamav.freshclam.plist
+    src: net.clamav.freshclam.plist.j2
+    dest: /Library/LaunchDaemons/net.clamav.freshclam.plist
     mode: 0644
     owner: root
     group: wheel
@@ -11,7 +11,7 @@
     - Update Virus Definitions
     - Restart Freshclam
 
-- name: Install FreshClam Configuration
+- name: Install FreshClam Daemon Configuration
   become: true
   ansible.builtin.template:
     src: freshclam.conf.j2
@@ -23,11 +23,11 @@
     - Update Virus Definitions
     - Restart Freshclam
 
-- name: Install Clamd Daemon Configuration
+- name: Install Clamd Service Configuration
   become: true
   ansible.builtin.template:
-    src: clamav.clamd.plist.j2
-    dest: /Library/LaunchDaemons/clamav.clamd.plist
+    src: net.clamav.clamd.plist.j2
+    dest: /Library/LaunchDaemons/net.clamav.clamd.plist
     mode: 0644
     owner: root
     group: wheel
@@ -35,7 +35,7 @@
     - Update Virus Definitions
     - Restart Clamd
 
-- name: Install Clamd Configuration
+- name: Install Clamd Daemon Configuration
   become: true
   ansible.builtin.template:
     src: clamd.conf.j2

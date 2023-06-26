@@ -1,10 +1,11 @@
 ---
 - name: Check ClamWatch logfile exists
+  become: true
   ansible.builtin.stat:
     path: "{{ clamav_clamwatch_log_file }}"
   register: clamav_clamwatch_log
 
-- name: Create Clamd logfile
+- name: Create ClamWatch logfile
   become: true
   ansible.builtin.file:
     path: "{{ clamav_clamwatch_log_file }}"
@@ -15,6 +16,7 @@
   when: not clamav_clamwatch_log.stat.exists
 
 - name: Check ClamWatch Error logfile exists
+  become: true
   ansible.builtin.stat:
     path: "{{ clamav_clamwatch_stderr_log_file }}"
   register: clamav_clamwatch_error_log

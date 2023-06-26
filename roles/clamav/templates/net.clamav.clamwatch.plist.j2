@@ -3,9 +3,15 @@
 <plist version="1.0">
 <dict>
 	<key>KeepAlive</key>
-	<false/>
+	<dict>
+		<key>OtherJobEnabled</key>
+		<dict>
+			<key>net.clamav.clamd</key>
+			<true/>
+		</dict>
+	</dict>
 	<key>Label</key>
-	<string>clamav.clamwatch</string>
+	<string>net.clamav.clamwatch</string>
 	<key>ProgramArguments</key>
 	<array>
 		<string>{{ brew_prefix }}/bin/clamwatch</string>

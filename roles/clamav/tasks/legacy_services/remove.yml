@@ -1,0 +1,21 @@
+---
+- name: Identify Legacy Install
+  become: true
+  ansible.builtin.stat:
+    path: "/Library/LaunchDaemons/{{ clamav_legacy_service }}.plist"
+  register: legacy_service
+
+- name: Stop Legacy Service
+  become: true
+  community.general.launchd:
+    name: "{{ clamav_legacy_service }}"
+    enabled: false
+    state: unloaded
+  when: legacy_service.stat.exists
+
+- name: Remove Legacy Service
+  become: true
+  ansible.builtin.file:
+    path: "/Library/LaunchDaemons/{{ clamav_legacy_service }}.plist"
+    state: absent
+  when: legacy_service.stat.exists
