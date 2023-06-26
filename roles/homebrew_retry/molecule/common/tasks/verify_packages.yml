@@ -1,0 +1,17 @@
+---
+- name: Create Brew Prefix
+  ansible.builtin.command: "brew --prefix"
+  changed_when: true
+  register: homebrew_retry_molecule_brew_prefix
+
+- name: Stat Binary for Package '{{ homebrew_retry_molecule_verification_package.name }}'
+  ansible.builtin.stat:
+    path: "{{ homebrew_retry_molecule_brew_prefix.stdout }}/{{ homebrew_retry_molecule_verification_package.path }}/{{ homebrew_retry_molecule_verification_package.name }}"
+  register: homebrew_retry_molecule_verification_package_stat
+
+- name: Assert Installation is Correct for Package '{{ homebrew_retry_molecule_verification_package.name }}'
+  ansible.builtin.assert:
+    that:
+      - homebrew_retry_molecule_verification_package_stat.stat.exists
+      - homebrew_retry_molecule_verification_package_stat.stat.executable
+    msg: "The package '{{ homebrew_retry_molecule_verification_package.name }}' was not installed correctly."

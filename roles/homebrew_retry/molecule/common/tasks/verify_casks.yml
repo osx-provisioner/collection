@@ -1,0 +1,20 @@
+---
+- name: Stat Binary for Cask '{{ homebrew_retry_molecule_verification_cask.name }}'
+  ansible.builtin.stat:
+    path: "{{ homebrew_retry_molecule_verification_cask.path }}/{{ homebrew_retry_molecule_verification_cask.name }}.app/Contents/MacOS/{{ homebrew_retry_molecule_verification_cask.name }}"
+  register: homebrew_retry_molecule_verification_cask_binary_stat
+
+- name: Stat Application Folder for Cask '{{ homebrew_retry_molecule_verification_cask.name }}'
+  ansible.builtin.stat:
+    path: "{{ homebrew_retry_molecule_verification_cask.path }}/{{ homebrew_retry_molecule_verification_cask.name }}.app"
+  register: homebrew_retry_molecule_verification_cask_application_stat
+
+- name: Assert Installation is Correct for Cask '{{ homebrew_retry_molecule_verification_cask.name }}'
+  ansible.builtin.assert:
+    that:
+      - homebrew_retry_molecule_verification_cask_binary_stat.stat.exists
+      - homebrew_retry_molecule_verification_cask_binary_stat.stat.executable
+      - homebrew_retry_molecule_verification_cask_application_stat.stat.exists
+      - homebrew_retry_molecule_verification_cask_application_stat.stat.mode == homebrew_retry_molecule_verification_cask.app_folder_mode
+      - homebrew_retry_molecule_verification_cask_application_stat.stat.pw_name == brew_user
+    msg: "The cask '{{ homebrew_retry_molecule_verification_cask.name }}' was not installed correctly."

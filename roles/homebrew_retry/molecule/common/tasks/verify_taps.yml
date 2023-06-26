@@ -1,0 +1,11 @@
+---
+- name: Check which Taps are Present
+  ansible.builtin.command: brew tap
+  changed_when: true
+  register: homebrew_retry_molecule_taps
+
+- name: Assert Installation is Correct for Tap '{{ homebrew_retry_molecule_verification_tap.name }}'
+  ansible.builtin.assert:
+    that:
+      - homebrew_retry_molecule_verification_tap.name in homebrew_retry_molecule_taps.stdout
+    msg: The tap '{{ homebrew_retry_molecule_verification_tap.name }}' was not installed correctly."
