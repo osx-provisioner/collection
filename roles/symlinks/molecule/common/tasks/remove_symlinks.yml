@@ -1,0 +1,11 @@
+---
+- name: Load Scenario Variables
+  ansible.builtin.include_vars: "vars/main.yml"
+
+- name: Remove Created Symlinks
+  ansible.builtin.file:
+    path: "{{ symlinks_item.link }}"
+    state: absent
+  loop: "{{ symlinks }}"
+  loop_control:
+    loop_var: symlinks_item
