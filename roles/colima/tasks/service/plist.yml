@@ -8,7 +8,7 @@
     owner: "{{ colima_user }}"
     group: "staff"
   notify:
-    - "Enable Colima Service"
+    - "Restart Colima Service"
 
 - name: Add LaunchAgents Folder
   become: true
@@ -19,7 +19,7 @@
     group: "staff"
     state: "directory"
   notify:
-    - "Enable Colima Service"
+    - "Restart Colima Service"
 
 - name: Add Colima Launch Agent Plist
   become: true
@@ -30,4 +30,4 @@
     owner: "{{ colima_user }}"
     group: "staff"
   notify:
-    - "Enable Colima Service"
+    - "Restart Colima Service"
