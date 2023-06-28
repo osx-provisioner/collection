@@ -10,7 +10,7 @@
   ansible.builtin.set_fact:
     clamav_molecule_process_matchers:
       clamd: '{{ brew_prefix }}/sbin/clamd --foreground -c {{ clamav_clamd_config_file }}'
-      clamwatch: '/bin/bash {{ brew_prefix }}/bin/clamwatch {{ clamav_clamwatch_target_folder }} {{ clamav_clamwatch_quarantine_folder }} {{ clamav_clamwatch_log_file }}'
+      clamwatch: '/bin/bash {{ brew_prefix }}/bin/clamwatch {{ clamav_clamwatch_target_folder }} {{ clamav_clamwatch_quarantine_folder }} {{ clamav_clamwatch_stdout_log_file }}'
       freshclam: '{{ brew_prefix }}/bin/freshclam --daemon --foreground --config-file {{ clamav_freshclam_config_file }}'
 
 - name: Wait For Process to Start

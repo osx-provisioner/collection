@@ -5,7 +5,7 @@ brew_user: "{{ lookup('env', 'USER') }}"
 brew_prefix: "{{ (ansible_machine == 'arm64') | ternary('/opt/homebrew', '/usr/local') }}"
 
 clamav_clamd_config_file: "{{ brew_prefix }}/etc/clamav/clamd.conf"
-clamav_clamd_log_file: /var/log/clamav.clamd.log
+clamav_clamd_stdout_log_file: /var/log/clamav.clamd.log
 clamav_clamd_stderr_log_file: /var/log/clamav.clamd.error.log
 
 clamav_database_location: "{{ brew_prefix }}/etc/local/var/lib/clamav"
@@ -13,11 +13,11 @@ clamav_database_location: "{{ brew_prefix }}/etc/local/var/lib/clamav"
 clamav_clamwatch: true
 clamav_clamwatch_target_folder: "{{ lookup('env', 'HOME') }}/Downloads"
 clamav_clamwatch_quarantine_folder: "{{ lookup('env', 'HOME') }}/Quarantine"
-clamav_clamwatch_log_file: /var/log/clamav.clamwatch.log
+clamav_clamwatch_stdout_log_file: /var/log/clamav.clamwatch.log
 clamav_clamwatch_stderr_log_file: /var/log/clamav.clamwatch.error.log
 
 clamav_freshclam_config_file: "{{ brew_prefix }}/etc/clamav/freshclam.conf"
-clamav_freshclam_log_file: /var/log/clamav.freshclam.log
+clamav_freshclam_stdout_log_file: /var/log/clamav.freshclam.log
 clamav_freshclam_stderr_log_file: /var/log/clamav.freshclam.error.log
 
 clamav_homebrew_retries: 3

@@ -2,13 +2,13 @@
 - name: Check ClamWatch logfile exists
   become: true
   ansible.builtin.stat:
-    path: "{{ clamav_clamwatch_log_file }}"
+    path: "{{ clamav_clamwatch_stdout_log_file }}"
   register: clamav_clamwatch_log
 
 - name: Create ClamWatch logfile
   become: true
   ansible.builtin.file:
-    path: "{{ clamav_clamwatch_log_file }}"
+    path: "{{ clamav_clamwatch_stdout_log_file }}"
     state: touch
     mode: 0640
     owner: root
