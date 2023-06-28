@@ -2,20 +2,20 @@
 # tasks file for role-colima
 - name: Create Colima Profiles List
   ansible.builtin.set_fact:
-    colima_profiles:
-      - "{{ colima_default_profile }}"
+    colima_service_profiles:
+      - "{{ colima_service_default_profile }}"
   tags:
     - colima
 
 - name: Create Colima Profiles List
   ansible.builtin.set_fact:
-    colima_profiles: "{{ colima_profiles + colima_additional_profiles }}"
+    colima_service_profiles: "{{ colima_service_profiles + colima_service_additional_profiles }}"
   tags:
     - colima
 
 - name: Install Colima From HomeBrew
   become: true
-  become_user: "{{ colima_user }}"
+  become_user: "{{ colima_service_user }}"
   community.general.homebrew:
     name:
       - colima
@@ -27,7 +27,7 @@
   register: colima_install_colima
   until: colima_install_colima is not failed
   notify:
-    - "Enable Colima Service"
+    - "Restart Colima Service"
   tags:
     - colima
 

@@ -3,7 +3,7 @@
 
 - name: Shutdown Bootstrapped Colima
   become: true
-  become_user: "{{ colima_user }}"
+  become_user: "{{ colima_service_user }}"
   ansible.builtin.command: colima stop
   changed_when: true
   when: colima_handler_disable is not defined
@@ -11,7 +11,7 @@
 
 - name: Restart Colima Service
   become: true
-  become_user: "{{ colima_user }}"
+  become_user: "{{ colima_service_user }}"
   community.general.launchd:
     name: "com.github.abiosoft.colima"
     enabled: true

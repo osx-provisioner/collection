@@ -2,31 +2,31 @@
 - name: Add Colima Configuration Folder
   become: true
   ansible.builtin.file:
-    path: "/Users/{{ colima_user }}/.colima/{{ colima_profile }}"
+    path: "/Users/{{ colima_service_user }}/.colima/{{ colima_profile }}"
     mode: "0755"
-    owner: "{{ colima_user }}"
+    owner: "{{ colima_service_user }}"
     group: "staff"
     state: "directory"
-  with_items: "{{ colima_profiles }}"
+  with_items: "{{ colima_service_profiles }}"
   loop_control:
     loop_var: "colima_profile"
   notify:
-    - "Enable Colima Service"
+    - "Restart Colima Service"
 
 - name: Hash Previous Colima Configuration
   ansible.builtin.stat:
-    path: "/Users/{{ colima_user }}/.colima/{{ colima_default_profile }}/colima.yaml"
+    path: "/Users/{{ colima_service_user }}/.colima/{{ colima_service_default_profile }}/colima.yaml"
   register: colima_previous_configuration
 
 - name: Add Colima Configuration
   become: true
   ansible.builtin.template:
     src: "./templates/colima.yaml.j2"
-    dest: "/Users/{{ colima_user }}/.colima/{{ colima_profile }}/colima.yaml"
+    dest: "/Users/{{ colima_service_user }}/.colima/{{ colima_profile }}/colima.yaml"
     mode: "0644"
-    owner: "{{ colima_user }}"
+    owner: "{{ colima_service_user }}"
     group: "staff"
-  with_items: "{{ colima_profiles }}"
+  with_items: "{{ colima_service_profiles }}"
   loop_control:
     loop_var: "colima_profile"
   changed_when: false
@@ -34,7 +34,7 @@
 - name: Add Colima Docker Symlink
   become: true
   ansible.builtin.file:
-    src: "/Users/{{ colima_user }}/.colima/{{ colima_default_profile }}/docker.sock"
+    src: "/Users/{{ colima_service_user }}/.colima/{{ colima_service_default_profile }}/docker.sock"
     dest: "/var/run/docker.sock"
     mode: "0751"
     owner: "root"
@@ -43,11 +43,11 @@
     follow: false
     force: true
   notify:
-    - "Enable Colima Service"
+    - "Restart Colima Service"
 
 - name: Bootstrap Colima
   become: true
-  become_user: "{{ colima_user }}"
+  become_user: "{{ colima_service_user }}"
   register: colima_bootstrap_service
   ansible.builtin.command: colima start
   changed_when: "'already running' not in colima_bootstrap_service.stderr"
@@ -57,12 +57,12 @@
 
 - name: Hash New Colima Configuration
   ansible.builtin.stat:
-    path: "/Users/{{ colima_user }}/.colima/{{ colima_default_profile }}/colima.yaml"
+    path: "/Users/{{ colima_service_user }}/.colima/{{ colima_service_default_profile }}/colima.yaml"
   register: colima_new_configuration
 
 - name: Detect Configuration Change
   ansible.builtin.command: "/bin/echo"
   changed_when: true
   notify:
-    - "Enable Colima Service"
+    - "Restart Colima Service"
   when: not colima_previous_configuration.stat.exists or colima_new_configuration.stat.checksum != colima_previous_configuration.stat.checksum

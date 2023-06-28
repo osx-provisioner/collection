@@ -1,7 +1,6 @@
 ---
 # defaults file for role-colima
 
-colima_user: "{{ lookup('env', 'USER') }}"
 colima_homebrew_retries: 4
 
 colima_service_startup_delay: 1
@@ -42,7 +41,7 @@ colima_provision_script: []
 colima_ssh_config: true
 
 colima_mounts:
-  - location: /Users/{{ colima_user }}
+  - location: /Users/{{ colima_service_user }}
     writable: true
 
 colima_environment_variables:

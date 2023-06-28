@@ -3,16 +3,15 @@
 
 brew_prefix: "{{ (ansible_machine == 'arm64') | ternary('/opt/homebrew', '/usr/local') }}"
 
-colima_user: "{{ lookup('env', 'USER') }}"
 colima_homebrew_retries: 3
 
+colima_service_default_profile: "default"
 colima_service_startup_delay: 0
+colima_service_stderr_log_file: "/var/log/colima.stderr.log"
+colima_service_stdout_log_file: "/var/log/colima.stdout.log"
+colima_service_user: "{{ lookup('env', 'USER') }}"
 
-colima_stderr_log_file: "/var/log/colima.stderr.log"
-colima_stdout_log_file: "/var/log/colima.stdout.log"
-
-colima_default_profile: "default"
-colima_additional_profiles:
+colima_service_additional_profiles:
   - backup
 
 colima_cpus: 2
@@ -48,7 +47,7 @@ colima_provision_script: []
 colima_ssh_config: true
 
 colima_mounts:
-  - location: /Users/{{ colima_user }}
+  - location: /Users/{{ colima_service_user }}
     writable: true
 
 colima_environment_variables: {}

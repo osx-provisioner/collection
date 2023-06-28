@@ -2,18 +2,18 @@
 - name: Add Docker CLI Plugin Folder
   become: true
   ansible.builtin.file:
-    dest: "/Users/{{ colima_user }}/.docker/cli-plugins"
+    dest: "/Users/{{ colima_service_user }}/.docker/cli-plugins"
     mode: "0751"
-    owner: "{{ colima_user }}"
+    owner: "{{ colima_service_user }}"
     group: "staff"
     state: "directory"
 
 - name: Enable Docker-Compose Support
   become: true
-  become_user: "{{ colima_user }}"
+  become_user: "{{ colima_service_user }}"
   ansible.builtin.file:
     src: "{{ brew_prefix }}/bin/docker-compose"
-    dest: "/Users/{{ colima_user }}/.docker/cli-plugins/docker-compose"
+    dest: "/Users/{{ colima_service_user }}/.docker/cli-plugins/docker-compose"
     force: true
     follow: false
     state: "link"

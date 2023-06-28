@@ -2,12 +2,12 @@
 - name: Create Log File List
   ansible.builtin.set_fact:
     colima_molecule_log_list:
-      - "/Users/{{ colima_user }}/.lima/colima/ha.stderr.log"
-      - "/Users/{{ colima_user }}/.lima/colima/ha.stdout.log"
-      - "/Users/{{ colima_user }}/.colima/{{ colima_default_profile }}/daemon/daemon.log"
-      - "/Users/{{ colima_user }}/.lima/colima/serial.log"
-      - "{{ colima_stdout_log_file }}"
-      - "{{ colima_stderr_log_file }}"
+      - "/Users/{{ colima_service_user }}/.lima/colima/ha.stderr.log"
+      - "/Users/{{ colima_service_user }}/.lima/colima/ha.stdout.log"
+      - "/Users/{{ colima_service_user }}/.colima/{{ colima_service_default_profile }}/daemon/daemon.log"
+      - "/Users/{{ colima_service_user }}/.lima/colima/serial.log"
+      - "{{ colima_service_stdout_log_file }}"
+      - "{{ colima_service_stderr_log_file }}"
 
 - name: Check For Existence of Logs
   ansible.builtin.stat:

@@ -5,7 +5,7 @@
     src: "./templates/colima-start-fg.sh.j2"
     dest: "/usr/local/bin/colima-start-fg.sh"
     mode: "0755"
-    owner: "{{ colima_user }}"
+    owner: "{{ colima_service_user }}"
     group: "staff"
   notify:
     - "Restart Colima Service"
@@ -13,9 +13,9 @@
 - name: Add LaunchAgents Folder
   become: true
   ansible.builtin.file:
-    dest: "/Users/{{ colima_user }}/Library/LaunchAgents"
+    dest: "/Users/{{ colima_service_user }}/Library/LaunchAgents"
     mode: "0700"
-    owner: "{{ colima_user }}"
+    owner: "{{ colima_service_user }}"
     group: "staff"
     state: "directory"
   notify:
@@ -25,9 +25,9 @@
   become: true
   ansible.builtin.template:
     src: "./templates/com.github.abiosoft.colima.plist.j2"
-    dest: "/Users/{{ colima_user }}/Library/LaunchAgents/com.github.abiosoft.colima.plist"
+    dest: "/Users/{{ colima_service_user }}/Library/LaunchAgents/com.github.abiosoft.colima.plist"
     mode: "0640"
-    owner: "{{ colima_user }}"
+    owner: "{{ colima_service_user }}"
     group: "staff"
   notify:
     - "Restart Colima Service"
