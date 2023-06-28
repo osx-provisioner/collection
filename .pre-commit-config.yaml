@@ -47,6 +47,7 @@ repos:
           - "--indent=2"
           - "-ci"
           - "-sr"
+        files: "^.+\\.(bash|bash\\.j2|sh|sh\\.j2)$"
       - id: format-toml
       - id: markdown-lint
         args:
@@ -59,12 +60,14 @@ repos:
           - "--indent=2"
           - "-ci"
           - "-sr"
+        files: "^.+\\.(bash|bash\\.j2|sh|sh\\.j2)$"
       - id: shell-lint
         args:
           - "--color=always"
           - "--source-path=SCRIPTDIR"
           - "--exclude=SC2317"
           - "-x"
+        files: "^.+\\.(bash|bash\\.j2|sh|sh\\.j2)$"
       - id: toml-lint
       - id: workflow-header-lint
       - id: workflow-lint

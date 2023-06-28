@@ -4,9 +4,8 @@
 # $2 - The quarantine folder to move items to
 # $3 - The log file location
 
-{{ brew_prefix }}/bin/fswatch "${1}" | while read -r FILE
-do
-   if [[ -f ${FILE} ]]; then
-     {{ brew_prefix }}/bin/clamdscan --no-summary --move="${2}" "${FILE}" >> "${3}"
-   fi
+"{{ brew_prefix }}/bin/fswatch" "${1}" | while read -r FILE; do
+  if [[ -f ${FILE} ]]; then
+    "{{ brew_prefix }}/bin/clamdscan" --no-summary --move="${2}" "${FILE}" >> "${3}"
+  fi
 done
