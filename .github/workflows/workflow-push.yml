@@ -138,6 +138,18 @@ jobs:
       PYTHON_VERSIONS: ${{ toJSON(fromJSON(needs.configuration.outputs.JSON_FILE_DATA).ci_python_versions) }}
       VERBOSE_NOTIFICATIONS: ${{ fromJSON(needs.configuration.outputs.JSON_FILE_DATA).ci_verbose_notifications }}
 
+  plist_lint:
+    needs: [configuration]
+    secrets:
+      SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+    uses: cicd-tools-org/cicd-tools/.github/workflows/job-80-poetry-precommit_commit_stage_hook.yml@master
+    with:
+      CONCURRENCY: ${{ fromJSON(needs.configuration.outputs.JSON_FILE_DATA).ci_concurrency_limit }}
+      PRECOMMIT_HOOK_ID: "format-plist"
+      PRECOMMIT_HOOK_NAME: "PLIST Formatting"
+      PYTHON_VERSIONS: ${{ toJSON(fromJSON(needs.configuration.outputs.JSON_FILE_DATA).ci_python_versions) }}
+      VERBOSE_NOTIFICATIONS: ${{ fromJSON(needs.configuration.outputs.JSON_FILE_DATA).ci_verbose_notifications }}
+
   shell_lint:
     needs: [configuration]
     secrets:
@@ -207,7 +219,7 @@ jobs:
   create_release:
     permissions:
       contents: write
-    needs: [ansible_lint, configuration, commit_lint, commit_spell_check, json_schema_lint, markdown_links, markdown_lint, markdown_spelling, pre-commit_hooks, security, shell_lint, start, toml_lint, workflow_lint, yaml_lint]
+    needs: [ansible_lint, configuration, commit_lint, commit_spell_check, json_schema_lint, markdown_links, markdown_lint, markdown_spelling, plist_lint, pre-commit_hooks, security, shell_lint, start, toml_lint, workflow_lint, yaml_lint]
     secrets:
       SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
     uses: cicd-tools-org/cicd-tools/.github/workflows/job-99-poetry-create_release.yml@master

@@ -19,6 +19,7 @@ download_(retries|save_location|save_user|timeout)
 gitflow
 launchd
 mac_maker
+plist
 plugin_tasks
 rbenv
 stderr

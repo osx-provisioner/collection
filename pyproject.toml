@@ -18,6 +18,7 @@ version = '1.0.1'
 
 [tool.poetry.dependencies]
 python = '^3.9'
+xmlformatter = '^0.2.4'
 
 [tool.poetry.group]
 [tool.poetry.group.dev]

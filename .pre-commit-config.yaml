@@ -71,3 +71,16 @@ repos:
       - id: toml-lint
       - id: workflow-header-lint
       - id: workflow-lint
+  - repo: local
+    hooks:
+      - id: format-plist
+        name: format-plist
+        description: "Format PLIST files as XML."
+        language: system
+        entry: xmlformat
+        args:
+          - "--overwrite"
+          - "--selfclose"
+        files: "^.+\\.(plist|plist.j2)$"
+        require_serial: true
+        stages: [commit]

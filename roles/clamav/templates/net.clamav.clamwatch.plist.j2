@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-<dict>
-	<key>KeepAlive</key>
-	<dict>
-		<key>OtherJobEnabled</key>
-		<dict>
-			<key>net.clamav.clamd</key>
-			<true/>
-		</dict>
-	</dict>
-	<key>Label</key>
-	<string>net.clamav.clamwatch</string>
-	<key>ProgramArguments</key>
-	<array>
-		<string>{{ brew_prefix }}/bin/clamwatch</string>
-		<string>{{ clamav_clamwatch_target_folder }}</string>
-		<string>{{ clamav_clamwatch_quarantine_folder }}</string>
-		<string>{{ clamav_clamwatch_stdout_log_file }}</string>
-	</array>
-	<key>RunAtLoad</key>
-	<true/>
-	<key>StandardErrorPath</key>
-	<string>{{ clamav_clamwatch_stderr_log_file }}</string>
-</dict>
+  <dict>
+    <key>KeepAlive</key>
+    <dict>
+      <key>OtherJobEnabled</key>
+      <dict>
+        <key>net.clamav.clamd</key>
+        <true/>
+      </dict>
+    </dict>
+    <key>Label</key>
+    <string>net.clamav.clamwatch</string>
+    <key>ProgramArguments</key>
+    <array>
+      <string>{{ brew_prefix }}/bin/clamwatch</string>
+      <string>{{ clamav_clamwatch_target_folder }}</string>
+      <string>{{ clamav_clamwatch_quarantine_folder }}</string>
+      <string>{{ clamav_clamwatch_stdout_log_file }}</string>
+    </array>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>StandardErrorPath</key>
+    <string>{{ clamav_clamwatch_stderr_log_file }}</string>
+  </dict>
 </plist>
