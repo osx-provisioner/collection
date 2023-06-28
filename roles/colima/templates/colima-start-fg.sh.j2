@@ -1,7 +1,8 @@
 #!/bin/bash
 
-COLIMA_PROFILE="{{ colima_default_profile }}"
-DAEMON_PID_FILE="/Users/{{ colima_user }}/.colima/{{ colima_default_profile }}/daemon/daemon.pid"
+COLIMA_PROFILE="{{ colima_service_default_profile }}"
+DAEMON_PID_FILE="/Users/{{ colima_service_user }}/.colima/{{ colima_service_default_profile }}/daemon/daemon.pid"
+STARTUP_DELAY="{{ colima_service_startup_delay }}"
 
 export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 
@@ -57,6 +58,9 @@ main() {
 
   trap colima_stop SIGINT
   trap colima_stop SIGTERM
+
+  echo "Waiting ${STARTUP_DELAY} second(s) ..."
+  sleep "${STARTUP_DELAY}"
 
   colima_foreground_start
   colima_foreground_poll
