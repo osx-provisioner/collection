@@ -54,14 +54,14 @@ jobs:
         scenario: ${{ fromJSON(needs.scenarios.outputs.SCENARIOS) }}
         platform: ${{ fromJSON(needs.configuration.outputs.JSON_FILE_DATA).ci_molecule_test_platforms }}
       max-parallel: ${{ fromJSON(needs.configuration.outputs.JSON_FILE_DATA).ci_concurrency_limit }}
-    uses: cicd-tools-org/cicd-tools/.github/workflows/job-40-poetry-molecule_role_command.yml@master
+    uses: cicd-tools-org/cicd-tools/.github/workflows/job-40-poetry-molecule_command.yml@master
     with:
       CONCURRENCY: ${{ fromJSON(needs.configuration.outputs.JSON_FILE_DATA).ci_concurrency_limit }}
       MOLECULE_COMMAND: "test"
       MOLECULE_SCENARIO: ${{ matrix.scenario }}
       PLATFORM: ${{ matrix.platform }}
       PYTHON_VERSIONS: ${{ toJSON(fromJSON(needs.configuration.outputs.JSON_FILE_DATA).ci_python_versions) }}
-      ROLE_PATH: "roles/colima"
+      TARGET_PATH: "roles/colima"
       VERBOSE_NOTIFICATIONS: ${{ fromJSON(needs.configuration.outputs.JSON_FILE_DATA).ci_verbose_notifications }}
       WORKFLOW_NAME: "colima"
 

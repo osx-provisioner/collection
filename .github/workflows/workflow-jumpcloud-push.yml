@@ -53,14 +53,14 @@ jobs:
       matrix:
         scenario: ${{ fromJSON(needs.scenarios.outputs.SCENARIOS) }}
       max-parallel: ${{ fromJSON(needs.configuration.outputs.JSON_FILE_DATA).ci_concurrency_limit }}
-    uses: cicd-tools-org/cicd-tools/.github/workflows/job-40-poetry-molecule_role_command.yml@master
+    uses: cicd-tools-org/cicd-tools/.github/workflows/job-40-poetry-molecule_command.yml@master
     with:
       CONCURRENCY: ${{ fromJSON(needs.configuration.outputs.JSON_FILE_DATA).ci_concurrency_limit }}
       MOLECULE_COMMAND: "test"
       MOLECULE_SCENARIO: ${{ matrix.scenario }}
       PLATFORM: "macos-11"
       PYTHON_VERSIONS: ${{ toJSON(fromJSON(needs.configuration.outputs.JSON_FILE_DATA).ci_python_versions) }}
-      ROLE_PATH: "roles/jumpcloud"
+      TARGET_PATH: "roles/jumpcloud"
       VERBOSE_NOTIFICATIONS: ${{ fromJSON(needs.configuration.outputs.JSON_FILE_DATA).ci_verbose_notifications }}
       WORKFLOW_NAME: "jumpcloud"
 
