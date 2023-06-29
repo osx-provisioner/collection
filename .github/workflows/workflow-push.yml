@@ -95,7 +95,7 @@ jobs:
       COMMAND: |
         CICD_COMMIT_MESSAGES_FILE="$(mktemp XXXXXXXX.git_history_file)"
         git log --pretty=format:%s "${PUSHED_COMMIT_REV_RANGE}" > "${CICD_COMMIT_MESSAGES_FILE}"
-        poetry run pre-commit run --hook-stage commit-msg commit-message-spelling --commit-msg-filename "${CICD_COMMIT_MESSAGES_FILE}"
+        poetry run pre-commit run --hook-stage commit-msg spelling-commit-message --commit-msg-filename "${CICD_COMMIT_MESSAGES_FILE}"
       COMMAND_NAME: "Commit Message Spelling"
       CONCURRENCY: ${{ fromJSON(needs.configuration.outputs.JSON_FILE_DATA).ci_concurrency_limit }}
       PYTHON_VERSIONS: ${{ toJSON(fromJSON(needs.configuration.outputs.JSON_FILE_DATA).ci_python_versions) }}
@@ -121,7 +121,7 @@ jobs:
     uses: cicd-tools-org/cicd-tools/.github/workflows/job-80-poetry-precommit_commit_stage_hook.yml@master
     with:
       CONCURRENCY: ${{ fromJSON(needs.configuration.outputs.JSON_FILE_DATA).ci_concurrency_limit }}
-      PRECOMMIT_HOOK_ID: "markdown-lint"
+      PRECOMMIT_HOOK_ID: "lint-markdown"
       PRECOMMIT_HOOK_NAME: "Markdown Linting"
       PYTHON_VERSIONS: ${{ toJSON(fromJSON(needs.configuration.outputs.JSON_FILE_DATA).ci_python_versions) }}
       VERBOSE_NOTIFICATIONS: ${{ fromJSON(needs.configuration.outputs.JSON_FILE_DATA).ci_verbose_notifications }}
@@ -133,7 +133,7 @@ jobs:
     uses: cicd-tools-org/cicd-tools/.github/workflows/job-80-poetry-precommit_commit_stage_hook.yml@master
     with:
       CONCURRENCY: ${{ fromJSON(needs.configuration.outputs.JSON_FILE_DATA).ci_concurrency_limit }}
-      PRECOMMIT_HOOK_ID: "markdown-spelling"
+      PRECOMMIT_HOOK_ID: "spelling-markdown"
       PRECOMMIT_HOOK_NAME: "Markdown Spelling"
       PYTHON_VERSIONS: ${{ toJSON(fromJSON(needs.configuration.outputs.JSON_FILE_DATA).ci_python_versions) }}
       VERBOSE_NOTIFICATIONS: ${{ fromJSON(needs.configuration.outputs.JSON_FILE_DATA).ci_verbose_notifications }}
@@ -158,9 +158,9 @@ jobs:
       fail-fast: true
       matrix:
         hook:
-          - id: "shell-fmt-lint"
+          - id: "format-shell"
             name: "Shell Formatting"
-          - id: "shell-lint"
+          - id: "lint-shell"
             name: "Shell Linting"
       max-parallel: ${{ fromJSON(needs.configuration.outputs.JSON_FILE_DATA).ci_concurrency_limit }}
     uses: cicd-tools-org/cicd-tools/.github/workflows/job-80-poetry-precommit_commit_stage_hook.yml@master
@@ -178,8 +178,8 @@ jobs:
     uses: cicd-tools-org/cicd-tools/.github/workflows/job-80-poetry-precommit_commit_stage_hook.yml@master
     with:
       CONCURRENCY: ${{ fromJSON(needs.configuration.outputs.JSON_FILE_DATA).ci_concurrency_limit }}
-      PRECOMMIT_HOOK_ID: "toml-lint"
-      PRECOMMIT_HOOK_NAME: "TOML Linting"
+      PRECOMMIT_HOOK_ID: "format-toml"
+      PRECOMMIT_HOOK_NAME: "TOML Formatting"
       PYTHON_VERSIONS: ${{ toJSON(fromJSON(needs.configuration.outputs.JSON_FILE_DATA).ci_python_versions) }}
       VERBOSE_NOTIFICATIONS: ${{ fromJSON(needs.configuration.outputs.JSON_FILE_DATA).ci_verbose_notifications }}
 
@@ -191,9 +191,9 @@ jobs:
       fail-fast: true
       matrix:
         hook:
-          - id: "workflow-lint"
+          - id: "lint-github-workflow"
             name: "Workflow Linting"
-          - id: "workflow-header-lint"
+          - id: "lint-github-workflow-header"
             name: "Workflow Header Linting"
       max-parallel: ${{ fromJSON(needs.configuration.outputs.JSON_FILE_DATA).ci_concurrency_limit }}
     uses: cicd-tools-org/cicd-tools/.github/workflows/job-80-poetry-precommit_commit_stage_hook.yml@master

@@ -33,14 +33,13 @@ repos:
     rev: v1.29.0
     hooks:
       - id: yamllint
-        args: ["-c", "./.yamllint.yml"]
+        args:
+          - "-c"
+          - "./.yamllint.yml"
         stages: [commit]
   - repo: https://github.com/cicd-tools-org/pre-commit.git
     rev: 0.1.0
     hooks:
-      - id: ansible-lint
-        files: "^roles/.+\\.(yaml|yml)$|^.ansible-lint$"
-      - id: commit-message-spelling
       - id: format-shell
         args:
           - "-w"
@@ -49,28 +48,23 @@ repos:
           - "-sr"
         files: "^.+\\.(bash|bash\\.j2|sh|sh\\.j2)$"
       - id: format-toml
-      - id: markdown-lint
+      - id: lint-ansible
+        files: "^roles/.+\\.(yaml|yml)$|^.ansible-lint$"
+      - id: lint-github-workflow
+      - id: lint-github-workflow-header
+      - id: lint-markdown
         args:
           - "-c"
           - ".markdownlint.yml"
-      - id: markdown-spelling
-      - id: shell-fmt-lint
-        args:
-          - "-d"
-          - "--indent=2"
-          - "-ci"
-          - "-sr"
-        files: "^.+\\.(bash|bash\\.j2|sh|sh\\.j2)$"
-      - id: shell-lint
+      - id: lint-shell
         args:
           - "--color=always"
           - "--source-path=SCRIPTDIR"
           - "--exclude=SC2317"
           - "-x"
         files: "^.+\\.(bash|bash\\.j2|sh|sh\\.j2)$"
-      - id: toml-lint
-      - id: workflow-header-lint
-      - id: workflow-lint
+      - id: spelling-commit-message
+      - id: spelling-markdown
   - repo: local
     hooks:
       - id: format-plist
