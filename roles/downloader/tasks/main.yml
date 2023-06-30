@@ -9,7 +9,7 @@
     dest: "{{ download_save_location }}/{{ downloader_item.name }}"
     owner: "{{ download_save_user }}"
     timeout: "{{ download_timeout }}"
-    mode: 0644
+    mode: "0644"
   loop: "{{ download_remote_urls }}"
   loop_control:
     loop_var: downloader_item

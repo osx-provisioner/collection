@@ -12,7 +12,7 @@
   ansible.builtin.get_url:
     url: "{{ jumpcloud_agent_url }}"
     dest: "{{ jumpcloud_installer_destination }}"
-    mode: 0700
+    mode: "0700"
   when: (jumpcloud_software_location.stat.exists and jumpcloud_upgrade) or not jumpcloud_software_location.stat.exists
   tags:
     - jumpcloud

@@ -4,7 +4,7 @@
   ansible.builtin.template:
     src: net.clamav.clamwatch.plist.j2
     dest: /Library/LaunchDaemons/net.clamav.clamwatch.plist
-    mode: 0644
+    mode: "0644"
     owner: root
     group: wheel
   notify:
@@ -15,7 +15,7 @@
   ansible.builtin.template:
     src: clamwatch.sh.j2
     dest: "{{ brew_prefix }}/bin/clamwatch"
-    mode: 0755
+    mode: "0755"
     owner: root
     group: wheel
   notify:

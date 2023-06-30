@@ -90,4 +90,4 @@
     src: "asdfrc.j2"
     dest: "{{ asdf_user_home }}/.asdfrc"
     owner: "{{ asdf_user }}"
-    mode: 0644
+    mode: "0644"

@@ -4,7 +4,7 @@
   ansible.builtin.file:
     path: "{{ clamav_database_location }}"
     state: directory
-    mode: 0755
+    mode: "0755"
     owner: _clamav
     group: _clamav
   notify:

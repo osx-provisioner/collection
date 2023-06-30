@@ -10,7 +10,7 @@
   ansible.builtin.file:
     path: "{{ clamav_clamwatch_stdout_log_file }}"
     state: touch
-    mode: 0640
+    mode: "0640"
     owner: root
     group: wheel
   when: not clamav_clamwatch_log.stat.exists
@@ -26,7 +26,7 @@
   ansible.builtin.file:
     path: "{{ clamav_clamwatch_stderr_log_file }}"
     state: touch
-    mode: 0640
+    mode: "0640"
     owner: root
     group: wheel
   when: not clamav_clamwatch_error_log.stat.exists

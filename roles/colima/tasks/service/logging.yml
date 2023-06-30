@@ -16,7 +16,7 @@
   ansible.builtin.file:
     path: "{{ colima_service_stderr_log_file }}"
     state: touch
-    mode: 0640
+    mode: "0640"
     owner: "{{ colima_service_user }}"
     group: admin
   when: not colima_service_stderr_log_file_stat.stat.exists
@@ -26,7 +26,7 @@
   ansible.builtin.file:
     path: "{{ colima_service_stdout_log_file }}"
     state: touch
-    mode: 0640
+    mode: "0640"
     owner: "{{ colima_service_user }}"
     group: admin
   when: not colima_service_stderr_log_file_stat.stat.exists

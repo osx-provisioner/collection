@@ -4,7 +4,7 @@
   ansible.builtin.template:
     src: net.clamav.freshclam.plist.j2
     dest: /Library/LaunchDaemons/net.clamav.freshclam.plist
-    mode: 0644
+    mode: "0644"
     owner: root
     group: wheel
   notify:
@@ -16,7 +16,7 @@
   ansible.builtin.template:
     src: freshclam.conf.j2
     dest:  "{{ clamav_freshclam_config_file }}"
-    mode: 0644
+    mode: "0644"
     owner: _clamav
     group: _clamav
   notify:
@@ -28,7 +28,7 @@
   ansible.builtin.template:
     src: net.clamav.clamd.plist.j2
     dest: /Library/LaunchDaemons/net.clamav.clamd.plist
-    mode: 0644
+    mode: "0644"
     owner: root
     group: wheel
   notify:
@@ -40,7 +40,7 @@
   ansible.builtin.template:
     src: clamd.conf.j2
     dest: "{{ clamav_clamd_config_file }}"
-    mode: 0644
+    mode: "0644"
     owner: root
     group: wheel
   notify:

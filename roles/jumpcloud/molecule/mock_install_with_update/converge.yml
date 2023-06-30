@@ -14,7 +14,7 @@
       ansible.builtin.copy:
         dest: "{{ jumpcloud_agent_location }}"
         content: "Mock Previous Install\n"
-        mode: 0644
+        mode: "0644"
       tags:
         - molecule-idempotence-notest
 
