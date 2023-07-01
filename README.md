@@ -5,7 +5,7 @@
 A collection of OSX automation tools for [Ansible](https://www.ansible.com/).
 
 - [![collection-github-workflow-push](https://github.com/osx-provisioner/collection/actions/workflows/workflow-push.yml/badge.svg?branch=master)](https://github.com/osx-provisioner/collection/actions/workflows/workflow-push.yml)<sup> (Master)</sup>
-- [![role-symlinks](https://github.com/osx-provisioner/collection/actions/workflows/workflow-symlinks-push.yml/badge.svg?branch=master)](https://github.com/osx-provisioner/collection/actions/workflows/workflow-symlinks-push.yml)<sup> (Dev)</sup>
+- [![collection-github-workflow-push](https://github.com/osx-provisioner/collection/actions/workflows/workflow-push.yml/badge.svg?branch=dev)](https://github.com/osx-provisioner/collection/actions/workflows/workflow-push.yml)<sup> (Dev)</sup>
 
 ## Table of Contents
 
