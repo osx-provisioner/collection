@@ -6,6 +6,7 @@ Ansible|ansible
 COLIMA|colima
 ClamAV|clamav
 DOWNLOADER|downloader
+FreshClam|freshclam
 HOMESHICK|homeshick
 Homebrew|homebrew
 JumpCloud|jumpcloud
