@@ -8,6 +8,51 @@
 
 Ansible role that installs the [Docker Desktop](https://www.docker.com/products/docker-desktop/) alternative [colima](https://github.com/abiosoft/colima).
 
+### Catalina and Later
+
+When using Colima as a service **Full Disk Access** in OSX may be problematic.  
+- In particular, it can be irksome when removable volumes are not accessible from inside a container.
+
+For those experiencing this problem, a manual workaround can be found with the use of `fdautil`, a component of [LaunchControl](https://soma-zone.com/LaunchControl/).
+- Although this application is proprietary, the enclosed free to use `fdautil` binary it ships with provides a secure method of granting **Full Disk Access**.  (And it's a great tool!)
+
+#### Full Disk Access Workaround
+
+Use `fdautil` as a proxy, grant it **Full Disk Access**, then follow these 4 steps:
+
+1. In your terminal execute:
+    ```bash
+      sudo /usr/local/bin/fdautil set agent com.github.abiosoft.colima /bin/bash /usr/local/bin/colima-start-fg.sh
+    ```
+
+2. Next, modify `~/Library/LaunchAgents/com.github.abiosoft.colima.plist`:
+   - change:
+      ```html
+        <string>/bin/bash</string>
+        <string>/usr/local/bin/colima-start-fg.sh</string>
+      ```
+   - to:
+      ```html
+        <string>/usr/local/bin/fdautil</string>
+        <string>exec</string>
+        <string>/bin/bash</string>
+        <string>/usr/local/bin/colima-start-fg.sh</string>
+      ```
+
+3. Then, secure your startup script to prevent it from becoming a point of escalation:
+    ```bash
+      chmod 755 /usr/local/bin/colima-start-fg.sh
+      chown root:wheel /usr/local/bin/colima-start-fg.sh
+    ```
+
+4. Finally, unload and reload your service:
+    ```bash
+      launchctl unload -w ~/Library/LaunchAgents/com.github.abiosoft.colima.plist
+      launchctl load -w ~/Library/LaunchAgents/com.github.abiosoft.colima.plist
+    ```
+
+This is fairly easy to automate in Ansible, however I'm hesitant to bundle [LaunchControl](https://soma-zone.com/LaunchControl/) with this role and will instead leave these hints for others in this situation.
+
 Requirements
 ------------
 
