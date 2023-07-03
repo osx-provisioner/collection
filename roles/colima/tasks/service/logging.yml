@@ -8,7 +8,7 @@
 - name: Check Colima Stdout Logfile Exists
   become: true
   ansible.builtin.stat:
-    path: "{{ colima_service_stderr_log_file }}"
+    path: "{{ colima_service_stdout_log_file }}"
   register: colima_service_stdout_log_file_stat
 
 - name: Create Colima Stderr Logfile
@@ -29,4 +29,4 @@
     mode: "0640"
     owner: "{{ colima_service_user }}"
     group: admin
-  when: not colima_service_stderr_log_file_stat.stat.exists
+  when: not colima_service_stdout_log_file_stat.stat.exists
