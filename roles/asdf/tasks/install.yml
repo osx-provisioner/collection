@@ -15,18 +15,17 @@
   become: True
   become_user: "{{ asdf_user }}"
   ansible.builtin.git:
-    repo: "https://github.com/asdf-vm/asdf.git"
+    repo: "{{ asdf_git_repository_url }}"
     dest: "{{ asdf_user_home }}/.asdf"
     version: "{{ asdf_version }}"
     clone: no
-    update: no
-  register: asdf_existing_install
+  register: asdf_git_results
 
 - name: Install asdf
   become: True
   become_user: "{{ asdf_user }}"
   ansible.builtin.git:
-    repo: "https://github.com/asdf-vm/asdf.git"
+    repo: "{{ asdf_git_repository_url }}"
     dest: "{{ asdf_user_home }}/.asdf"
     version: "{{ asdf_version }}"
-  when: not asdf_existing_install.before
+  when: not asdf_git_results.before

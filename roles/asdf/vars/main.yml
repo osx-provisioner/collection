@@ -1,2 +1,4 @@
 ---
 # vars file for role-asdf
+
+asdf_git_repository_url: "https://github.com/asdf-vm/asdf.git"

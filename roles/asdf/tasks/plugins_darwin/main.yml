@@ -1,9 +1,9 @@
 ---
 - name: Set asdf_source Variable
   ansible.builtin.set_fact:
-    "asdf_source": "{{ asdf_user_home }}/.asdf/asdf.sh"
+    asdf_source: "{{ asdf_user_home }}/.asdf/asdf.sh"
 
-- name: Install Homebrew Packages
+- name: Install Optional Dependencies with Homebrew
   become: True
   become_user: "{{ asdf_user }}"
   community.general.homebrew:
@@ -11,8 +11,8 @@
     state: upgraded
   retries: "{{ asdf_homebrew_retries }}"
   delay: 3
-  register: asdf_install_optional_dependencies
-  until: asdf_install_optional_dependencies is not failed
+  register: asdf_install_optional_dependencies_results
+  until: asdf_install_optional_dependencies_results is not failed
 
 - name: Install asdf Plugins
   become: True
@@ -28,7 +28,7 @@
   when: asdf_plugins|length > 0
   ignore_errors: True  # noqa ignore-errors
 
-- name: Install OSX Specific Plugin Configuration
+- name: Install Plugin Specific Dependencies
   ansible.builtin.include_tasks: "plugins_darwin/install.yml"
   with_items: "{{ asdf_plugins }}"
   loop_control:
