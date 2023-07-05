@@ -1,0 +1,12 @@
+---
+firewall_enabled: true
+
+firewall_apps_blocked_paths:
+  - /usr/sbin/netbiosd
+  - /sbin/launchd
+
+firewall_apps_unblocked_paths:
+  - /System/Library/PrivateFrameworks/Heimdal.framework/Helpers/kdc
+
+firewall_apps_unmanaged_paths:
+  - /usr/libexec/rapportd

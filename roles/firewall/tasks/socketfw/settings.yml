@@ -1,0 +1,36 @@
+---
+- name: Query Existing Socket Firewall State
+  ansible.builtin.include_tasks: "./socketfw/execute.yml"
+  loop:
+    - "{{ firewall_cli_query_commands | join(' ') }}"
+  loop_control:
+    loop_var: "firewall_cli_command_item"
+
+- name: Store Socket Firewall State
+  ansible.builtin.set_fact:
+    firewall_cli_original_configuration_state: "{{ firewall_cli_command_results.stdout }}"
+
+- name: Configure Socket Firewall State
+  ansible.builtin.include_tasks: "./socketfw/execute.yml"
+  loop: "{{ firewall_cli_configure_commands }}"
+  loop_control:
+    loop_var: "firewall_cli_command_item"
+
+- name: Query New Socket Firewall State
+  ansible.builtin.include_tasks: "./socketfw/execute.yml"
+  loop:
+    - "{{ firewall_cli_query_commands | join(' ') }}"
+  loop_control:
+    loop_var: "firewall_cli_command_item"
+
+- name: Store Socket Firewall New State
+  ansible.builtin.set_fact:
+    firewall_cli_new_configuration_state: "{{ firewall_cli_command_results.stdout }}"
+
+- name: Compare Old and New State
+  ansible.builtin.command: "/bin/echo"
+  changed_when: true
+  when:
+    - firewall_cli_new_configuration_state != firewall_cli_original_configuration_state
+  notify:
+    - "Restart Systems Preferences"

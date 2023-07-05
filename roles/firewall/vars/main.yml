@@ -1,0 +1,46 @@
+---
+# vars file for role-firewall
+
+firewall_cli_valid_logging_levels:
+  - brief
+  - detail
+  - throttled
+
+firewall_cli_binary: "/usr/libexec/ApplicationFirewall/socketfilterfw"
+
+firewall_cli_command: ""
+
+firewall_cli_add_app_commands:
+  - "--add"
+
+firewall_cli_block_app_commands:
+  - "--add"
+  - "--blockapp"
+
+firewall_cli_configure_commands:
+  - "--setallowsigned {{ firewall_allow_builtin_apps | ternary('on', 'off') }}"
+  - "--setallowsignedapp {{ firewall_allow_all_signed_apps | ternary('on', 'off') }}"
+  - "--setglobalstate {{ firewall_enabled | ternary('on', 'off') }}"
+  - "--setloggingmode {{ firewall_logging_enabled | ternary('on', 'off') }}"
+  - "--setloggingopt {{ firewall_logging_level | lower }}"
+  - "--setstealthmode {{ firewall_stealth_mode_enabled | ternary('on', 'off') }}"
+  - "--setblockall {{ firewall_block_all_enabled | ternary('on', 'off') }}"
+
+firewall_cli_list_apps_commands:
+  - "--listapps"
+
+firewall_cli_query_commands:
+  - "--getallowsigned"
+  - "--getglobalstate"
+  - "--getloggingmode"
+  - "--getloggingmode"
+  - "--getloggingopt"
+  - "--getstealthmode"
+  - "--getblockall"
+
+firewall_cli_remove_app_commands:
+  - "--remove"
+
+firewall_cli_unblock_app_commands:
+  - "--add"
+  - "--unblockapp"

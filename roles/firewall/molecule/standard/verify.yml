@@ -1,0 +1,24 @@
+---
+- name: Verify
+  hosts: all
+  gather_facts: false
+  tasks:
+
+    - name: Display Logs For Troubleshooting Failures
+      block:
+
+        - name: Verify Socket Firewall Applications
+          ansible.builtin.include_tasks: "../common/tasks/verify_socket_firewall_applications.yml"
+
+        - name: Verify Socket Firewall State
+          ansible.builtin.include_tasks: "../common/tasks/verify_socket_firewall_settings.yml"
+          vars:
+            firewall_molecule_cli_expected_state: "Automatically allow built-in signed software DISABLED\nAutomatically allow downloaded software DISABLED\nFirewall is enabled. (State = 1) \nStealth mode enabled \nBlock all DISABLED! \nLog mode is off \nLog Option is throttled "
+
+        - name: Verify Packet Filter Service
+          ansible.builtin.include_tasks: "../common/tasks/verify_packet_filter_service.yml"
+
+      always:
+
+        - name: Display Logs
+          ansible.builtin.include_tasks: "../common/tasks/display_logs.yml"

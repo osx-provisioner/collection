@@ -1,0 +1,53 @@
+---
+- name: Converge
+  hosts: all
+  connection: local
+  tasks:
+
+    - name: Expect Failure 1
+      block:
+        - name: Load Defaults
+          ansible.builtin.include_vars: "../../defaults/main.yml"
+
+        - name: Load Bad Config 1
+          ansible.builtin.include_vars: "../vars/bad_config_1.yml"
+
+        - name: Include osx_provisioner.collection.firewall
+          ansible.builtin.include_role:
+            name: "osx_provisioner.collection.firewall"
+
+        - name: Check execution halted
+          ansible.builtin.fail:
+            msg: "The playbook should stop execution before this step."
+          register: playbook_exception
+
+      rescue:
+
+        - name: Verify the role failed
+          ansible.builtin.assert:
+            that:
+              - playbook_exception is not defined
+
+    - name: Expect Failure 2
+      block:
+        - name: Load Defaults
+          ansible.builtin.include_vars: "../../defaults/main.yml"
+
+        - name: Load Bad Config 1
+          ansible.builtin.include_vars: "../vars/bad_config_2.yml"
+
+        - name: Include osx_provisioner.collection.firewall
+          ansible.builtin.include_role:
+            name: "osx_provisioner.collection.firewall"
+
+        - name: Check execution halted
+          ansible.builtin.fail:
+            msg: "The playbook should stop execution before this step."
+          register: playbook_exception
+
+      rescue:
+
+        - name: Verify the role failed
+          ansible.builtin.assert:
+            that:
+              - playbook_exception is not defined

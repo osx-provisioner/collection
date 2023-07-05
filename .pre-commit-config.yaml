@@ -46,6 +46,7 @@ repos:
           - "--indent=2"
           - "-ci"
           - "-sr"
+        exclude: "^roles/firewall/templates/pf-configure\\.sh\\.j2$"
         files: "^.+\\.(bash|bash\\.j2|sh|sh\\.j2)$"
       - id: format-toml
       - id: lint-ansible
@@ -62,6 +63,7 @@ repos:
           - "--source-path=SCRIPTDIR"
           - "--exclude=SC2317"
           - "-x"
+        exclude: "^roles/firewall/templates/pf-configure\\.sh\\.j2$"
         files: "^.+\\.(bash|bash\\.j2|sh|sh\\.j2)$"
       - id: spelling-commit-message
       - id: spelling-markdown

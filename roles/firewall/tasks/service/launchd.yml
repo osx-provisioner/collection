@@ -1,0 +1,22 @@
+---
+- name: Add Packet Filter Configuration Script
+  become: true
+  ansible.builtin.template:
+    src: "./templates/pf-configure.sh.j2"
+    dest: "/usr/local/bin/pf-configure.sh"
+    mode: "0750"
+    owner: "root"
+    group: "wheel"
+  notify:
+    - "Restart Packet Filter Customization Service"
+
+- name: Template Packet Filter Service File
+  become: true
+  ansible.builtin.template:
+    src: ./templates/com.apple.pfctl.user.custom.plist.j2
+    dest: /Library/LaunchDaemons/com.apple.pfctl.user.custom.plist
+    owner: "root"
+    group: "wheel"
+    mode: "0644"
+  notify:
+    - "Restart Packet Filter Customization Service"

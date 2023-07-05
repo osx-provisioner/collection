@@ -1,0 +1,33 @@
+---
+# defaults file for role-firewall
+
+firewall_enabled: true
+
+firewall_allow_builtin_apps: false
+firewall_allow_all_signed_apps: false
+firewall_block_all_enabled: false
+firewall_logging_enabled: false
+firewall_logging_level: "throttled" # throttled | brief | detail
+firewall_stealth_mode_enabled: true
+
+firewall_service_stdout_log_file: "/var/log/pfctl.user.custom.stdout.log"
+firewall_service_stderr_log_file: "/var/log/pfctl.user.custom.stderr.log"
+
+firewall_apps_blocked_paths: []
+firewall_apps_unblocked_paths: []
+firewall_apps_unmanaged_paths: []
+
+firewall_pf_anchors: []
+
+# Anchor Examples
+# firewall_pf_anchors:
+#   - name: "lan_ssh.pf"
+#     description: "Allow SSH from 192.168.0.9"
+#     rules: |
+#       block drop in proto {tcp, udp} from any to any port = 22
+#       pass in inet proto tcp from 192.168.0.9 to any port = 22 keep state
+#   - name: "enable_lan_vnc.pf"
+#     description: "Allow VNC traffic from 192.168.0.10"
+#     rules: |
+#       block drop in proto {tcp, udp} from any to any port = 5900
+#       pass in inet proto tcp from 192.168.0.10 to any port = 5900 keep state

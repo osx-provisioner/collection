@@ -1,0 +1,29 @@
+#!/bin/bash
+
+set -eo pipefail
+
+main() {
+
+  echo "** PF Configuration Script **"
+  date
+  _pf_wait_for_network
+  _pf_anchors
+
+}
+
+_pf_anchors() {
+  echo "> Load Custom Anchors ..."
+{% for anchor in firewall_pf_anchors %}
+  echo "> Loading: '{{ anchor.description }}'' ...."
+  pfctl -a "com.apple/{{ anchor.name }}" -f "/etc/pf.anchors/{{ anchor.name }}"
+  echo "> Loaded!"
+{% endfor %}
+  echo "< Custom Anchors Loaded!"
+}
+
+_pf_wait_for_network() {
+  /bin/sleep 5
+  /usr/sbin/ipconfig waitall
+}
+
+main "$@"

@@ -1,0 +1,24 @@
+---
+dependency:
+  name: galaxy
+  options:
+    role-file: "../../requirements.yml"
+    requirements-file: "../../requirements.yml"
+    timeout: "120"
+    force: false
+driver:
+  name: delegated
+  options:
+    managed: False
+    ansible_connection_options:
+      ansible_connection: local
+      ansible_become_password: "${ANSIBLE_BECOME_PASSWORD}"
+platforms:
+  - name: instance
+provisioner:
+  name: ansible
+  config_options:
+    privilege_escalation:
+      become_method: sudo
+verifier:
+  name: ansible

@@ -1,0 +1,17 @@
+---
+# set: firewall_molecule_cli_expected_state
+
+- name: Load Socket Filter Commands
+  ansible.builtin.include_vars: "../../../vars/main.yml"
+
+- name: Query Existing Socket Firewall State
+  ansible.builtin.include_tasks: "../../../tasks/socketfw/execute.yml"
+  loop:
+    - "{{ firewall_cli_query_commands | join(' ') }}"
+  loop_control:
+    loop_var: "firewall_cli_command_item"
+
+- name: Verify Socket Firewall State Correct
+  ansible.builtin.assert:
+    that:
+      - firewall_cli_command_results.stdout == firewall_molecule_cli_expected_state

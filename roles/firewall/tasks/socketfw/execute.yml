@@ -1,0 +1,24 @@
+---
+# set: firewall_cli_command_item
+
+- name: Create Socket Firewall Command
+  ansible.builtin.set_fact:
+    firewall_cli_command: "{{ firewall_cli_binary }} {{ firewall_cli_command_item }}"
+
+- name: Debug Socket Firewall Command
+  ansible.builtin.debug:
+    msg: "Executing: {{ firewall_cli_command }}"
+
+- name: Run Socket Firewall Command
+  become: true
+  register: firewall_cli_command_results
+  ansible.builtin.command: "{{ firewall_cli_command }}"
+  changed_when: false
+
+- name: Debug Socket Firewall Command Results
+  ansible.builtin.debug:
+    msg: "Results: {{ firewall_cli_command_results.stdout }}"
+
+- name: Wait For Socket Firewall
+  ansible.builtin.pause:
+    seconds: 0.5

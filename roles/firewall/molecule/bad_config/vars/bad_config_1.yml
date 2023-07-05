@@ -1,0 +1,4 @@
+---
+
+firewall_logging_enabled: true
+firewall_logging_level: "bad value"

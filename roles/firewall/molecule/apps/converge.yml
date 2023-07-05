@@ -1,0 +1,24 @@
+---
+- name: Converge
+  hosts: all
+  connection: local
+  tasks:
+
+    - name: Setup Scenario
+      ansible.builtin.include_tasks: "../common/tasks/setup.yml"
+
+    - name: Load Socket Filter Commands
+      ansible.builtin.include_vars: "../../../vars/main.yml"
+
+    - name: Load Scenario Var Content
+      ansible.builtin.include_vars: "vars/main.yml"
+
+    - name: Add Test Applications To Firewall
+      ansible.builtin.include_tasks: "../../tasks/socketfw/execute.yml"
+      loop: "{{ firewall_cli_add_app_commands | product(firewall_apps_unmanaged_paths) | map('join', ' ') }}"
+      loop_control:
+        loop_var: "firewall_cli_command_item"
+
+    - name: Include osx_provisioner.collection.firewall
+      ansible.builtin.include_role:
+        name: "osx_provisioner.collection.firewall"

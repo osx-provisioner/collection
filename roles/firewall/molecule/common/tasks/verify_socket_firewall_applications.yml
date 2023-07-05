@@ -1,0 +1,74 @@
+---
+# set: firewall_molecule_cli_expected_state
+
+- name: Load Socket Filter Commands
+  ansible.builtin.include_vars: "../../../vars/main.yml"
+
+- name: Load Default Var Content
+  ansible.builtin.include_vars: "../../defaults/main.yml"
+
+- name: Load Scenario Var Content
+  ansible.builtin.include_vars: "vars/main.yml"
+
+- name: Query Existing Socket Firewall Applications
+  ansible.builtin.include_tasks: "../../../tasks/socketfw/execute.yml"
+  loop: "{{ firewall_cli_list_apps_commands }}"
+  loop_control:
+    loop_var: "firewall_cli_command_item"
+
+- name: Parse Output
+  ansible.builtin.set_fact:
+    firewall_molecule_parsed_apps: "{{ firewall_cli_command_results.stdout.split(':')[2:] }}"
+    firewall_molecule_blocked_apps: []
+    firewall_molecule_unblocked_apps: []
+
+- name: Create Blocked Apps List
+  ansible.builtin.set_fact:
+    firewall_molecule_blocked_apps: "{{ firewall_molecule_blocked_apps + [firewall_molecule_app_item.split('\n')[0].strip()]  }}"
+  loop: "{{ firewall_molecule_parsed_apps }}"
+  loop_control:
+    loop_var: "firewall_molecule_app_item"
+  when: "'( block incoming connections )' in firewall_molecule_app_item | lower"
+
+- name: Create Unblocked Apps List
+  ansible.builtin.set_fact:
+    firewall_molecule_unblocked_apps: "{{ firewall_molecule_unblocked_apps + [firewall_molecule_app_item.split('\n')[0].strip()] }}"
+  loop: "{{ firewall_molecule_parsed_apps }}"
+  loop_control:
+    loop_var: "firewall_molecule_app_item"
+  when: "'( allow incoming connections )' in firewall_molecule_app_item | lower"
+
+- name: Debug Parsed Lists
+  ansible.builtin.debug:
+    msg:
+      - "All Apps"
+      - "{{ firewall_molecule_parsed_apps }}"
+      - "Blocked Apps"
+      - "{{ firewall_molecule_blocked_apps }}"
+      - "Unblocked Apps"
+      - "{{ firewall_molecule_unblocked_apps }}"
+
+- name: Validate Blocked Apps
+  ansible.builtin.assert:
+    that:
+      - firewall_molecule_app_item in firewall_molecule_blocked_apps
+  loop: "{{ firewall_apps_blocked_paths }}"
+  loop_control:
+    loop_var: "firewall_molecule_app_item"
+
+- name: Validate Unblocked Apps
+  ansible.builtin.assert:
+    that:
+      - firewall_molecule_app_item in firewall_molecule_unblocked_apps
+  loop: "{{ firewall_apps_unblocked_paths }}"
+  loop_control:
+    loop_var: "firewall_molecule_app_item"
+
+- name: Validate Unmanaged Apps
+  ansible.builtin.assert:
+    that:
+      - firewall_molecule_app_item not in firewall_molecule_blocked_apps
+      - firewall_molecule_app_item not in firewall_molecule_unblocked_apps
+  loop: "{{ firewall_apps_unmanaged_paths }}"
+  loop_control:
+    loop_var: "firewall_molecule_app_item"

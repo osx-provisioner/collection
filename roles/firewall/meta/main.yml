@@ -1,0 +1,22 @@
+---
+galaxy_info:
+  role_name: firewall
+  namespace: osx_provisioner
+  author: Niall Byrne
+  description: Ansible role that manages the OSX firewall.
+  company: Shared Vision Solutions
+  license: MIT
+  platforms:
+    - name: macOS
+      versions:
+        - Monterey
+  min_ansible_version: 2.11.0
+  galaxy_tags:
+    - firewall
+    - socketfilterfw
+    - mac
+    - osx
+    - pf
+    - pfctl
+
+dependencies: []

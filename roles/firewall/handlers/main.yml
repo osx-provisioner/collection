@@ -1,0 +1,25 @@
+---
+# handlers file for role-firewall
+
+- name: Enable Custom Packet Filter Rules
+  become: true
+  community.general.launchd:
+    name: "com.apple.pfctl.user.custom"
+    enabled: true
+    state: restarted
+  listen: "Restart Packet Filter Customization Service"
+
+- name: Retrieve Running Processes
+  become: true
+  register: firewall_system_preferences_pid
+  ansible.builtin.command: "ps aux"
+  changed_when: false
+  listen: "Restart Systems Preferences"
+
+- name: Restart System Preferences for Synchronization
+  become: true
+  ansible.builtin.command: "killall 'System Preferences'"
+  changed_when: true
+  when:
+    - "'/System/Applications/System Preferences.app/Contents/MacOS/System Preferences' in firewall_system_preferences_pid.stdout"
+  listen: "Restart System Preferences"

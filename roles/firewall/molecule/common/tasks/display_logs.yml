@@ -1,0 +1,36 @@
+---
+- name: Load Defaults
+  ansible.builtin.include_vars: "../../../defaults/main.yml"
+
+- name: Create Log File List
+  ansible.builtin.set_fact:
+    firewall_molecule_log_list:
+      - "{{ firewall_service_stdout_log_file }}"
+      - "{{ firewall_service_stderr_log_file }}"
+
+- name: Check For Existence of Logs
+  ansible.builtin.stat:
+    path: "{{ firewall_molecule_log_file }}"
+  register: firewall_molecule_log_stat
+  loop: "{{ firewall_molecule_log_list }}"
+  loop_control:
+    loop_var: firewall_molecule_log_file
+
+- name: Read Log Files
+  ansible.builtin.slurp:
+    path: "{{ firewall_molecule_log_file.stat.path }}"
+  register: firewall_molecule_log_data
+  when: firewall_molecule_log_file.stat.exists
+  loop: "{{ firewall_molecule_log_stat.results }}"
+  loop_control:
+    loop_var: firewall_molecule_log_file
+
+- name: Display Log Data
+  ansible.builtin.debug:
+    msg:
+      - "filename: {{ firewall_molecule_log_file.source }}"
+      - "{{ firewall_molecule_log_file.content | b64decode | split('\n') }}"
+  when: firewall_molecule_log_file.source is defined
+  loop: "{{ firewall_molecule_log_data.results }}"
+  loop_control:
+    loop_var: firewall_molecule_log_file

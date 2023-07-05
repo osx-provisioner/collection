@@ -1,0 +1,24 @@
+---
+firewall_enabled: true
+
+firewall_allow_builtin_apps: true
+firewall_allow_all_signed_apps: true
+firewall_block_all_enabled: true
+firewall_logging_enabled: true
+firewall_logging_level: "detail" # throttled | brief | detail
+firewall_stealth_mode_enabled: false
+
+firewall_service_stdout_log_file: "/var/log/pfctl.user.custom.stdout.log"
+firewall_service_stderr_log_file: "/var/log/pfctl.user.custom.stderr.log"
+
+firewall_pf_anchors:
+  - name: "test_anchor_1.pf"
+    description: "Simply for testing 1"
+    rules: |
+      block drop in inet proto tcp from any to any port = 1111
+      block drop in inet proto tcp from any to any port = 2222
+  - name: "test_anchor_2.pf"
+    description: "Simply for testing 2"
+    rules: |
+      block drop in inet proto tcp from any to any port = 3333
+      block drop in inet proto tcp from any to any port = 4444

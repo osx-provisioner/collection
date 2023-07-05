@@ -1,0 +1,62 @@
+---
+- name: Load Default Var Content
+  ansible.builtin.include_vars: "../../defaults/main.yml"
+
+- name: Load Scenario Var Content
+  ansible.builtin.include_vars: "vars/main.yml"
+
+- name: Stat Packet Filter Anchor Files
+  become: true
+  ansible.builtin.stat:
+    path: "/etc/pf.anchors/{{ firewall_molecule_anchor_item.name }}"
+  register: firewall_molecule_anchor_file_stat
+  loop: "{{ firewall_pf_anchors }}"
+  loop_control:
+    loop_var: firewall_molecule_anchor_item
+
+- name: Verify Packet Filter Anchor Files Exist
+  ansible.builtin.assert:
+    that:
+      - firewall_molecule_anchor_file_item.stat.exists
+  loop: "{{ firewall_molecule_anchor_file_stat.results }}"
+  loop_control:
+    loop_var: firewall_molecule_anchor_file_item
+
+- name: Check Installed Anchors
+  become: true
+  register: firewall_molecule_packet_filter_results
+  ansible.builtin.command: "sudo pfctl -vsA"
+  changed_when: false
+
+- name: Debug Installed Anchors
+  ansible.builtin.debug:
+    var: firewall_molecule_packet_filter_results
+
+- name: Verify Packet Filter Anchors Are Installed
+  ansible.builtin.assert:
+    that:
+      - firewall_molecule_anchor_item.name in firewall_molecule_packet_filter_results.stdout
+  loop: "{{ firewall_pf_anchors }}"
+  loop_control:
+    loop_var: firewall_molecule_anchor_item
+
+- name: Check Installed Anchor Rules
+  become: true
+  register: firewall_molecule_packet_filter_anchor_rules_results
+  ansible.builtin.command: "sudo pfctl -a 'com.apple/{{ firewall_molecule_anchor_item.name }}' -sr"
+  changed_when: false
+  loop: "{{ firewall_pf_anchors }}"
+  loop_control:
+    loop_var: firewall_molecule_anchor_item
+
+- name: Debug Anchor Content
+  ansible.builtin.debug:
+    var: firewall_molecule_packet_filter_anchor_rules_results
+
+- name: Verify Packet Filter Anchors Have Correct Rules
+  ansible.builtin.assert:
+    that:
+      - firewall_molecule_anchor_contents_item.firewall_molecule_anchor_item.rules == firewall_molecule_anchor_contents_item.stdout + "\n"
+  loop: "{{ firewall_molecule_packet_filter_anchor_rules_results.results }}"
+  loop_control:
+    loop_var: firewall_molecule_anchor_contents_item

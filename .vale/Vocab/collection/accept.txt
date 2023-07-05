@@ -17,6 +17,8 @@ brew_(casks|install_state|packages|prefix|retries|sudo_password|taps|targeted_ca
 config
 dotfiles
 download_(retries|save_location|save_user|timeout)
+firewall_(enabled|allow_builtin_apps|allow_all_signed_apps|apps_blocked_paths|apps_unblocked_paths|apps_unmanaged_paths|block_all_enabled|logging_enabled|logging_level|stealth_mode_enabled)
+fw
 gitflow
 launchd
 mac_maker
@@ -26,5 +28,6 @@ rbenv
 stderr
 stdout
 symlinks_user
+unmanaged
 url
 wip

@@ -1,0 +1,45 @@
+---
+# tasks file for role-firewall
+
+- name: Validate Selected Logging Level
+  ansible.builtin.fail:
+    msg: "{{ firewall_logging_level }} is not a valid logging level. ({{ firewall_cli_valid_logging_levels | join(', ') }})"
+  when:
+    - firewall_logging_enabled
+    - firewall_logging_level | lower not in firewall_cli_valid_logging_levels
+  tags:
+    - firewall
+
+- name: Validate Block All and Global Disable Conflict
+  ansible.builtin.fail:
+    msg: "You cannot disable the firewall and block all traffic!"
+  when:
+    - not firewall_enabled
+    - firewall_block_all_enabled
+  tags:
+    - firewall
+
+- name: Configure the Socket Firewall Settings
+  ansible.builtin.include_tasks: "./socketfw/settings.yml"
+  tags:
+    - firewall
+
+- name: Configure the Socket Firewall Applications
+  ansible.builtin.include_tasks: "./socketfw/applications.yml"
+  tags:
+    - firewall
+
+- name: Setup Packet Filter Customization Service Logging
+  ansible.builtin.import_tasks: "service/logging.yml"
+  tags:
+    - firewall
+
+- name: Install Packet Filter Customization Service Anchor Files
+  ansible.builtin.import_tasks: "service/anchors.yml"
+  tags:
+    - firewall
+
+- name: Install Packet Filter Customization Service
+  ansible.builtin.import_tasks: "service/launchd.yml"
+  tags:
+    - firewall

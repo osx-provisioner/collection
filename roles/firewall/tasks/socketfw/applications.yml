@@ -1,0 +1,46 @@
+---
+- name: Query Existing Socket Firewall Applications
+  ansible.builtin.include_tasks: "./socketfw/execute.yml"
+  loop: "{{ firewall_cli_list_apps_commands }}"
+  loop_control:
+    loop_var: "firewall_cli_command_item"
+
+- name: Store Socket Firewall Applications
+  ansible.builtin.set_fact:
+    firewall_cli_original_app_state: "{{ firewall_cli_command_results.stdout }}"
+
+- name: Block All Configured Applications
+  ansible.builtin.include_tasks: "./socketfw/execute.yml"
+  loop: "{{ firewall_cli_block_app_commands | product(firewall_apps_blocked_paths) | map('join', ' ') }}"
+  loop_control:
+    loop_var: "firewall_cli_command_item"
+
+- name: Unblock All Configured Applications
+  ansible.builtin.include_tasks: "./socketfw/execute.yml"
+  loop: "{{ firewall_cli_unblock_app_commands | product(firewall_apps_unblocked_paths) | map('join', ' ') }}"
+  loop_control:
+    loop_var: "firewall_cli_command_item"
+
+- name: Remove All Configured Applications
+  ansible.builtin.include_tasks: "./socketfw/execute.yml"
+  loop: "{{ firewall_cli_remove_app_commands | product(firewall_apps_unmanaged_paths) | map('join', ' ') }}"
+  loop_control:
+    loop_var: "firewall_cli_command_item"
+
+- name: Query Existing Socket Firewall Applications
+  ansible.builtin.include_tasks: "./socketfw/execute.yml"
+  loop: "{{ firewall_cli_list_apps_commands }}"
+  loop_control:
+    loop_var: "firewall_cli_command_item"
+
+- name: Store Socket Firewall Applications
+  ansible.builtin.set_fact:
+    firewall_cli_original_app_state: "{{ firewall_cli_command_results.stdout }}"
+
+- name: Compare Old and New State
+  ansible.builtin.command: "/bin/echo"
+  changed_when: true
+  when:
+    - firewall_cli_original_app_state != firewall_cli_original_app_state
+  notify:
+    - "Restart Systems Preferences"

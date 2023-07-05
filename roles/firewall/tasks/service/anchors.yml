@@ -1,0 +1,16 @@
+---
+- name: Add Packet Filter Customized Anchors
+  become: true
+  ansible.builtin.copy:
+    content: |
+      # {{ firewall_anchor_item.description }}
+      {{ firewall_anchor_item.rules }}
+    dest: "/etc/pf.anchors/{{ firewall_anchor_item.name }}"
+    mode: "0644"
+    owner: "root"
+    group: "wheel"
+  loop: "{{ firewall_pf_anchors }}"
+  loop_control:
+    loop_var: "firewall_anchor_item"
+  notify:
+    - "Restart Packet Filter Customization Service"
