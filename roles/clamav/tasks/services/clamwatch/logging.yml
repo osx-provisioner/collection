@@ -1,0 +1,32 @@
+---
+- name: Check ClamWatch Stdout Log File exists
+  become: true
+  ansible.builtin.stat:
+    path: "{{ clamav_clamwatch_stdout_log_file }}"
+  register: clamav_clamwatch_stdout_log_file_stat_results
+
+- name: Check ClamWatch Stderr Log File exists
+  become: true
+  ansible.builtin.stat:
+    path: "{{ clamav_clamwatch_stderr_log_file }}"
+  register: clamav_clamwatch_stderr_log_file_stat_results
+
+- name: Create ClamWatch Stdout Log File
+  become: true
+  ansible.builtin.file:
+    path: "{{ clamav_clamwatch_stdout_log_file }}"
+    state: touch
+    mode: "0640"
+    owner: root
+    group: wheel
+  when: not clamav_clamwatch_stdout_log_file_stat_results.stat.exists
+
+- name: Create ClamWatch Stderr Log File
+  become: true
+  ansible.builtin.file:
+    path: "{{ clamav_clamwatch_stderr_log_file }}"
+    state: touch
+    mode: "0640"
+    owner: root
+    group: wheel
+  when: not clamav_clamwatch_stderr_log_file_stat_results.stat.exists

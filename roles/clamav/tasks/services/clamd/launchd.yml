@@ -1,0 +1,24 @@
+---
+- name: Install Clamd Service Plist
+  become: true
+  ansible.builtin.template:
+    src: services/clamd/net.clamav.clamd.plist.j2
+    dest: /Library/LaunchDaemons/net.clamav.clamd.plist
+    mode: "0644"
+    owner: root
+    group: wheel
+  notify:
+    - Update Virus Definitions
+    - Restart Clamd
+
+- name: Install Clamd Daemon Configuration
+  become: true
+  ansible.builtin.template:
+    src: services/clamd/clamd.conf.j2
+    dest: "{{ clamav_clamd_config_file }}"
+    mode: "0644"
+    owner: root
+    group: wheel
+  notify:
+    - Update Virus Definitions
+    - Restart Clamd

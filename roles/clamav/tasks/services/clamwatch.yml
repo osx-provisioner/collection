@@ -1,0 +1,12 @@
+---
+- name: Clamwatch -- Create Folders
+  ansible.builtin.include_tasks:
+    file: "clamwatch/folders.yml"
+
+- name: Clamwatch -- Setup Logging
+  ansible.builtin.include_tasks:
+    file: "clamwatch/logging.yml"
+
+- name: Clamwatch -- Install Service
+  ansible.builtin.include_tasks:
+    file: "clamwatch/launchd.yml"

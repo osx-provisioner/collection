@@ -1,0 +1,24 @@
+---
+- name: Install FreshClam Service Plist
+  become: true
+  ansible.builtin.template:
+    src: services/freshclam/net.clamav.freshclam.plist.j2
+    dest: /Library/LaunchDaemons/net.clamav.freshclam.plist
+    mode: "0644"
+    owner: root
+    group: wheel
+  notify:
+    - Update Virus Definitions
+    - Restart Freshclam
+
+- name: Install FreshClam Daemon Configuration
+  become: true
+  ansible.builtin.template:
+    src: services/freshclam/freshclam.conf.j2
+    dest:  "{{ clamav_freshclam_config_file }}"
+    mode: "0644"
+    owner: _clamav
+    group: _clamav
+  notify:
+    - Update Virus Definitions
+    - Restart Freshclam

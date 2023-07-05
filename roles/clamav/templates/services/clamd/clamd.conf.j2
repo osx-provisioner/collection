@@ -11,7 +11,7 @@
 # LogFile must be writable for the user running daemon.
 # A full path is required.
 # Default: disabled
-LogFile {{ clamav_clamd_stdout_log_file }}
+LogFile {{ clamav_clamd_daemon_log_file }}
 
 # By default the log file is locked for writing - the lock protects against
 # running clamd multiple times (if want to run another clamd, please

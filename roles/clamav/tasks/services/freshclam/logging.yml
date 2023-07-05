@@ -1,0 +1,48 @@
+---
+- name: Check FreshClam Daemon Log File exists
+  become: true
+  ansible.builtin.stat:
+    path: "{{ clamav_freshclam_daemon_log_file }}"
+  register: clamav_freshclam_daemon_log_file_stat_results
+
+- name: Check FreshClam Stderr Log File exists
+  become: true
+  ansible.builtin.stat:
+    path: "{{ clamav_freshclam_stderr_log_file }}"
+  register: clamav_freshclam_stderr_log_file_stat_results
+
+- name: Check FreshClam Stdout Log File exists
+  become: true
+  ansible.builtin.stat:
+    path: "{{ clamav_freshclam_stdout_log_file }}"
+  register: clamav_freshclam_stdout_log_file_stat_results
+
+- name: Create FreshClam Daemon Log File
+  become: true
+  ansible.builtin.file:
+    path: "{{ clamav_freshclam_daemon_log_file }}"
+    state: touch
+    mode: "0640"
+    owner: _clamav
+    group: _clamav
+  when: not clamav_freshclam_daemon_log_file_stat_results.stat.exists
+
+- name: Create FreshClam Stderr Log File
+  become: true
+  ansible.builtin.file:
+    path: "{{ clamav_freshclam_stderr_log_file }}"
+    state: touch
+    mode: "0640"
+    owner: _clamav
+    group: _clamav
+  when: not clamav_freshclam_stderr_log_file_stat_results.stat.exists
+
+- name: Create FreshClam Stdout Log File
+  become: true
+  ansible.builtin.file:
+    path: "{{ clamav_freshclam_stdout_log_file }}"
+    state: touch
+    mode: "0640"
+    owner: _clamav
+    group: _clamav
+  when: not clamav_freshclam_stdout_log_file_stat_results.stat.exists

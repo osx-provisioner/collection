@@ -28,41 +28,21 @@
   tags:
     - clamav
 
-- name: Setup ClamAV Folders
+- name: Install Clamd Service
   ansible.builtin.include_tasks:
-    file: "clam_av/folders.yml"
+    file: "services/clamd.yml"
   tags:
     - clamav
 
-- name: Setup ClamAV Logging
+- name: Install Clamwatch Service
   ansible.builtin.include_tasks:
-    file: "clam_av/logging.yml"
-  tags:
-    - clamav
-
-- name: Setup ClamAV Configuration
-  ansible.builtin.include_tasks:
-    file: "clam_av/configuration.yml"
-  tags:
-    - clamav
-
-- name: Setup ClamWatch Folders
-  ansible.builtin.include_tasks:
-    file: "clam_watch/folders.yml"
-  tags:
-    - clamav
+    file: "services/clamwatch.yml"
   when: clamav_clamwatch
-
-- name: Setup ClamWatch Logging
-  ansible.builtin.include_tasks:
-    file: "clam_watch/logging.yml"
   tags:
     - clamav
-  when: clamav_clamwatch
 
-- name: Setup ClamWatch Configuration
+- name: Install Freshclam Service
   ansible.builtin.include_tasks:
-    file: "clam_watch/configuration.yml"
+    file: "services/freshclam.yml"
   tags:
     - clamav
-  when: clamav_clamwatch

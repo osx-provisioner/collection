@@ -1,0 +1,48 @@
+---
+- name: Check Clamd Daemon Log File exists
+  become: true
+  ansible.builtin.stat:
+    path: "{{ clamav_clamd_daemon_log_file }}"
+  register: clamav_clamd_daemon_log_file_stat_results
+
+- name: Check Clamd Stderr Log File exists
+  become: true
+  ansible.builtin.stat:
+    path: "{{ clamav_clamd_stderr_log_file }}"
+  register: clamav_clamd_stderr_log_file_stat_results
+
+- name: Check Clamd Stdout Log File exists
+  become: true
+  ansible.builtin.stat:
+    path: "{{ clamav_clamd_stdout_log_file }}"
+  register: clamav_clamd_stdout_log_file_stat_results
+
+- name: Create Clamd Daemon Log File
+  become: true
+  ansible.builtin.file:
+    path: "{{ clamav_clamd_daemon_log_file }}"
+    state: touch
+    mode: "0640"
+    owner: root
+    group: wheel
+  when: not clamav_clamd_daemon_log_file_stat_results.stat.exists
+
+- name: Create Clamd Stderr Log File
+  become: true
+  ansible.builtin.file:
+    path: "{{ clamav_clamd_stderr_log_file }}"
+    state: touch
+    mode: "0640"
+    owner: root
+    group: wheel
+  when: not clamav_clamd_stderr_log_file_stat_results.stat.exists
+
+- name: Create Clamd Stdout Log File
+  become: true
+  ansible.builtin.file:
+    path: "{{ clamav_clamd_stdout_log_file }}"
+    state: touch
+    mode: "0640"
+    owner: root
+    group: wheel
+  when: not clamav_clamd_stdout_log_file_stat_results.stat.exists

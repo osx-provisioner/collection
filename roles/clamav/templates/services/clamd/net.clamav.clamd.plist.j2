@@ -5,18 +5,19 @@
     <key>KeepAlive</key>
     <false/>
     <key>Label</key>
-    <string>net.clamav.freshclam</string>
+    <string>net.clamav.clamd</string>
     <key>ProgramArguments</key>
     <array>
-      <string>{{ brew_prefix }}/bin/freshclam</string>
-      <string>--daemon</string>
+      <string>{{ brew_prefix }}/sbin/clamd</string>
       <string>--foreground</string>
-      <string>--config-file</string>
-      <string>{{ clamav_freshclam_config_file }}</string>
+      <string>-c</string>
+      <string>{{ clamav_clamd_config_file }}</string>
     </array>
     <key>RunAtLoad</key>
     <true/>
+    <key>StandardOutPath</key>
+    <string>{{ clamav_clamd_stdout_log_file }}</string>
     <key>StandardErrorPath</key>
-    <string>{{ clamav_freshclam_stderr_log_file }}</string>
+    <string>{{ clamav_clamd_stderr_log_file }}</string>
   </dict>
 </plist>

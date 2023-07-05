@@ -1,0 +1,12 @@
+---
+- name: Freshclam -- Create Folders
+  ansible.builtin.include_tasks:
+    file: "freshclam/folders.yml"
+
+- name: Freshclam -- Setup Logging
+  ansible.builtin.include_tasks:
+    file: "freshclam/logging.yml"
+
+- name: Freshclam -- Install Service
+  ansible.builtin.include_tasks:
+    file: "freshclam/launchd.yml"

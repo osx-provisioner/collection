@@ -1,0 +1,8 @@
+---
+- name: Clamd -- Setup Logging
+  ansible.builtin.include_tasks:
+    file: "clamd/logging.yml"
+
+- name: Clamd -- Install Service
+  ansible.builtin.include_tasks:
+    file: "clamd/launchd.yml"
