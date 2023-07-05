@@ -2,7 +2,7 @@
 - name: Add Colima Launch Script
   become: true
   ansible.builtin.template:
-    src: "./templates/colima-start-fg.sh.j2"
+    src: "service/colima-start-fg.sh.j2"
     dest: "/usr/local/bin/colima-start-fg.sh"
     mode: "0755"
     owner: "{{ colima_service_user }}"
@@ -24,7 +24,7 @@
 - name: Add Colima Launch Agent Plist
   become: true
   ansible.builtin.template:
-    src: "./templates/com.github.abiosoft.colima.plist.j2"
+    src: "service/com.github.abiosoft.colima.plist.j2"
     dest: "/Users/{{ colima_service_user }}/Library/LaunchAgents/com.github.abiosoft.colima.plist"
     mode: "0640"
     owner: "{{ colima_service_user }}"

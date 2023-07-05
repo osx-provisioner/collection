@@ -1,17 +1,17 @@
 ---
-- name: Check Colima Stderr Logfile exists
+- name: Check Colima Stderr Log File exists
   become: true
   ansible.builtin.stat:
     path: "{{ colima_service_stderr_log_file }}"
   register: colima_service_stderr_log_file_stat
 
-- name: Check Colima Stdout Logfile Exists
+- name: Check Colima Stdout Log File Exists
   become: true
   ansible.builtin.stat:
     path: "{{ colima_service_stdout_log_file }}"
   register: colima_service_stdout_log_file_stat
 
-- name: Create Colima Stderr Logfile
+- name: Create Colima Stderr Log File
   become: true
   ansible.builtin.file:
     path: "{{ colima_service_stderr_log_file }}"
@@ -21,7 +21,7 @@
     group: admin
   when: not colima_service_stderr_log_file_stat.stat.exists
 
-- name: Create Colima Stdout Logfile
+- name: Create Colima Stdout Log File
   become: true
   ansible.builtin.file:
     path: "{{ colima_service_stdout_log_file }}"

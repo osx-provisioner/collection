@@ -17,3 +17,15 @@
     force: true
     follow: false
     state: "link"
+
+- name: Add Colima Docker Symlink
+  become: true
+  ansible.builtin.file:
+    src: "/Users/{{ colima_service_user }}/.colima/{{ colima_service_default_profile }}/docker.sock"
+    dest: "/var/run/docker.sock"
+    mode: "0751"
+    owner: "root"
+    group: "daemon"
+    state: link
+    follow: false
+    force: true

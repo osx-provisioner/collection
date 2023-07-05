@@ -21,7 +21,7 @@
 - name: Add Colima Configuration
   become: true
   ansible.builtin.template:
-    src: "./templates/colima.yaml.j2"
+    src: "colima/colima.yaml.j2"
     dest: "/Users/{{ colima_service_user }}/.colima/{{ colima_profile }}/colima.yaml"
     mode: "0644"
     owner: "{{ colima_service_user }}"
@@ -30,20 +30,6 @@
   loop_control:
     loop_var: "colima_profile"
   changed_when: false
-
-- name: Add Colima Docker Symlink
-  become: true
-  ansible.builtin.file:
-    src: "/Users/{{ colima_service_user }}/.colima/{{ colima_service_default_profile }}/docker.sock"
-    dest: "/var/run/docker.sock"
-    mode: "0751"
-    owner: "root"
-    group: "daemon"
-    state: link
-    follow: false
-    force: true
-  notify:
-    - "Restart Colima Service"
 
 - name: Bootstrap Colima
   become: true

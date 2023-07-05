@@ -71,31 +71,31 @@ Role Variables
 | colima_service_stderr_log_file          | The stderr log file for the installed launchd service.                                                                                                               |
 | colima_service_stdout_log_file          | The stdout log file for the installed launchd service.                                                                                                               |
 | colima_service_user                     | The user to configure colima with.                                                                                                                                   |
-| colima_cpus                             | See the [configuration template](./templates/colima.yaml.j2) for details.                                                                                            |
-| colima_disk_gigs                        | See the [configuration template](./templates/colima.yaml.j2) for details.                                                                                            |
-| colima_memory_gigs                      | See the [configuration template](./templates/colima.yaml.j2) for details.                                                                                            |
-| colima_arch                             | See the [configuration template](./templates/colima.yaml.j2) for details.                                                                                            |
-| colima_runtime                          | See the [configuration template](./templates/colima.yaml.j2) for details.                                                                                            |
-| colima_kubernetes_enabled               | See the [configuration template](./templates/colima.yaml.j2) for details.                                                                                            |
-| colima_kubernetes_version               | See the [configuration template](./templates/colima.yaml.j2) for details.                                                                                            |
-| colima_kubernetes_args                  | See the [configuration template](./templates/colima.yaml.j2) for details.                                                                                            |
-| colima_auto_activate                    | See the [configuration template](./templates/colima.yaml.j2) for details.                                                                                            |
-| colima_network_address                  | See the [configuration template](./templates/colima.yaml.j2) for details.                                                                                            |
-| colima_network_dns                      | See the [configuration template](./templates/colima.yaml.j2) for details.                                                                                            |
-| colima_network_dns_hosts                | See the [configuration template](./templates/colima.yaml.j2) for details.                                                                                            |
-| colima_network_driver                   | See the [configuration template](./templates/colima.yaml.j2) for details.                                                                                            |
-| colima_forward_agent                    | See the [configuration template](./templates/colima.yaml.j2) for details.                                                                                            |
-| colima_docker_config                    | See the [configuration template](./templates/colima.yaml.j2) for details.                                                                                            |
-| colima_vm_type                          | See the [configuration template](./templates/colima.yaml.j2) for details.                                                                                            |
-| colima_use_rosetta                      | See the [configuration template](./templates/colima.yaml.j2) for details.                                                                                            |
-| colima_mount_type                       | See the [configuration template](./templates/colima.yaml.j2) for details.                                                                                            |
-| colima_mount_inotify                    | See the [configuration template](./templates/colima.yaml.j2) for details.                                                                                            |
-| colima_cpu_type                         | See the [configuration template](./templates/colima.yaml.j2) for details.                                                                                            |
-| colima_layer                            | See the [configuration template](./templates/colima.yaml.j2) for details.                                                                                            |
-| colima_provision_script                 | See the [configuration template](./templates/colima.yaml.j2) for details.                                                                                            |
-| colima_ssh_config                       | See the [configuration template](./templates/colima.yaml.j2) for details.                                                                                            |
-| colima_mounts                           | See the [configuration template](./templates/colima.yaml.j2) for details.                                                                                            |
-| colima_environment_variables            | See the [configuration template](./templates/colima.yaml.j2) for details.                                                                                            |
+| colima_cpus                             | See the [configuration template](templates/colima/colima.yaml.j2) for details.                                                                                       |
+| colima_disk_gigs                        | See the [configuration template](templates/colima/colima.yaml.j2) for details.                                                                                       |
+| colima_memory_gigs                      | See the [configuration template](templates/colima/colima.yaml.j2) for details.                                                                                       |
+| colima_arch                             | See the [configuration template](templates/colima/colima.yaml.j2) for details.                                                                                       |
+| colima_runtime                          | See the [configuration template](templates/colima/colima.yaml.j2) for details.                                                                                       |
+| colima_kubernetes_enabled               | See the [configuration template](templates/colima/colima.yaml.j2) for details.                                                                                       |
+| colima_kubernetes_version               | See the [configuration template](templates/colima/colima.yaml.j2) for details.                                                                                       |
+| colima_kubernetes_args                  | See the [configuration template](templates/colima/colima.yaml.j2) for details.                                                                                       |
+| colima_auto_activate                    | See the [configuration template](templates/colima/colima.yaml.j2) for details.                                                                                       |
+| colima_network_address                  | See the [configuration template](templates/colima/colima.yaml.j2) for details.                                                                                       |
+| colima_network_dns                      | See the [configuration template](templates/colima/colima.yaml.j2) for details.                                                                                       |
+| colima_network_dns_hosts                | See the [configuration template](templates/colima/colima.yaml.j2) for details.                                                                                       |
+| colima_network_driver                   | See the [configuration template](templates/colima/colima.yaml.j2) for details.                                                                                       |
+| colima_forward_agent                    | See the [configuration template](templates/colima/colima.yaml.j2) for details.                                                                                       |
+| colima_docker_config                    | See the [configuration template](templates/colima/colima.yaml.j2) for details.                                                                                       |
+| colima_vm_type                          | See the [configuration template](templates/colima/colima.yaml.j2) for details.                                                                                       |
+| colima_use_rosetta                      | See the [configuration template](templates/colima/colima.yaml.j2) for details.                                                                                       |
+| colima_mount_type                       | See the [configuration template](templates/colima/colima.yaml.j2) for details.                                                                                       |
+| colima_mount_inotify                    | See the [configuration template](templates/colima/colima.yaml.j2) for details.                                                                                       |
+| colima_cpu_type                         | See the [configuration template](templates/colima/colima.yaml.j2) for details.                                                                                       |
+| colima_layer                            | See the [configuration template](templates/colima/colima.yaml.j2) for details.                                                                                       |
+| colima_provision_script                 | See the [configuration template](templates/colima/colima.yaml.j2) for details.                                                                                       |
+| colima_ssh_config                       | See the [configuration template](templates/colima/colima.yaml.j2) for details.                                                                                       |
+| colima_mounts                           | See the [configuration template](templates/colima/colima.yaml.j2) for details.                                                                                       |
+| colima_environment_variables            | See the [configuration template](templates/colima/colima.yaml.j2) for details.                                                                                       |
 
 [See The Default Values](defaults/main.yml)
 

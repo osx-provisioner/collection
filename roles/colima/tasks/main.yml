@@ -31,13 +31,13 @@
   tags:
     - colima
 
-- name: Configure Colima Service
-  ansible.builtin.import_tasks: "configuration/service.yml"
+- name: Configure Colima
+  ansible.builtin.import_tasks: "colima/configuration.yml"
   tags:
     - colima
 
-- name: Configure Docker Compose Support
-  ansible.builtin.import_tasks: "configuration/compose.yml"
+- name: Configure Docker CLI
+  ansible.builtin.import_tasks: "colima/docker.yml"
   tags:
     - colima
 
@@ -47,6 +47,6 @@
     - colima
 
 - name: Install Service
-  ansible.builtin.import_tasks: "service/plist.yml"
+  ansible.builtin.import_tasks: "service/launchd.yml"
   tags:
     - colima
