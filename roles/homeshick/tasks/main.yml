@@ -50,12 +50,26 @@
   tags:
     - homeshick
 
+- name: Debug Homeshick Clone Command
+  ansible.builtin.debug:
+    msg: "Executing: {{ homeshick_cli_clone_command }}"
+  when: not homeshick_user_castle_stat_results.stat.exists and homeshick_dotfiles_repo
+  tags:
+    - homeshick
+
 - name: Install User Dotfile Castle
   become: true
   become_user: "{{ homeshick_user }}"
   ansible.builtin.command: "{{ homeshick_cli_clone_command }}"
   changed_when: true
   when: not homeshick_user_castle_stat_results.stat.exists and homeshick_dotfiles_repo
+  tags:
+    - homeshick
+
+- name: Debug Homeshick Link Command
+  ansible.builtin.debug:
+    msg: "Executing: {{ homeshick_cli_link_command }}"
+  when: homeshick_dotfiles_repo
   tags:
     - homeshick
 
