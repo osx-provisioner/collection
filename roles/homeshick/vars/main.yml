@@ -1,2 +1,4 @@
 ---
 # vars file for role-homeshick
+
+homeshick_git_repository_url: "https://github.com/andsens/homeshick.git"

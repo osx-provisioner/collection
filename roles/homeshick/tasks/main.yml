@@ -1,10 +1,34 @@
 ---
 # tasks file for homeshick
 
-- name: Check for Homeshick Install
-  ansible.builtin.stat:
-    path: "{{ homeshick_user_home }}/.homesick/repos/homeshick"
-  register: homeshick_stat_result
+- name: Create Homeshick CLI Command
+  ansible.builtin.set_fact:
+    homeshick_cli_command: "{{ homeshick_user_home }}/.homesick/repos/homeshick/bin/homeshick"
+  tags:
+    - homeshick
+
+- name: Create Homeshick User Repo Name
+  ansible.builtin.set_fact:
+    homeshick_user_castle_name: "{{ homeshick_dotfiles_repo | lower | basename | replace('.git', '') }}"
+  tags:
+    - homeshick
+
+- name: Create Homeshick CLI Task Helpers
+  ansible.builtin.set_fact:
+    homeshick_cli_clone_command: "{{ homeshick_cli_command }} clone {{ homeshick_dotfiles_repo }}"
+    homeshick_cli_link_command: "{{ homeshick_cli_command }} link {{ homeshick_force | ternary('-vf', '-v') }} {{ homeshick_user_castle_name }}"
+  tags:
+    - homeshick
+
+- name: Check for Existing Homeshick Install
+  become: true
+  become_user: "{{ homeshick_user }}"
+  ansible.builtin.git:
+    repo: "{{ homeshick_git_repository_url }}"
+    dest: "{{ homeshick_user_home }}/.homesick/repos/homeshick"
+    version: "{{ homeshick_version }}"
+    clone: no
+  register: homeshick_git_results
   tags:
     - homeshick
 
@@ -12,43 +36,35 @@
   become: true
   become_user: "{{ homeshick_user }}"
   ansible.builtin.git:
-    repo: https://github.com/andsens/homeshick.git
+    repo: "{{ homeshick_git_repository_url }}"
     dest: "{{ homeshick_user_home }}/.homesick/repos/homeshick"
     version: "{{ homeshick_version }}"
-  when: not homeshick_stat_result.stat.exists
+  when: not homeshick_git_results.before
   tags:
     - homeshick
 
-- name: Check if the user dotfiles were already installed
+- name: Check if User Dotfiles Castle Already Installed
   ansible.builtin.stat:
-    path: "{{ homeshick_user_home }}/.homesick/repos/{{ homeshick_dotfiles_repo | lower | basename | replace('.git', '') }}"
-  register: homeshick_user_dot_files
-
-- name: Install User Dotfiles
-  become: true
-  become_user: "{{ homeshick_user }}"
-  ansible.builtin.command: "{{ homeshick_user_home }}/.homesick/repos/homeshick/bin/homeshick clone {{ homeshick_dotfiles_repo }}"
-  changed_when: not homeshick_user_dot_files.stat.exists and homeshick_dotfiles_repo
-  when: not homeshick_user_dot_files.stat.exists and homeshick_dotfiles_repo
+    path: "{{ homeshick_user_home }}/.homesick/repos/{{ homeshick_user_castle_name }}"
+  register: homeshick_user_castle_stat_results
   tags:
     - homeshick
 
-- name: Link Install Dotfiles (Force)
+- name: Install User Dotfile Castle
   become: true
   become_user: "{{ homeshick_user }}"
-  ansible.builtin.command: "{{ homeshick_user_home }}/.homesick/repos/homeshick/bin/homeshick link -vf {{ homeshick_dotfiles_repo | lower | basename | replace('.git', '') }}"
-  register: homeshick_install_command
-  changed_when: "'symlink' in homeshick_install_command.stdout"
-  when: homeshick_dotfiles_repo and homeshick_force
+  ansible.builtin.command: "{{ homeshick_cli_clone_command }}"
+  changed_when: true
+  when: not homeshick_user_castle_stat_results.stat.exists and homeshick_dotfiles_repo
   tags:
     - homeshick
 
-- name: Link Install Dotfiles (Without Force)
+- name: Link User Dotfile Castle
   become: true
   become_user: "{{ homeshick_user }}"
-  ansible.builtin.command: "{{ homeshick_user_home }}/.homesick/repos/homeshick/bin/homeshick link -v {{ homeshick_dotfiles_repo | lower | basename | replace('.git', '') }}"
+  ansible.builtin.command: "{{ homeshick_cli_link_command }}"
   register: homeshick_install_command
   changed_when: "'symlink' in homeshick_install_command.stdout"
-  when: homeshick_dotfiles_repo and not homeshick_force
+  when: homeshick_dotfiles_repo
   tags:
     - homeshick
