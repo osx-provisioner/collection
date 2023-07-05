@@ -3,7 +3,7 @@
   become: true
   ansible.builtin.file:
     path: "/Users/{{ colima_service_user }}/.colima/{{ colima_profile }}"
-    mode: "0755"
+    mode: "0750"
     owner: "{{ colima_service_user }}"
     group: "staff"
     state: "directory"
@@ -23,7 +23,7 @@
   ansible.builtin.template:
     src: "colima/colima.yaml.j2"
     dest: "/Users/{{ colima_service_user }}/.colima/{{ colima_profile }}/colima.yaml"
-    mode: "0644"
+    mode: "0640"
     owner: "{{ colima_service_user }}"
     group: "staff"
   with_items: "{{ colima_service_profiles }}"

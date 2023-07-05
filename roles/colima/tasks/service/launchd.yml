@@ -4,7 +4,7 @@
   ansible.builtin.template:
     src: "service/colima-start-fg.sh.j2"
     dest: "/usr/local/bin/colima-start-fg.sh"
-    mode: "0755"
+    mode: "0750"
     owner: "{{ colima_service_user }}"
     group: "staff"
   notify:
@@ -14,7 +14,7 @@
   become: true
   ansible.builtin.file:
     dest: "/Users/{{ colima_service_user }}/Library/LaunchAgents"
-    mode: "0700"
+    mode: "0750"
     owner: "{{ colima_service_user }}"
     group: "staff"
     state: "directory"
