@@ -38,7 +38,7 @@ repos:
           - "./.yamllint.yml"
         stages: [commit]
   - repo: https://github.com/cicd-tools-org/pre-commit.git
-    rev: 0.1.0
+    rev: 0.2.0
     hooks:
       - id: format-shell
         args:
@@ -65,6 +65,7 @@ repos:
           - "-x"
         exclude: "^roles/firewall/templates/pf-configure\\.sh\\.j2$"
         files: "^.+\\.(bash|bash\\.j2|sh|sh\\.j2)$"
+      - id: security-credentials
       - id: spelling-commit-message
       - id: spelling-markdown
   - repo: local
