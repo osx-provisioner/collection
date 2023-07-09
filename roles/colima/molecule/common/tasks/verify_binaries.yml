@@ -1,8 +1,4 @@
 ---
-- name: Set CI Machine Type
-  ansible.builtin.set_fact:
-    brew_prefix: "{{ (lookup('env', 'PLATFORM') == 'arm64') | ternary('/opt/homebrew', '/usr/local') }}"
-
 - name: Load Default Var Content
   ansible.builtin.include_vars: "../../../defaults/main.yml"
 

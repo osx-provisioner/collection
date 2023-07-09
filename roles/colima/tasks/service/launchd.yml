@@ -3,7 +3,7 @@
   become: true
   ansible.builtin.template:
     src: "service/colima-start-fg.sh.j2"
-    dest: "/usr/local/bin/colima-start-fg.sh"
+    dest: "{{ brew_prefix }}/bin/colima-start-fg.sh"
     mode: "0750"
     owner: "{{ colima_service_user }}"
     group: "staff"
