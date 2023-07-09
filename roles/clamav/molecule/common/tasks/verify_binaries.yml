@@ -1,8 +1,4 @@
 ---
-- name: Set CI Machine Type
-  ansible.builtin.set_fact:
-    ansible_machine: "{{ lookup('env', 'PLATFORM') }}"
-
 - name: Load Default Var Content
   ansible.builtin.include_vars: "../../../defaults/main.yml"
 
