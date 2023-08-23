@@ -1,4 +1,7 @@
 ---
+- name: Load Default Var Content
+  ansible.builtin.include_vars: "../../../defaults/main.yml"
+
 - name: Create Log File List
   ansible.builtin.set_fact:
     colima_molecule_log_list:

@@ -1,1 +1,3 @@
 ---
+
+colima_service_user: "{{ lookup('env', 'USER') }}"

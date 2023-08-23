@@ -7,6 +7,14 @@
     - name: Setup Scenario
       ansible.builtin.include_tasks: "../common/tasks/setup.yml"
 
-    - name: Include osx_provisioner.collection.colima
-      ansible.builtin.include_role:
-        name: "osx_provisioner.collection.colima"
+    - name: Display Logs For Troubleshooting Failures
+      block:
+
+        - name: Include osx_provisioner.collection.colima
+          ansible.builtin.include_role:
+            name: "osx_provisioner.collection.colima"
+
+      rescue:
+
+        - name: Display Logs
+          ansible.builtin.include_tasks: "../common/tasks/display_logs.yml"
