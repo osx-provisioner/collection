@@ -2,7 +2,7 @@
 
 symlinks_user: "{{ lookup('env', 'USER') }}"
 
-symlinks:
+symlinks:  # noqa: var-naming[no-role-prefix]
   - link: /Users/{{ symlinks_user }}/test1
     target: /Users/{{ symlinks_user }}/Downloads
   - link: /Users/{{ symlinks_user }}/test2

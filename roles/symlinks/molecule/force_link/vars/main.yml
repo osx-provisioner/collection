@@ -2,7 +2,7 @@
 
 symlinks_user: "{{ lookup('env', 'USER') }}"
 
-symlinks:
+symlinks:  # noqa: var-naming[no-role-prefix]
   - link: /Users/{{ symlinks_user }}/test1
     target: /NonExistentFolder0001
     force: true

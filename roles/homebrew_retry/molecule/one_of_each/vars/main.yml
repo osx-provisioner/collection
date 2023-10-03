@@ -1,18 +1,18 @@
 ---
-brew_user: "{{ lookup('env', 'USER') }}"
+brew_user: "{{ lookup('env', 'USER') }}"  # noqa: var-naming[no-role-prefix]
 
-brew_packages:
+brew_packages:  # noqa: var-naming[no-role-prefix]
   - telnet
-brew_casks:
+brew_casks:  # noqa: var-naming[no-role-prefix]
   - appcleaner
-brew_taps:
+brew_taps:  # noqa: var-naming[no-role-prefix]
   - gromgit/fuse
 
-brew_user_casks_location: "{{ lookup('env', 'HOME') }}/Applications"
-brew_user_casks:
+brew_user_casks_location: "{{ lookup('env', 'HOME') }}/Applications"  # noqa: var-naming[no-role-prefix]
+brew_user_casks:  # noqa: var-naming[no-role-prefix]
   - transmission
 
-brew_targeted_casks_group: "admin"
-brew_targeted_casks_location: "/opt/casks"
-brew_targeted_casks:
+brew_targeted_casks_group: "admin"  # noqa: var-naming[no-role-prefix]
+brew_targeted_casks_location: "/opt/casks"  # noqa: var-naming[no-role-prefix]
+brew_targeted_casks:  # noqa: var-naming[no-role-prefix]
   - spotify

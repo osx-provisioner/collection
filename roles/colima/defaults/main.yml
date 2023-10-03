@@ -1,7 +1,7 @@
 ---
 # defaults file for role-colima
 
-brew_prefix: "{{ (ansible_machine == 'arm64') | ternary('/opt/homebrew', '/usr/local') }}"
+brew_prefix: "{{ (ansible_machine == 'arm64') | ternary('/opt/homebrew', '/usr/local') }}"  # noqa: var-naming[no-role-prefix]
 
 colima_homebrew_retries: 3
 

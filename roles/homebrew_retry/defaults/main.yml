@@ -1,30 +1,30 @@
 ---
 # defaults file for homebrew_retry
 
-brew_user: "{{ lookup('env', 'USER') }}"
-brew_retries: 3
+brew_user: "{{ lookup('env', 'USER') }}"  # noqa: var-naming[no-role-prefix]
+brew_retries: 3  # noqa: var-naming[no-role-prefix]
 
 # Typical Values: latest, present
-brew_install_state: latest
+brew_install_state: latest  # noqa: var-naming[no-role-prefix]
 
 # Some casks may require SUDO to complete their install
-brew_sudo_password: "{{ ansible_become_password }}"
+brew_sudo_password: "{{ ansible_become_password }}"  # noqa: var-naming[no-role-prefix]
 
 # Installs to Standard Homebrew Locations
-brew_packages: []
-brew_casks: []
-brew_taps: []
+brew_packages: []  # noqa: var-naming[no-role-prefix]
+brew_casks: []  # noqa: var-naming[no-role-prefix]
+brew_taps: []  # noqa: var-naming[no-role-prefix]
 
 # Installs to {{ brew_user_casks_location }}
-brew_user_casks_location: "{{ lookup('env', 'HOME') }}/Applications"
-brew_user_casks: []
+brew_user_casks_location: "{{ lookup('env', 'HOME') }}/Applications"  # noqa: var-naming[no-role-prefix]
+brew_user_casks: []  # noqa: var-naming[no-role-prefix]
 
 # Installs the casks to {{ brew_targeted_casks_location }}
-brew_targeted_casks_group: "admin"
-brew_targeted_casks_location: "/opt/casks"
-brew_targeted_casks: []
+brew_targeted_casks_group: "admin"  # noqa: var-naming[no-role-prefix]
+brew_targeted_casks_location: "/opt/casks"  # noqa: var-naming[no-role-prefix]
+brew_targeted_casks: []  # noqa: var-naming[no-role-prefix]
 
 # Allows quickly failing when casks or packages do not exist
-brew_fail_matchers:
+brew_fail_matchers:  # noqa: var-naming[no-role-prefix]
   casks: "No Cask with this name exists"
   packages: "No formulae or casks found for"

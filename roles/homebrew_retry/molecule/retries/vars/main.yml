@@ -1,2 +1,2 @@
 ---
-brew_user: "{{ lookup('env', 'USER') }}"
+brew_user: "{{ lookup('env', 'USER') }}"  # noqa: var-naming[no-role-prefix]

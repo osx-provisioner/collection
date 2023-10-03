@@ -1,8 +1,8 @@
 ---
 # defaults file for clamav
 
-brew_user: "{{ lookup('env', 'USER') }}"
-brew_prefix: "{{ (ansible_machine == 'arm64') | ternary('/opt/homebrew', '/usr/local') }}"
+brew_user: "{{ lookup('env', 'USER') }}"  # noqa: var-naming[no-role-prefix]
+brew_prefix: "{{ (ansible_machine == 'arm64') | ternary('/opt/homebrew', '/usr/local') }}"  # noqa: var-naming[no-role-prefix]
 
 clamav_clamd_config_file: "{{ brew_prefix }}/etc/clamav/clamd.conf"
 clamav_clamd_daemon_log_file: /var/log/clamav.clamd.daemon.log

@@ -11,10 +11,10 @@
 #   - url: https://www.sws-extension.org/download/featured/sws-v2.10.0.1.dmg
 #     name: sws-v2.10.0.1.dmg
 
-download_remote_urls: []
+download_remote_urls: []  # noqa: var-naming (TODO: breaking change to update these, next release)
 
-download_save_user: "{{ lookup('env', 'USER') }}"
-download_save_location: "{{ lookup('env', 'HOME') }}/Downloads"
+download_save_user: "{{ lookup('env', 'USER') }}"  # noqa: var-naming[no-role-prefix]
+download_save_location: "{{ lookup('env', 'HOME') }}/Downloads"  # noqa: var-naming[no-role-prefix]
 
-download_timeout: 10
-download_retries: 3
+download_timeout: 10  # noqa: var-naming[no-role-prefix]
+download_retries: 3  # noqa: var-naming[no-role-prefix]

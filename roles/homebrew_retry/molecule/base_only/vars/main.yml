@@ -1,9 +1,9 @@
 ---
-brew_user: "{{ lookup('env', 'USER') }}"
+brew_user: "{{ lookup('env', 'USER') }}"  # noqa: var-naming[no-role-prefix]
 
-brew_packages:
+brew_packages:  # noqa: var-naming[no-role-prefix]
   - telnet
-brew_casks:
+brew_casks:  # noqa: var-naming[no-role-prefix]
   - appcleaner
-brew_taps:
+brew_taps:  # noqa: var-naming[no-role-prefix]
   - gromgit/fuse
