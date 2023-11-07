@@ -17,6 +17,7 @@
     loop_var: firewall_molecule_log_file
 
 - name: Read Log Files
+  become: true
   ansible.builtin.slurp:
     path: "{{ firewall_molecule_log_file.stat.path }}"
   register: firewall_molecule_log_data

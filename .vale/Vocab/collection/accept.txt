@@ -9,6 +9,7 @@ DOWNLOADER|downloader
 HOMESHICK|homeshick
 Homebrew|homebrew
 JumpCloud|jumpcloud
+SUDO|sudo
 URL|url
 YAMLLINT
 boolean
