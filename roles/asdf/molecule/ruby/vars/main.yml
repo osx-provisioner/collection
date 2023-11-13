@@ -7,7 +7,7 @@ asdf_plugins:
   - name: "ruby"
     repository: ""
     versions:
-      - 2.6.8
+      - 2.7.8
     environment:
       test: value
-    global: 2.6.8
+    global: 2.7.8
