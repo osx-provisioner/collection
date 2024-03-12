@@ -1,7 +1,7 @@
 # asdf
 
-### Master Branch
-[![role-asdf](https://github.com/osx-provisioner/collection/actions/workflows/workflow-asdf-push.yml/badge.svg?branch=master)](https://github.com/osx-provisioner/collection/actions/workflows/workflow-asdf-push.yml)
+### Main Branch
+[![role-asdf](https://github.com/osx-provisioner/collection/actions/workflows/workflow-asdf-push.yml/badge.svg?branch=main)](https://github.com/osx-provisioner/collection/actions/workflows/workflow-asdf-push.yml)
 
 ### Dev Branch
 [![role-asdf](https://github.com/osx-provisioner/collection/actions/workflows/workflow-asdf-push.yml/badge.svg?branch=dev)](https://github.com/osx-provisioner/collection/actions/workflows/workflow-asdf-push.yml)

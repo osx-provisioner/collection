@@ -24,13 +24,13 @@ on:
 jobs:
 
   configuration:
-    uses: cicd-tools-org/cicd-tools/.github/workflows/job-00-generic-read_json_file.yml@master
+    uses: cicd-tools-org/cicd-tools/.github/workflows/job-00-generic-read_json_file.yml@main
     with:
       JSON_FILE_PATH: ".github/config/workflows/workflow-push.json"
 
   scenarios:
     needs: [configuration]
-    uses: cicd-tools-org/cicd-tools/.github/workflows/job-00-generic-identify_molecule_scenarios.yml@master
+    uses: cicd-tools-org/cicd-tools/.github/workflows/job-00-generic-identify_molecule_scenarios.yml@main
     with:
       MOLECULE_EXCLUSION_REGEX: ${{ fromJSON(needs.configuration.outputs.JSON_FILE_DATA).ci_molecule_excluded_scenarios_regex }}
       MOLECULE_SCENARIO_PATH: "roles/firewall/molecule"
@@ -38,7 +38,7 @@ jobs:
   start:
     secrets:
       SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-    uses: cicd-tools-org/cicd-tools/.github/workflows/job-00-generic-notification.yml@master
+    uses: cicd-tools-org/cicd-tools/.github/workflows/job-00-generic-notification.yml@main
     with:
       NOTIFICATION_EMOJI: ":vertical_traffic_light:"
       NOTIFICATION_MESSAGE: "workflow has started!"
@@ -54,7 +54,7 @@ jobs:
         scenario: ${{ fromJSON(needs.scenarios.outputs.SCENARIOS) }}
         platform: ${{ fromJSON(needs.configuration.outputs.JSON_FILE_DATA).ci_molecule_test_platforms }}
       max-parallel: ${{ fromJSON(needs.configuration.outputs.JSON_FILE_DATA).ci_concurrency_limit }}
-    uses: cicd-tools-org/cicd-tools/.github/workflows/job-40-poetry-molecule_command.yml@master
+    uses: cicd-tools-org/cicd-tools/.github/workflows/job-40-poetry-molecule_command.yml@main
     with:
       CONCURRENCY: ${{ fromJSON(needs.configuration.outputs.JSON_FILE_DATA).ci_concurrency_limit }}
       MOLECULE_COMMAND: "test"
@@ -69,7 +69,7 @@ jobs:
     needs: [molecule_test, start]
     secrets:
       SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-    uses: cicd-tools-org/cicd-tools/.github/workflows/job-00-generic-notification.yml@master
+    uses: cicd-tools-org/cicd-tools/.github/workflows/job-00-generic-notification.yml@main
     with:
       NOTIFICATION_EMOJI: ":checkered_flag:"
       NOTIFICATION_MESSAGE: "workflow has completed successfully!"

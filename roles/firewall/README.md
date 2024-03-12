@@ -1,7 +1,7 @@
 # firewall
 
-### Master Branch
-[![role-firewall](https://github.com/osx-provisioner/collection/actions/workflows/workflow-firewall-push.yml/badge.svg?branch=master)](https://github.com/osx-provisioner/collection/actions/workflows/workflow-firewall-push.yml)
+### Main Branch
+[![role-firewall](https://github.com/osx-provisioner/collection/actions/workflows/workflow-firewall-push.yml/badge.svg?branch=main)](https://github.com/osx-provisioner/collection/actions/workflows/workflow-firewall-push.yml)
 
 ### Dev Branch
 [![role-firewall](https://github.com/osx-provisioner/collection/actions/workflows/workflow-firewall-push.yml/badge.svg?branch=dev)](https://github.com/osx-provisioner/collection/actions/workflows/workflow-firewall-push.yml)

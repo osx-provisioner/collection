@@ -27,21 +27,21 @@ on:
 jobs:
 
   configuration:
-    uses: cicd-tools-org/cicd-tools/.github/workflows/job-00-generic-read_json_file.yml@master
+    uses: cicd-tools-org/cicd-tools/.github/workflows/job-00-generic-read_json_file.yml@main
     with:
       JSON_FILE_PATH: ".github/config/workflows/workflow-publish-to-galaxy.json"
 
   api_key_exists:
     secrets:
       SECRET: ${{ secrets.GALAXY_API_KEY }}
-    uses: cicd-tools-org/cicd-tools/.github/workflows/job-00-generic-identify_secret_exists.yml@master
+    uses: cicd-tools-org/cicd-tools/.github/workflows/job-00-generic-identify_secret_exists.yml@main
 
   start:
     if: needs.api_key_exists.outputs.EXISTS == 'true'
     needs: [api_key_exists]
     secrets:
       SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-    uses: cicd-tools-org/cicd-tools/.github/workflows/job-00-generic-notification.yml@master
+    uses: cicd-tools-org/cicd-tools/.github/workflows/job-00-generic-notification.yml@main
     with:
       NOTIFICATION_EMOJI: ":vertical_traffic_light:"
       NOTIFICATION_MESSAGE: "Ansible Galaxy release workflow has started!"
@@ -53,7 +53,7 @@ jobs:
     secrets:
       GALAXY_API_KEY: ${{ secrets.GALAXY_API_KEY }}
       SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-    uses: cicd-tools-org/cicd-tools/.github/workflows/job-95-poetry-galaxy_import_collection.yml@master
+    uses: cicd-tools-org/cicd-tools/.github/workflows/job-95-poetry-galaxy_import_collection.yml@main
     with:
       PYTHON_VERSION: ${{ fromJSON(needs.configuration.outputs.JSON_FILE_DATA).ci_python_version }}
       WORKFLOW_DISPATCH: ${{ github.event_name == 'workflow_dispatch' }}
@@ -65,7 +65,7 @@ jobs:
     needs: [api_key_exists, publish_to_galaxy]
     secrets:
       SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-    uses: cicd-tools-org/cicd-tools/.github/workflows/job-00-generic-notification.yml@master
+    uses: cicd-tools-org/cicd-tools/.github/workflows/job-00-generic-notification.yml@main
     with:
       NOTIFICATION_EMOJI: ":checkered_flag:"
       NOTIFICATION_MESSAGE: "Ansible Galaxy release workflow has completed successfully!"
