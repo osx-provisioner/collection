@@ -57,6 +57,7 @@ jobs:
     uses: cicd-tools-org/cicd-tools/.github/workflows/job-40-poetry-molecule_command.yml@main
     with:
       CONCURRENCY: ${{ fromJSON(needs.configuration.outputs.JSON_FILE_DATA).ci_concurrency_limit }}
+      DEBUG: true
       MOLECULE_COMMAND: "test"
       MOLECULE_SCENARIO: ${{ matrix.scenario }}
       PLATFORM: ${{ matrix.platform }}
