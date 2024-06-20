@@ -7,7 +7,7 @@
     "- [] Ensure main is synchronized with the release tag."
   ],
   "ci_molecule_excluded_scenarios_regex": "^common$|^default$|^noci-.*$",
-  "ci_molecule_test_platforms": ["macos-latest"],
+  "ci_molecule_test_platforms": ["macos-13"],
   "ci_python_versions": ["3.9"],
   "ci_trufflehog_extra_scan_args": "",
   "ci_verbose_notifications": false
