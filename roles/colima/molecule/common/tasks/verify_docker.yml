@@ -11,7 +11,7 @@
   ansible.builtin.command: docker ps
   changed_when: false
   retries: 10
-  delay: 3
+  delay: 10
   register: colima_molecule_docker_status
   until: colima_molecule_docker_status is not failed
 
@@ -22,7 +22,10 @@
 - name: Run Ubuntu Docker Container
   ansible.builtin.command: docker run -t ubuntu:latest echo "Docker is working!"
   changed_when: false
+  retries: 10
+  delay: 10
   register: colima_molecule_docker_run_test
+  until: colima_molecule_docker_run_test is not failed
 
 - name: Check Docker Processes
   ansible.builtin.command: docker ps -a
