@@ -1,69 +1,20 @@
 #!/bin/bash
 
 COLIMA_PROFILE="{{ colima_service_default_profile }}"
-DAEMON_PID_FILE="/Users/{{ colima_service_user }}/.colima/{{ colima_service_default_profile }}/daemon/daemon.pid"
 STARTUP_DELAY="{{ colima_service_startup_delay }}"
 
 export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 
-function colima_foreground_poll() {
-  echo "Colima has started, beginning process monitor ..."
-  if daemon_has_pid_file; then
-    daemon_get_pid
-    while daemon_is_alive; do
-      sleep 5
-    done
-  fi
-  echo "Colima process is no longer running, exiting process monitor."
-}
-
-function colima_foreground_start() {
-  if ! daemon_has_pid_file; then
-    colima_launch
-  else
-    daemon_get_pid
-    if ! daemon_is_alive; then
-      colima_launch
-    fi
-  fi
-}
-
 function colima_launch() {
   echo "Starting Colima ..."
-  colima start -p "${COLIMA_PROFILE}"
-}
-
-function colima_stop() {
-  echo "Terminating Colima daemon ..."
-  colima daemon stop "${COLIMA_PROFILE}"
-  echo "Terminating Colima process ..."
-  colima stop -p "${COLIMA_PROFILE}"
-  echo "Complete."
-}
-
-function daemon_get_pid() {
-  DAEMON_PID="$(cat "${DAEMON_PID_FILE}")"
-}
-
-function daemon_has_pid_file() {
-  [[ -f "${DAEMON_PID_FILE}" ]]
-}
-
-function daemon_is_alive() {
-  kill -0 "${DAEMON_PID}"
+  colima start --foreground -p "${COLIMA_PROFILE}"
 }
 
 main() {
-  local DAEMON_PID
-
-  trap colima_stop SIGINT
-  trap colima_stop SIGTERM
-
   echo "Waiting ${STARTUP_DELAY} second(s) ..."
   sleep "${STARTUP_DELAY}"
 
-  colima_foreground_start
-  colima_foreground_poll
+  colima_launch
 }
 
 main "$@"
