@@ -17,6 +17,7 @@ brew_(casks|install_state|packages|prefix|retries|sudo_password|taps|targeted_ca
 clamd
 clamwatch
 config
+dns
 dotfiles
 download_(retries|save_location|save_user|timeout)
 erlang

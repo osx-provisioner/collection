@@ -1,3 +1,6 @@
 ---
 
 colima_service_user: "{{ lookup('env', 'USER') }}"
+
+colima_cpus: 1
+colima_memory_gigs: 3
