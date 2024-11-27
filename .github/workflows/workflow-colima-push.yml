@@ -61,6 +61,7 @@ jobs:
       MOLECULE_COMMAND: "test"
       MOLECULE_SCENARIO: ${{ matrix.scenario }}
       PLATFORM: ${{ matrix.platform }}
+      PRE_COMMAND: brew install qemu
       PYTHON_VERSIONS: ${{ toJSON(fromJSON(needs.configuration.outputs.JSON_FILE_DATA).ci_python_versions) }}
       TARGET_PATH: "roles/colima"
       VERBOSE_NOTIFICATIONS: ${{ fromJSON(needs.configuration.outputs.JSON_FILE_DATA).ci_verbose_notifications }}

@@ -29,6 +29,7 @@ launchd
 mac_maker
 plist
 plugin_tasks
+qemu
 rbenv
 stderr
 stdout
