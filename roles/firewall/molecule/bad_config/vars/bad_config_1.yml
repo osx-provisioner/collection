@@ -1,4 +1,4 @@
 ---
 
-firewall_logging_enabled: true
-firewall_logging_level: "bad value"
+firewall_enabled: false
+firewall_block_all_enabled: true

@@ -2,7 +2,7 @@
 firewall_enabled: true
 
 firewall_apps_blocked_paths:
-  - /usr/sbin/netbiosd
+  - /usr/sbin/smbd
   - /sbin/launchd
 
 firewall_apps_unblocked_paths:

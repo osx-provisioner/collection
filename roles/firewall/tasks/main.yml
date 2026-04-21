@@ -1,15 +1,6 @@
 ---
 # tasks file for role-firewall
 
-- name: Validate Selected Logging Level
-  ansible.builtin.fail:
-    msg: "{{ firewall_logging_level }} is not a valid logging level. ({{ firewall_cli_valid_logging_levels | join(', ') }})"
-  when:
-    - firewall_logging_enabled
-    - firewall_logging_level | lower not in firewall_cli_valid_logging_levels
-  tags:
-    - firewall
-
 - name: Validate Block All and Global Disable Conflict
   ansible.builtin.fail:
     msg: "You cannot disable the firewall and block all traffic!"

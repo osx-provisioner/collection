@@ -22,8 +22,6 @@ Role Variables
 | firewall_allow_builtin_apps      | A boolean indicating if OSX builtin apps should automatically be permitted to receive traffic. |
 | firewall_allow_all_signed_apps   | A boolean indicating if ALL signed apps should automatically be permitted to receive traffic.  |
 | firewall_block_all_enabled       | A boolean indicating if ALL traffic should be blocked, with some OS related permits.           |
-| firewall_logging_enabled         | A boolean indicating if logging should be enabled on the firewall.                             |
-| firewall_logging_level           | A string indicating the type of logging.  Valid options: "throttled", "brief" or "detail".     |
 | firewall_stealth_mode_enabled    | A boolean indicating if stealth mode should be enabled on the firewall.                        |
 | firewall_apps_blocked_paths      | A list of paths to apps that are blocked from receiving traffic.                               |
 | firewall_apps_unblocked_paths    | A list of paths to apps that are permitted to receive traffic.                                 |

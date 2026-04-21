@@ -28,7 +28,7 @@
   loop: "{{ firewall_molecule_parsed_apps }}"
   loop_control:
     loop_var: "firewall_molecule_app_item"
-  when: "'( block incoming connections )' in firewall_molecule_app_item | lower"
+  when: "'(block incoming connections)' in firewall_molecule_app_item | lower"
 
 - name: Create Unblocked Apps List
   ansible.builtin.set_fact:
@@ -36,7 +36,7 @@
   loop: "{{ firewall_molecule_parsed_apps }}"
   loop_control:
     loop_var: "firewall_molecule_app_item"
-  when: "'( allow incoming connections )' in firewall_molecule_app_item | lower"
+  when: "'(allow incoming connections)' in firewall_molecule_app_item | lower"
 
 - name: Debug Parsed Lists
   ansible.builtin.debug:
