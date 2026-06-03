@@ -17,6 +17,7 @@ name = 'collection'
 version = '3.0.0'
 
 [tool.poetry.dependencies]
+molecule-plugins = '>=23.0.0,<24.0.0'
 python = '^3.9'
 xmlformatter = '^0.2.4'
 
@@ -32,7 +33,7 @@ markers = "platform_system != 'Windows'"
 version = '^6.12.2'
 
 [tool.poetry.group.dev.dependencies.molecule]
-version = '^5.0.0'
+version = '^6.0.0'
 
 [tool.poetry.group.dev.dependencies.molecule-plugins]
 extras = ['docker']
