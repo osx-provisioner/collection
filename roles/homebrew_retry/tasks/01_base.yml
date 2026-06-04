@@ -25,7 +25,7 @@
   retries: "{{ brew_retries }}"
   delay: 3
   register: homebrew_retry_install_packages
-  until: homebrew_retry_install_packages is not failed or brew_fail_matchers.packages in homebrew_retry_install_packages.msg
+  until: homebrew_retry_install_packages is not failed or brew_fail_matchers.packages in homebrew_retry_install_packages.msg or brew_fail_matchers.legacy in homebrew_retry_install_packages.msg
   when: brew_packages|length > 0
   tags:
     - homebrew_retry
@@ -42,7 +42,7 @@
   retries: "{{ brew_retries }}"
   delay: 3
   register: homebrew_retry_install_casks
-  until: homebrew_retry_install_casks is not failed or brew_fail_matchers.casks in homebrew_retry_install_casks.msg
+  until: homebrew_retry_install_casks is not failed or brew_fail_matchers.casks in homebrew_retry_install_casks.msg or brew_fail_matchers.legacy in homebrew_retry_install_casks.msg
   when: brew_casks|length > 0
   tags:
     - homebrew_retry

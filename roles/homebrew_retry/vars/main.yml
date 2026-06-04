@@ -1,2 +1,8 @@
 ---
 # vars file for role-homebrew_retry
+
+# Allows quickly failing when casks or packages do not exist
+brew_fail_matchers:  # noqa: var-naming[no-role-prefix]
+  casks: "No Cask with this name exists"
+  legacy: "No formulae or casks found for"
+  packages: "No available formula with the name"

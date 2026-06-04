@@ -23,8 +23,3 @@ brew_user_casks: []  # noqa: var-naming[no-role-prefix]
 brew_targeted_casks_group: "admin"  # noqa: var-naming[no-role-prefix]
 brew_targeted_casks_location: "/opt/casks"  # noqa: var-naming[no-role-prefix]
 brew_targeted_casks: []  # noqa: var-naming[no-role-prefix]
-
-# Allows quickly failing when casks or packages do not exist
-brew_fail_matchers:  # noqa: var-naming[no-role-prefix]
-  casks: "No Cask with this name exists"
-  packages: "No formulae or casks found for"

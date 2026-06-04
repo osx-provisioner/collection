@@ -27,6 +27,7 @@
         name: "osx_provisioner.collection.homebrew_retry"
       vars:
         brew_fail_matchers:  # noqa var-naming[no-role-prefix]
+          legacy: "DISABLED"
           packages: "DISABLED"
         brew_packages:  # noqa var-naming[no-role-prefix]
           - non_existent_non_existent_non_existent

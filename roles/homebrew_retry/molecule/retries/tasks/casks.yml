@@ -28,6 +28,7 @@
           - non_existent_non_existent_non_existent
         brew_fail_matchers:  # noqa var-naming[no-role-prefix]
           casks: "DISABLED"
+          legacy: "DISABLED"
         brew_retries: 2  # noqa var-naming[no-role-prefix]
 
   rescue:

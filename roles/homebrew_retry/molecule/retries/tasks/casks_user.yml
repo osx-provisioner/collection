@@ -26,6 +26,7 @@
       vars:
         brew_fail_matchers:  # noqa var-naming[no-role-prefix]
           casks: "DISABLED"
+          legacy: "DISABLED"
         brew_retries: 2  # noqa var-naming[no-role-prefix]
         brew_user_casks:  # noqa var-naming[no-role-prefix]
           - non_existent_non_existent_non_existent
