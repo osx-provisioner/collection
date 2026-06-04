@@ -84,6 +84,9 @@ PidFile /var/run/clamd.pid
 # Default: hardcoded (depends on installation options)
 DatabaseDirectory {{ clamav_database_location }}
 
+# Certificate directory
+CVDCertsDirectory {{ clamav_certificate_location }}
+
 # Only load the official signatures published by the ClamAV project.
 # Default: no
 #OfficialDatabaseOnly no

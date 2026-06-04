@@ -1,4 +1,8 @@
 ---
+- name: Clamd -- Create Folders
+  ansible.builtin.include_tasks:
+    file: "clamd/folders.yml"
+
 - name: Clamd -- Setup Logging
   ansible.builtin.include_tasks:
     file: "clamd/logging.yml"

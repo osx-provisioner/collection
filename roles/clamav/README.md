@@ -31,6 +31,7 @@ Role Variables
 |------------------------------------|----------------------------------------------------------------------------------------------------------|
 | brew_user                          | The user to run homebrew operations as.                                                                  |
 | brew_prefix                        | Usually `/usr/local` or `/opt/homebrew` depending on your OSX version.                                   |
+| clamav_clamd_root_folder           | The clamd daemon root folder path.  (Typically all configuration is contained inside this folder.)       |
 | clamav_clamd_config_file           | The clamd daemon configuration file installation location.                                               |
 | clamav_clamd_daemon_log_file       | The clamd daemon log file.                                                                               |
 | clamav_clamd_stderr_log_file       | The clamd service stderr log file.                                                                       |
@@ -40,6 +41,7 @@ Role Variables
 | clamav_clamwatch_quarantine_folder | The folder the clamwatch daemon will move infected files to.                                             |
 | clamav_clamwatch_stderr_log_file   | The clamwatch service stderr log file path.                                                              |
 | clamav_clamwatch_stdout_log_file   | The clamwatch service stdout log file path.                                                              |
+| clamav_certificate_location        | The location of the virus definition database verification certificates.                                 |
 | clamav_database_location           | The location of the virus definition database.                                                           |
 | clamav_freshclam_config_file       | The freshclam daemon configuration file installation location.                                           |
 | clamav_freshclam_daemon_log_file   | The freshclam daemon log file.                                                                           |

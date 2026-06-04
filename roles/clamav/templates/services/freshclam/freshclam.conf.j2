@@ -12,6 +12,9 @@
 # Default: hardcoded (depends on installation options)
 DatabaseDirectory {{ clamav_database_location }}
 
+# Certificate directory
+CVDCertsDirectory {{ clamav_certificate_location }}
+
 # Path to the log file (make sure it has proper permissions)
 # Default: disabled
 UpdateLogFile {{ clamav_freshclam_daemon_log_file }}

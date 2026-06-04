@@ -1,0 +1,36 @@
+---
+- name: Create Clamd Root Folder
+  become: true
+  ansible.builtin.file:
+    path: "{{ clamav_clamd_root_folder }}"
+    state: directory
+    mode: "0755"
+    owner: _clamav
+    group: _clamav
+  notify:
+    - Update Virus Definitions
+    - Restart Clamd
+
+- name: Create Clamd Certificate Folder
+  become: true
+  ansible.builtin.file:
+    path: "{{ clamav_certificate_location }}"
+    state: directory
+    mode: "0755"
+    owner: _clamav
+    group: _clamav
+  notify:
+    - Update Virus Definitions
+    - Restart Clamd
+
+- name: Set Clamd Certificate Folder Ownership
+  become: true
+  ansible.builtin.file:
+    path: "{{ clamav_certificate_location }}"
+    state: directory
+    recurse: yes
+    owner: _clamav
+    group: _clamav
+  notify:
+    - Update Virus Definitions
+    - Restart Clamd
