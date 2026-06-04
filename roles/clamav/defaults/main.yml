@@ -12,7 +12,10 @@ clamav_clamd_stdout_log_file: /var/log/clamav.clamd.stdout.log
 clamav_clamd_stderr_log_file: /var/log/clamav.clamd.error.log
 
 clamav_certificate_location: "{{ clamav_clamd_root_folder }}/certs"
-clamav_database_location: "{{ brew_prefix }}/etc/local/var/lib/clamav"
+
+# This should not be in etc, but the permissions on {{ brew_prefix }}/var and {{ brew_prefix }}/var/lib are often not correct.
+# Since homebrew doesn't generally touch {{ brew_prefix }}/etc, this location seems appropriate and safe.
+clamav_database_location: "{{ clamav_clamd_root_folder }}/db"
 
 clamav_clamwatch: true
 clamav_clamwatch_target_folder: "{{ lookup('env', 'HOME') }}/Downloads"
