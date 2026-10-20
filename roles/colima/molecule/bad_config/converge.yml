@@ -17,7 +17,7 @@
         - name: Check execution halted
           ansible.builtin.fail:
             msg: "The playbook should stop execution before this step."
-          register: playbook_exception
+          register: colima_playbook_exception
 
       rescue:
 
@@ -28,4 +28,4 @@
         - name: Ensure the role failed
           ansible.builtin.assert:
             that:
-              - playbook_exception is not defined
+              - colima_playbook_exception is not defined

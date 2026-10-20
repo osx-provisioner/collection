@@ -30,7 +30,7 @@ pre-commit = '^3.1.1'
 
 [tool.poetry.group.dev.dependencies.ansible-lint]
 markers = "platform_system != 'Windows'"
-version = '^6.12.2'
+version = '^26.10.1'
 
 [tool.poetry.group.dev.dependencies.molecule]
 version = '^6.0.0'

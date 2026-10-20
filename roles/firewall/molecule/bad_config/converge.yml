@@ -19,11 +19,11 @@
         - name: Check execution halted
           ansible.builtin.fail:
             msg: "The playbook should stop execution before this step."
-          register: playbook_exception
+          register: firewall_playbook_exception
 
       rescue:
 
         - name: Verify the role failed
           ansible.builtin.assert:
             that:
-              - playbook_exception is not defined
+              - firewall_playbook_exception is not defined

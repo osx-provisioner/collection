@@ -3,7 +3,7 @@
   become: true
   ansible.builtin.stat:
     path: "/Library/LaunchDaemons/{{ clamav_legacy_service }}.plist"
-  register: legacy_service
+  register: clamav_legacy_service_check
 
 - name: Stop Legacy Service
   become: true
@@ -11,11 +11,11 @@
     name: "{{ clamav_legacy_service }}"
     enabled: false
     state: unloaded
-  when: legacy_service.stat.exists
+  when: clamav_legacy_service_check.stat.exists
 
 - name: Remove Legacy Service
   become: true
   ansible.builtin.file:
     path: "/Library/LaunchDaemons/{{ clamav_legacy_service }}.plist"
     state: absent
-  when: legacy_service.stat.exists
+  when: clamav_legacy_service_check.stat.exists

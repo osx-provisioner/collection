@@ -11,10 +11,10 @@
       become: true
       ansible.builtin.slurp:
         src: /tmp/mock_installer_arguments
-      register: jump_cloud_molecule_results
+      register: jumpcloud_molecule_results
 
     - name: Check Mock Install Arguments
       ansible.builtin.assert:
         that:
-          - jump_cloud_molecule_results.content | b64decode == "-f -s -k secret_jumpcloud_key\n"
+          - jumpcloud_molecule_results.content | b64decode == "-f -s -k secret_jumpcloud_key\n"
         msg: "The mock installer was called with incorrect arguments."

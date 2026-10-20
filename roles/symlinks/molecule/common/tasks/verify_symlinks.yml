@@ -5,7 +5,7 @@
 - name: Stat Symlinks
   ansible.builtin.stat:
     path: "{{ symlinks_item.link }}"
-  register: homeshick_molecule_check_content
+  register: symlinks_molecule_check_content
   loop: "{{ symlinks }}"
   loop_control:
     loop_var: symlinks_item
@@ -15,7 +15,7 @@
     that:
       - symlinks_item.stat.exists
     msg: "{{ symlinks_item.symlinks_item.link }} does not exist."
-  loop: "{{ homeshick_molecule_check_content.results }}"
+  loop: "{{ symlinks_molecule_check_content.results }}"
   loop_control:
     loop_var: symlinks_item
 
@@ -26,6 +26,6 @@
       - symlinks_item.stat.lnk_target == symlinks_item.symlinks_item.target
       - symlinks_item.stat.path == symlinks_item.symlinks_item.link
     msg: "{{ symlinks_item.symlinks_item.link }} has wrong attributes."
-  loop: "{{ homeshick_molecule_check_content.results }}"
+  loop: "{{ symlinks_molecule_check_content.results }}"
   loop_control:
     loop_var: symlinks_item

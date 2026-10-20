@@ -119,3 +119,6 @@ kinds:
 
 # Allow setting custom prefix for name[prefix] rule
 task_name_prefix: "{stem} | "
+
+supported_ansible_also:
+  - "2.14"
