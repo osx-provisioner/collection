@@ -51,7 +51,7 @@
       "description": "This array contains the list of Python versions the workflow steps will execute on.",
       "type": "array",
       "contains": {
-        "pattern": "^3\\.[0-9]$",
+        "pattern": "^3\\.[0-9]+$",
         "type": "string"
       }
     },
