@@ -31,7 +31,7 @@ tags:
   - tools
 
 dependencies:
-  community.general: ">=8.0.0"
+  community.general: ">=12.2.0"  # >=8.0.0 is sufficient, but may leak credentials due to CVE-2025-14010
   geerlingguy.mac: ">=4.0.0,<5.0.0"
 
 repository: https://github.com/osx-provisioner/collection
