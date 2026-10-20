@@ -7,6 +7,9 @@ brew_retries: 3  # noqa: var-naming[no-role-prefix]
 # Typical Values: latest, present
 brew_install_state: latest  # noqa: var-naming[no-role-prefix]
 
+# Determines whether homebrew attempts to update itself
+brew_update_homebrew: "yes" # noqa: var-naming[no-role-prefix]
+
 # Some casks may require SUDO to complete their install
 brew_sudo_password: "{{ ansible_become_password }}"  # noqa: var-naming[no-role-prefix]
 

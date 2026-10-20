@@ -15,13 +15,13 @@
   tags:
     - homebrew_retry
 
-- name: Install Homebrew Packages (With Homebrew Update)
+- name: Install Homebrew Packages (With Optional Homebrew Update)
   become: True
   become_user: "{{ brew_user }}"
   community.general.homebrew:
     name: "{{ brew_packages }}"
     state: "{{ brew_install_state }}"
-    update_homebrew: yes
+    update_homebrew: "{{ brew_update_homebrew }}"
   retries: "{{ brew_retries }}"
   delay: 3
   register: homebrew_retry_install_packages
