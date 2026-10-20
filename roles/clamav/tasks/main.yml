@@ -8,7 +8,7 @@
     name:
       - clamav
       - fswatch
-    state: upgraded
+    state: "{{ clamav_homebrew_install_state }}"
   retries: "{{ clamav_homebrew_retries }}"
   delay: 3
   register: clamav_install

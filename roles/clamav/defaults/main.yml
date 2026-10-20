@@ -28,4 +28,5 @@ clamav_freshclam_daemon_log_file: /var/log/clamav.freshclam.daemon.log
 clamav_freshclam_stdout_log_file: /var/log/clamav.freshclam.stdout.log
 clamav_freshclam_stderr_log_file: /var/log/clamav.freshclam.error.log
 
+clamav_homebrew_install_state: "latest"
 clamav_homebrew_retries: 3
