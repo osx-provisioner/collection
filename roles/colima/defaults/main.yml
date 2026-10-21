@@ -3,6 +3,7 @@
 
 brew_prefix: "{{ (ansible_machine == 'arm64') | ternary('/opt/homebrew', '/usr/local') }}"  # noqa: var-naming[no-role-prefix]
 
+colima_homebrew_install_state: "latest"
 colima_homebrew_retries: 3
 
 colima_service_default_profile: "default"

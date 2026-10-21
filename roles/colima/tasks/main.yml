@@ -21,7 +21,7 @@
       - colima
       - docker
       - docker-compose
-    state: upgraded
+    state: "{{ colima_homebrew_install_state }}"
   retries: "{{ colima_homebrew_retries }}"
   delay: 3
   register: colima_install_colima
