@@ -8,7 +8,7 @@
   become_user: "{{ asdf_user }}"
   community.general.homebrew:
     name: "{{ asdf_darwin_optional_dependencies }}"
-    state: upgraded
+    state: "{{ asdf_homebrew_install_state }}"
   retries: "{{ asdf_homebrew_retries }}"
   delay: 3
   register: asdf_install_optional_dependencies_results

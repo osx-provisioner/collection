@@ -1,5 +1,7 @@
 ---
 # defaults file for asdf
+
+asdf_homebrew_install_state: "latest"
 asdf_homebrew_retries: 3
 asdf_legacy_version_file: "yes"
 asdf_user: "{{ lookup('env', 'USER') }}"
