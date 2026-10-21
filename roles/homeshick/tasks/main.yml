@@ -53,7 +53,7 @@
 - name: Debug Homeshick Clone Command
   ansible.builtin.debug:
     msg: "Executing: {{ homeshick_cli_clone_command }}"
-  when: not homeshick_user_castle_stat_results.stat.exists and homeshick_dotfiles_repo
+  when: homeshick_dotfiles_repo != "" and not homeshick_user_castle_stat_results.stat.exists
   tags:
     - homeshick
 
@@ -62,14 +62,14 @@
   become_user: "{{ homeshick_user }}"
   ansible.builtin.command: "{{ homeshick_cli_clone_command }}"
   changed_when: true
-  when: not homeshick_user_castle_stat_results.stat.exists and homeshick_dotfiles_repo
+  when: homeshick_dotfiles_repo != "" and not homeshick_user_castle_stat_results.stat.exists
   tags:
     - homeshick
 
 - name: Debug Homeshick Link Command
   ansible.builtin.debug:
     msg: "Executing: {{ homeshick_cli_link_command }}"
-  when: homeshick_dotfiles_repo
+  when: homeshick_dotfiles_repo != ""
   tags:
     - homeshick
 
@@ -79,6 +79,6 @@
   ansible.builtin.command: "{{ homeshick_cli_link_command }}"
   register: homeshick_install_command
   changed_when: "'symlink' in homeshick_install_command.stdout"
-  when: homeshick_dotfiles_repo
+  when: homeshick_dotfiles_repo != ""
   tags:
     - homeshick
